@@ -1,0 +1,20 @@
+{
+  "name": "path-length",
+  "version": "0.0.1",
+  "description": "Calculate the length for an SVG path, to use it with node or a Canvas element",
+  "main": "length.js",
+  "scripts": {
+    "pretest": "rollup --banner \"$(preamble)\" -f umd -g parse-svg-path:parse -n d3 -o length.js -- index.js",
+    "test": "tape 'test/*-test.js' && eslint index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bezier-js": "^2.2.1",
+    "parse-svg-path": "^0.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "tape": "^4.6.2"
+  }
+}
