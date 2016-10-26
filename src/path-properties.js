@@ -1,17 +1,13 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('parse-svg-path'), require('bezier-js')) :
-  typeof define === 'function' && define.amd ? define(['parse-svg-path', 'bezier-js'], factory) :
-  (global.d3 = factory(global.parse,global.Bezier));
-}(this, function (parse,Bezier) { 'use strict';
+import parse from "parse-svg-path";
+import Bezier from "bezier-js";
 
-  parse = 'default' in parse ? parse['default'] : parse;
-  Bezier = 'default' in Bezier ? Bezier['default'] : Bezier;
+export default function(svgString) {
+  var length = 0;
 
-  function index(svgString) {
-    var parsed = parse(svgString);
+  function svgProperties(string){
+    var parsed = parse(string);
     var cur = [0, 0];
     var prev_point = [0, 0];
-    var length = 0;
     var curve;
     for (var i = 0; i < parsed.length; i++){
       //moveTo
@@ -102,9 +98,12 @@
       }
 
     }
-    return length;
+    return svgProperties;
   }
 
-  return index;
+  svgProperties.getLength = function(){
+    return length;
+  };
 
-}));
+  return svgProperties(svgString);
+}
