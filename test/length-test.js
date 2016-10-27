@@ -4,8 +4,8 @@ path = require("../");
 require("./inDelta");
 
 tape("Testing the lineTo", function(test) {
+  console.info(path);
   var properties = path.pathProperties("m0,0l10,0");
-  console.info(properties.getLength());
   test.equal(properties.getLength(), 10, "Length with m and l");
 
   properties = path.pathProperties("M0,0L10,0");

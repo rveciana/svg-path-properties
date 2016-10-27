@@ -4,7 +4,7 @@
   "description": "Calculate the length for an SVG path, to use it with node or a Canvas element",
   "main": "path-properties.js",
   "scripts": {
-    "pretest": "rollup --banner \"$(preamble)\" -f umd -g parse-svg-path:parse -n d3 -o path-properties.js -- index.js",
+    "pretest": "webpack",
     "test": "tape 'test/*-test.js' && eslint index.js"
   },
   "author": "Roger Veciana i Rovira",
@@ -14,7 +14,13 @@
     "parse-svg-path": "^0.1.2"
   },
   "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
     "eslint": "^3.8.1",
-    "tape": "^4.6.2"
+    "tape": "^4.6.2",
+    "uglify": "^0.1.5",
+    "uglify-js": "^2.7.4",
+    "webpack": "^1.13.3"
   }
 }

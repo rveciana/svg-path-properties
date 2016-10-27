@@ -3,6 +3,8 @@ import Bezier from "bezier-js";
 
 export default function(svgString) {
   var length = 0;
+  var partial_lengths = [];
+
 
   function svgProperties(string){
     var parsed = parse(string);
@@ -96,12 +98,17 @@ export default function(svgString) {
         prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
       }
+      partial_lengths.push(length);
 
     }
     return svgProperties;
   }
 
-  svgProperties.getLength = function(){
+ svgProperties.getLength = function(){
+    return length;
+  };
+
+  svgProperties.getPointAt = function(){
     return length;
   };
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+svg {
+  fill: None;
+  stroke: #000;
+}
+</style>
+<body>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../path-properties.js"></script>
+<script src="svg-path.js"></script>
+<script src="bezier.js"></script>
+  <script>
+  var paths = ["M200,200 C275,100 575,100 500,200",
+              "M100,200 C100,100 250,100 250,200 S400,300 400,200"];
+
+  for(var i=0; i<paths.length; i++){
+    pathEl = d3.select("body").append("svg")
+      .attr("width", 960)
+      .attr("height", 300);
+    path = pathEl
+      .append("path").attr("d",paths[i]);
+    pathEl
+      .append("text")
+      .attr("x", 25)
+      .attr("y", 70)
+      .attr("font-size", 12)
+      .attr("font-family", "Verdana")
+      .attr("fill", "black")
+      .text(paths[i]);
+    browserLength = path.node().getTotalLength();
+
+    properties = pathProperties.pathProperties(paths[i]);
+    console.info(properties.getLength());
+    if((properties.getLength()).toFixed(2) == (browserLength.toFixed(2))){
+      color = "green";
+      text = "OK";
+    } else {
+      color = "red";
+      text = "Fail";
+    }
+    pathEl
+      .append("text")
+      .attr("x", 25)
+      .attr("y", 90)
+      .attr("font-size", 16)
+      .attr("font-family", "Verdana")
+      .attr("fill", color)
+      .attr("stroke", color)
+      .text(text + " Browser: " + (browserLength).toFixed(2) + " Library: " + (properties.getLength()).toFixed(2));
+  }
+  </script>
+</body>
