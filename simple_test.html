@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<body>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="path-properties.js"></script>
+<script src="svg-path.js"></script>
+<script src="bezier.js"></script>
+  <script>
+
+  pathEl = d3.select("body").append("svg")
+    .attr("width", 960)
+    .attr("height", 300);
+  path = pathEl
+    .append("path")
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("d","M200,300 Q400,50 600,300");
+
+
+  var curve = new Bezier(200,300,400,50,600,300);
+
+  console.info("Bezier-js", curve.get(0.2));
+  var browserLength = path.node().getTotalLength();
+  console.info("SVG", path.node().getPointAtLength(0.2 * browserLength));
+
+  </script>
+</body>
