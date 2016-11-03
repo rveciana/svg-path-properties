@@ -237,6 +237,33 @@
 	  return z * sum;
 	}
 
+	function LinearPosition(x0, x1, y0, y1) {
+	  return new LinearPosition$1(x0, x1, y0, y1);
+
+	}
+
+	function LinearPosition$1(x0, x1, y0, y1){
+	  this.x0 = x0;
+	  this.x1 = x1;
+	  this.y0 = y0;
+	  this.y1 = y1;
+	}
+
+	LinearPosition$1.prototype.getLength = function(){
+	  return Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+	         Math.pow(this.y0 - this.y1, 2));
+	};
+
+	LinearPosition$1.prototype.getPositionAtLength = function(pos){
+
+	  var fraction = pos/ (Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+	         Math.pow(this.y0 - this.y1, 2)));
+	  
+	  var newDeltaX = (this.x1 - this.x0)*fraction;
+	  var newDeltaY = (this.y1 - this.y0)*fraction;
+	  return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
+	};
+
 	function pathProperties(svgString) {
 	  var length = 0;
 	  var partial_lengths = [];
@@ -259,7 +286,7 @@
 	      //lineTo
 	      else if(parsed[i][0] === "L"){
 	        length = length + Math.sqrt(Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2));
-	        functions.push(linearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
+	        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
 	        cur = [parsed[i][1], parsed[i][2]];
 
 	      } else if(parsed[i][0] === "l"){
@@ -336,7 +363,7 @@
 	        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
 	          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , parsed[i][1], parsed[i][2]);
 	        } else {
-	          curve = linearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
+	          curve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
 	        }
 	        functions.push(curve);
 	        length = length + curve.getLength();
@@ -347,7 +374,7 @@
 	        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
 	          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2]);
 	        } else {
-	          curve = linearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
+	          curve = new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
 	        }
 	        length = length + curve.getLength();
 	        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
@@ -364,39 +391,26 @@
 	    return length;
 	  };
 
-	  svgProperties.getPointAt = function(fractionLength){
+	  svgProperties.getPointAtLength = function(fractionLength){
+	    console.info(fractionLength);
 	    var i = partial_lengths.length - 1;
 
 	    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
 	      i--;
 	    }
 	    i++;
-	    var fractionPart = (fractionLength-partial_lengths[i-1])/partial_lengths[i];
-	    return functions[i].get(fractionPart);
+	    //var fractionPart = (fractionLength-partial_lengths[i-1])/partial_lengths[i];
+	    var fractionPart = fractionLength-partial_lengths[i-1];
+	    return functions[i].getPositionAtLength(fractionPart);
 	  };
 
 	  return svgProperties(svgString);
 	}
 
-
-	function linearPosition(x0, x1, y0, y1){
-	   function calculateLinearPosition(){
-	      return linearPosition;
-	    }
-	    linearPosition.getLength = function(){
-	      return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2));
-	    };
-	    linearPosition.get = function(fraction){
-	      var newDeltaX = (x1 - x0)*fraction;
-	      var newDeltaY = (y1 - y0)*fraction;
-	      return { x: x0 + newDeltaX, y: y0 + newDeltaY };
-	    };
-	  return calculateLinearPosition();
-	}
-
 	exports.svgPathProperties = pathProperties;
 	exports.parse = parse;
 	exports.Bezier = Bezier;
+	exports.LinearPosition = LinearPosition;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
