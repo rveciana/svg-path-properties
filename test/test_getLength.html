@@ -8,6 +8,11 @@
 
   var paths = ["M0,50L500,50",
               "M0,50L300,300",
+              "M0,50H300",
+              "M50,50h300",
+              "M50,0V200",
+              "M50,10v200",
+              "M50,50H300V200H50Z",
               "M200,200 C275,100 575,100 500,200",
               "M100,200 C100,100 250,100 250,200 S400,300 400,200",
               "M100,200 S400,300 400,200",
@@ -59,7 +64,7 @@
       .attr("stroke", color)
       .text(text + " Browser: " + (browserLength).toFixed(2) + " Library: " + (properties.getLength()).toFixed(2));
 
-    console.info(path);
+    console.info(paths[i]);
     var xValues= [];
     var yValues= [];
 
@@ -76,7 +81,7 @@
         .attr("r", 4)
         .attr("fill", "blue");
 
-      var position2 = properties.getPointAt(j*browserLength/6);
+      var position2 = properties.getPointAtLength(j*browserLength/6);
       pathEl
         .append("circle")
         .attr("cx", position2.x)

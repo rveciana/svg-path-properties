@@ -14,12 +14,30 @@ tape("getPointAt testing lineTo", function(test) {
     path: "M0,50L300,300",
     xValues: [ 0, 59.999996185302734, 119.99999237060547, 180, 239.99998474121094, 300 ],
     yValues: [ 50, 100, 150, 200, 249.99998474121094, 300 ]
+  },{
+    path: "M0,50H300",
+    xValues: [ 0, 50, 100, 150, 200, 250, 300 ],
+    yValues: [ 50, 50, 50, 50, 50, 50, 50 ]
+  },{
+    path: "M50,50h300",
+    xValues: [ 50, 100, 150, 200, 250, 300, 350 ],
+    yValues: [ 50, 50, 50, 50, 50, 50, 50 ]
+  },{
+    path: "M50,0V200",
+    xValues: [ 50, 50, 50, 50, 50, 50, 50 ],
+    yValues: [ 0, 33.33333206176758, 66.66666412353516, 100, 133.3333282470703, 166.6666717529297, 200 ]
+  },{
+    path: "M50,10v200",
+    xValues: [ 50, 50, 50, 50, 50, 50, 50 ],
+    yValues: [ 10, 43.33333206176758, 76.66666412353516, 110, 143.3333282470703, 176.6666717529297, 210 ]
+  },{
+    path: "M50,50H300V200H50Z",
+    xValues: [ 50, 183.3333282470703, 300, 300, 166.66668701171875, 50, 50 ],
+    yValues: [ 50, 50, 66.66665649414062, 200, 200, 183.33331298828125, 50 ]
   }];
 
-  //for(var i=0; i< paths.length; i++){
-  for(var i=0; i< 1; i++){
-    //for(var j=0; j<paths[i].xValues.length; j++){
-      for(var j=0; j<2; j++){
+  for(var i=0; i< paths.length; i++){
+    for(var j=0; j<paths[i].xValues.length; j++){
       properties = path.svgPathProperties(paths[i].path);
       var position = properties.getPointAtLength(j*properties.getLength()/(paths[i].xValues.length-1));
       test.inDelta(position.x, paths[i].xValues[j], 0.1);

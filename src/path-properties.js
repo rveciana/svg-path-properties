@@ -33,25 +33,26 @@ export default function(svgString) {
         functions.push();
       } else if(parsed[i][0] === "H"){
         length = length + Math.abs(cur[0] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]));
         cur[0] = parsed[i][1];
-        functions.push();
       } else if(parsed[i][0] === "h"){
         length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1]));
         cur[0] = parsed[i][1] + cur[0];
-        functions.push();
       } else if(parsed[i][0] === "V"){
         length = length + Math.abs(cur[1] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1]));
         cur[1] = parsed[i][1];
-        functions.push();
       } else if(parsed[i][0] === "v"){
         length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]));
         cur[1] = parsed[i][1] + cur[1];
         functions.push();
       //Close path
       }  else if(parsed[i][0] === "z" || parsed[i][0] === "Z"){
-        length = length + Math.sqrt(Math.pow(parsed[0][1] - cur[0], 2) + Math.pow(parsed[0][1] - cur[1], 2));
+        length = length + Math.sqrt(Math.pow(parsed[0][1] - cur[0], 2) + Math.pow(parsed[0][2] - cur[1], 2));
+        functions.push(new LinearPosition(cur[0], parsed[0][1], cur[1], parsed[0][2]));
         cur = [parsed[0][1], parsed[0][2]];
-        functions.push();
       }
       //Cubic Bezier curves
       else if(parsed[i][0] === "C"){
