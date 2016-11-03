@@ -3,10 +3,8 @@
 
 <body>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="../path-properties.js"></script>
-<script src="svg-path.js"></script>
-<script src="bezier.js"></script>
-  <script>
+<script src="../build/path-properties.js"></script>
+<script>
 
   var paths = ["M0,50L500,50",
               "M0,50L300,300",
@@ -43,7 +41,7 @@
       .text(paths[i]);
     browserLength = path.node().getTotalLength();
 
-    properties = pathProperties.pathProperties(paths[i]);
+    properties = spp.svgPathProperties(paths[i]);
     if((properties.getLength()).toFixed(2) == (browserLength.toFixed(2))){
       color = "green";
       text = "OK";
