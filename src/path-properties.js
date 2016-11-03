@@ -138,7 +138,7 @@ export default function(svgString) {
     }
     i++;
     var fractionPart = fractionLength-partial_lengths[i-1];
-    return functions[i].getPositionAtLength(fractionPart);
+    return functions[i].getPointAtLength(fractionPart);
   };
 
   return svgProperties(svgString);

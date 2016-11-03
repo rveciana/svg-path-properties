@@ -15,7 +15,7 @@ LinearPosition.prototype.getLength = function(){
          Math.pow(this.y0 - this.y1, 2));
 };
 
-LinearPosition.prototype.getPositionAtLength = function(pos){
+LinearPosition.prototype.getPointAtLength = function(pos){
   var fraction = pos/ (Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
          Math.pow(this.y0 - this.y1, 2)));
 

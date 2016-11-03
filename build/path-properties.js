@@ -60,8 +60,10 @@
 
 	  if(dx && dy){
 	    this.getArcLength = getCubicArcLength;
+	    this.getPoint = cubicPoint;
 	  } else {
 	    this.getArcLength = getQuadraticArcLength;
+	    this.getPoint = quadraticPoint;
 	  }
 
 	  this.init();
@@ -78,10 +80,39 @@
 	  getLength: function() {
 	    return this.length;
 	  },
-	  getPointAtLength: function() {
-	    return this.length;
+	  getPointAtLength: function(length) {
+	    var error = 1;
+	    var t = length/this.length;
+
+	    while (error > 0.008){
+
+	      var calcLength = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
+	                                      [this.a.y, this.b.y, this.c.y, this.d.y],
+	                                    t);
+	      error = Math.abs(length - calcLength)/this.length;
+	      t = t + (length-calcLength)/this.length;
+	    }
+
+	    return this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+	                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+	                                  t);
 	  }
 	};
+
+	function quadraticPoint(xs, ys, t){
+	  var x = (1 - t) * (1 - t) * xs[0] + 2 * (1 - t) * t * xs[1] + t * t * xs[2];
+	  var y = (1 - t) * (1 - t) * ys[0] + 2 * (1 - t) * t * ys[1] + t * t * ys[2];
+	  return {x: x, y: y};
+	}
+
+	function cubicPoint(xs, ys, t){
+	  var x = (1 - t) * (1 - t) * (1 - t) * xs[0] + 3 * (1 - t) * (1 - t) * t * xs[1] +
+	  3 * (1 - t) * t * t * xs[2] + t * t * t * xs[3];
+	  var y = (1 - t) * (1 - t) * (1 - t) * ys[0] + 3 * (1 - t) * (1 - t) * t * ys[1] +
+	  3 * (1 - t) * t * t * ys[2] + t * t * t * ys[3];
+
+	  return {x: x, y: y};
+	}
 
 	function getQuadraticArcLength(xs, ys, t) {
 	  if (t === undefined) {
@@ -214,19 +245,17 @@
 	  return Math.sqrt(combined);
 	}
 
-	function getCubicArcLength(xs, ys, t, n) {
+	function getCubicArcLength(xs, ys, t) {
 	  var z, sum, i, correctedT;
 
-	  if (xs.length >= tValues.length) {
+	  /*if (xs.length >= tValues.length) {
 	    throw new Error('too high n bezier');
-	  }
+	  }*/
 
 	  if (t === undefined) {
 	    t = 1;
 	  }
-	  if (n === undefined) {
-	    n = 20;
-	  }
+	  var n = 20;
 
 	  z = t / 2;
 	  sum = 0;
@@ -254,7 +283,7 @@
 	         Math.pow(this.y0 - this.y1, 2));
 	};
 
-	LinearPosition$1.prototype.getPositionAtLength = function(pos){
+	LinearPosition$1.prototype.getPointAtLength = function(pos){
 	  var fraction = pos/ (Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
 	         Math.pow(this.y0 - this.y1, 2)));
 
@@ -399,7 +428,7 @@
 	    }
 	    i++;
 	    var fractionPart = fractionLength-partial_lengths[i-1];
-	    return functions[i].getPositionAtLength(fractionPart);
+	    return functions[i].getPointAtLength(fractionPart);
 	  };
 
 	  return svgProperties(svgString);
