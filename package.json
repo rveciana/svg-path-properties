@@ -19,7 +19,7 @@
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
     "test": "tape 'test/*-test.js' && eslint index.js src",
-    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js && git add build/* && git commit -m \"rebuild and uglify\"",
+    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js",
     "postpublish": "git push && git push --tags"
   },
   "author": {
@@ -32,7 +32,6 @@
     "package-preamble": "0.0.2",
     "rollup": "0.33",
     "tape": "4.6.2",
-    "uglify": "0.1.5",
     "uglify-js": "2.7.4"
   }
 }
