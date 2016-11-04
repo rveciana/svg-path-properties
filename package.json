@@ -15,7 +15,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/rveciana/svg-path-properties.git"
-},
+  },
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
     "test": "tape 'test/*-test.js' && eslint index.js src",
@@ -29,6 +29,7 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "eslint": "3.9.1",
     "package-preamble": "0.0.2",
     "rollup": "0.33",
     "tape": "4.6.2",
