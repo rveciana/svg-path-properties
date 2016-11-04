@@ -1,6 +1,6 @@
 {
   "name": "svg-path-properties",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Calculate the length for an SVG path, to use it with node or a Canvas element",
   "keywords": [
     "path",
@@ -22,7 +22,7 @@
     "url": "https://geoexamples.com"
   },
   "license": "ISC",
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
     "package-preamble": "0.0.2",
     "rollup": "0.33",
