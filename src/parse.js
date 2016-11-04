@@ -17,7 +17,7 @@ export default function(path) {
 			command = command === 'm' ? 'l' : 'L';
 		}
 
-		while (true) {
+		while (args.length >= 0) {
 			if (args.length === length[type]) {
 				args.unshift(command);
 				return data.push(args);
