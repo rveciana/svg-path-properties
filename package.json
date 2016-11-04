@@ -11,6 +11,11 @@
   ],
   "homepage": "http://geoexamples.com/path-properties/",
   "main": "build/path-properties.js",
+  "jsnext:main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rveciana/svg-path-properties.git"
+},
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
     "test": "tape 'test/*-test.js' && eslint index.js src",
