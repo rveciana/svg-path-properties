@@ -43,7 +43,10 @@ tape("getPointAtLength testing lineTo", function(test) {
       test.inDelta(position.x, paths[i].xValues[j], 0.1);
       test.inDelta(position.y, paths[i].yValues[j], 0.1);
     }
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
+
   test.end();
 
 });
@@ -82,6 +85,8 @@ tape("getPointAtLength testing Quadratic Bézier", function(test) {
       test.inDelta(position.x, paths[i].xValues[j], 1);
       test.inDelta(position.y, paths[i].yValues[j], 1);
     }
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();
 });
@@ -108,6 +113,8 @@ tape("getPointAtLength testing Cubic Bézier", function(test) {
       test.inDelta(position.x, paths[i].xValues[j], 1);
       test.inDelta(position.y, paths[i].yValues[j], 1);
     }
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();
 });

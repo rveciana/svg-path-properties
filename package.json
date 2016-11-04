@@ -1,12 +1,21 @@
 {
-  "name": "path-properties",
-  "version": "0.0.1",
+  "name": "svg-path-properties",
+  "version": "0.0.0",
   "description": "Calculate the length for an SVG path, to use it with node or a Canvas element",
+  "keywords": [
+    "path",
+    "getPointAtLength",
+    "length",
+    "canvas",
+    "svg"
+  ],
   "homepage": "http://geoexamples.com/path-properties/",
   "main": "build/path-properties.js",
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
-    "test": "tape 'test/*-test.js' && eslint index.js"
+    "test": "tape 'test/*-test.js' && eslint index.js src",
+    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js && git add build/* && git commit -m \"rebuild and uglify\"",
+    "postpublish": "git push && git push --tags"
   },
   "author": {
     "name": "Roger Veciana i Rovira",
@@ -17,8 +26,8 @@
   "devDependencies": {
     "package-preamble": "0.0.2",
     "rollup": "0.33",
-    "tape": "^4.6.2",
-    "uglify": "^0.1.5",
-    "uglify-js": "^2.7.4"
+    "tape": "4.6.2",
+    "uglify": "0.1.5",
+    "uglify-js": "2.7.4"
   }
 }

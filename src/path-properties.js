@@ -131,6 +131,12 @@ export default function(svgString) {
   };
 
   svgProperties.getPointAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
     var i = partial_lengths.length - 1;
 
     while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){

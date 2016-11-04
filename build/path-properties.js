@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.0.1. Copyright 2016 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.0.0. Copyright 2016 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -24,7 +24,7 @@
 				command = command === 'm' ? 'l' : 'L';
 			}
 
-			while (true) {
+			while (args.length >= 0) {
 				if (args.length === length[type]) {
 					args.unshift(command);
 					return data.push(args);
@@ -421,6 +421,12 @@
 	  };
 
 	  svgProperties.getPointAtLength = function(fractionLength){
+	    if(fractionLength < 0){
+	      fractionLength = 0;
+	    } else if(fractionLength > length){
+	      fractionLength = length;
+	    }
+
 	    var i = partial_lengths.length - 1;
 
 	    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
