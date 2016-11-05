@@ -6,43 +6,43 @@ require("./inDelta");
 tape("Testing the lineTo", function(test) {
   var properties = path.svgPathProperties("m0,0l10,0");
 
-  test.equal(properties.getLength(), 10, "Length with m and l");
+  test.equal(properties.getTotalLength(), 10, "Length with m and l");
 
   properties = path.svgPathProperties("M0,0L10,0");
-  test.equal(properties.getLength(), 10, "Length with M and L");
+  test.equal(properties.getTotalLength(), 10, "Length with M and L");
   properties = path.svgPathProperties("M0,0L10,0M0,0L10,0");
-  test.equal(properties.getLength(), 20, "Length with M and L");
+  test.equal(properties.getTotalLength(), 20, "Length with M and L");
   properties = path.svgPathProperties("M0,0L10,0m0,0L10,0");
-  test.equal(properties.getLength(), 10, "Length with m, M and L");
+  test.equal(properties.getTotalLength(), 10, "Length with m, M and L");
 
   properties = path.svgPathProperties("M0,0L10,0l10,0");
-  test.equal(properties.getLength(), 20, "Length with M, l and L");
+  test.equal(properties.getTotalLength(), 20, "Length with M, l and L");
   test.end();
 });
 
 
 tape("Testing the H and V", function(test) {
   var properties = path.svgPathProperties("m0,0h10");
-  test.equal(properties.getLength(), 10, "Length with m and h");
+  test.equal(properties.getTotalLength(), 10, "Length with m and h");
 
   properties = path.svgPathProperties("M50,0H40");
-  test.equal(properties.getLength(), 10, "Length with m and H");
+  test.equal(properties.getTotalLength(), 10, "Length with m and H");
 
   properties = path.svgPathProperties("m0,0v10");
-  test.equal(properties.getLength(), 10, "Length with m and v");
+  test.equal(properties.getTotalLength(), 10, "Length with m and v");
 
   properties = path.svgPathProperties("M0,50V40");
-  test.equal(properties.getLength(), 10, "Length with m and V");
+  test.equal(properties.getTotalLength(), 10, "Length with m and V");
 
   test.end();
 });
 
 tape("Testing z and Z", function(test) {
   var properties = path.svgPathProperties("m0,0h10z");
-  test.equal(properties.getLength(), 20, "Length with z");
+  test.equal(properties.getTotalLength(), 20, "Length with z");
 
   properties = path.svgPathProperties("m0,0h10Z");
-  test.equal(properties.getLength(), 20, "Length with Z");
+  test.equal(properties.getTotalLength(), 20, "Length with Z");
   test.end();
 });
 
@@ -50,25 +50,25 @@ tape("Testing Cubic Bézier", function(test) {
 
   //C & c
   var properties = path.svgPathProperties("M100,25C10,90,110,100,150,195");
-  test.inDelta(properties.getLength(), 213.8, 0.1);
+  test.inDelta(properties.getTotalLength(), 213.8, 0.1);
 
   properties = path.svgPathProperties("m100,25c-90,65,10,75,50,170");
-  test.inDelta(properties.getLength(), 213.8, 0.1);
+  test.inDelta(properties.getTotalLength(), 213.8, 0.1);
 
 
   //S & s
   properties = path.svgPathProperties("M100,200 C100,100 250,100 250,200 S400,300 400,200");
-  test.inDelta(properties.getLength(), 475.746, 0.1);
+  test.inDelta(properties.getTotalLength(), 475.746, 0.1);
 
   properties = path.svgPathProperties("M100,200 c0,-100 150,-100 150,0 s150,100 150,0");
-  test.inDelta(properties.getLength(), 475.746, 0.1);
+  test.inDelta(properties.getTotalLength(), 475.746, 0.1);
 
   //S & s without previous C or c
   properties = path.svgPathProperties("M100,200 S400,300 400,200");
-  test.inDelta(properties.getLength(), 327.9618, 0.1);
+  test.inDelta(properties.getTotalLength(), 327.9618, 0.1);
 
   properties = path.svgPathProperties("M100,200 s300,100 300,0");
-  test.inDelta(properties.getLength(), 327.9618, 0.1);
+  test.inDelta(properties.getTotalLength(), 327.9618, 0.1);
 
   test.end();
 
@@ -78,27 +78,27 @@ tape("Testing Quadratic Bézier", function(test) {
 
   //Q & q
   var properties = path.svgPathProperties("M200,300 Q400,50 600,300");
-  test.inDelta(properties.getLength(), 487.77, 0.1);
+  test.inDelta(properties.getTotalLength(), 487.77, 0.1);
 
   properties = path.svgPathProperties("M200,300 q200,-250 400,0");
-  test.inDelta(properties.getLength(), 487.77, 0.1);
+  test.inDelta(properties.getTotalLength(), 487.77, 0.1);
 
   //T & t
   properties = path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
-  test.inDelta(properties.getLength(), 376.84, 0.1);
+  test.inDelta(properties.getTotalLength(), 376.84, 0.1);
 
   properties = path.svgPathProperties("M0,100 q50,-150 100,0 t100,0");
-  test.inDelta(properties.getLength(), 376.84, 0.1);
+  test.inDelta(properties.getTotalLength(), 376.84, 0.1);
 
   properties = path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100 T300,100");
-  test.inDelta(properties.getLength(), 565.26, 0.1);
+  test.inDelta(properties.getTotalLength(), 565.26, 0.1);
 
   //T & t without previous values
   properties = path.svgPathProperties("M0,100 T200,100");
-  test.inDelta(properties.getLength(), 200, 0.1);
+  test.inDelta(properties.getTotalLength(), 200, 0.1);
 
   properties = path.svgPathProperties("M0,100 t200,100");
-  test.inDelta(properties.getLength(), 223.606, 0.1);
+  test.inDelta(properties.getTotalLength(), 223.606, 0.1);
 
   test.end();
 
@@ -106,7 +106,7 @@ tape("Testing Quadratic Bézier", function(test) {
 
 tape("Some complex examples", function(test){
   var properties = path.svgPathProperties("M137.69692698614858,194.75002119995685L140.5811864522362,200.02784443179866L145.21300688556522,205.5730786360974L151.96589957664872,210.57916233863872L157.11811791245674,216.958427402148L160.38007797705498,217.5517159659712L170.86150068075614,226.50677931755828L184.78753673995035,229.40372164152683L188.48682846625186,231.74464203758626L194.96220985606624,232.24831761753774L199.0151340580992,235.98908347947008L200.33619274822317,239.1501414459547L208.1352797340722,240.97174662891314L214.55451361971706,243.72269753526453L217.92992784370034,242.79750552259512L222.422382828094,245.95312239185364L226.33834281296274,246.6562900586742L232.1785094475572,250.37579609444018L247.67126011118384,253.41216989328635L249.86860925383274,259.67235659237457L258.0102758151366,263.53584756964034L265.7094539012957,271.9301187141604L275.3442092382522,280.797134878233L292.5367640425162,281.439215857073L300.3900165167456,283.19277126134665L317.1541418598862,288.08140107614616L325.68746219694265,282.98731281377525L334.20900545032936,279.42687578910136L341.89090086141164,279.65662234387565L344.6975683081848,280.71420717321774L352.73368224017975,278.81635544720564L357.8378453664788,280.8621873013037L360.27780217558785,280.351713437805L366.10835670115375,282.6140677325477L369.09298803246423,282.32880268111796L376.79699044083907,278.5755589629451L382.0884404158815,278.74374570898004L386.6969703376813,280.7868194847831L391.5118882394122,287.6851129793625L401.6043570144851,289.4523241399227L418.32264375071753,303.60974325767233L416.56748832810626,308.8321991418072L421.85304030224415,309.8073672357337L426.9233662531078,306.30064325383734L428.39794675453993,303.9729502861741L433.7178516894217,301.12745610964237L435.55518815288303,303.2790040699963L429.98849506106274,310.0981677440247L430.3920258191735,315.904266873991L431.8697365975619,320.41310652120495L431.51963155330213,325.7229788905284L437.6672507546333,329.58621381302714L437.3918696288182,334.8637567665635L439.98603260092784,334.44629338092415L446.1764597142119,341.8547790472293L453.6668527230894,346.9381545890387L457.5294853076264,347.9669234517022L462.48118856871827,352.94569484976665L466.87142760911547,353.62325409732335L470.1647323309724,356.65500849656917L478.52329558789495,361.73028232300277L486.88560554821527,370.7823973990582L489.73056770534674,376.3046557640006L489.2413765676388,379.0217789927731L492.6796339000674,384.9123226146289L500.3373626256565,376.6596349946864L507.84942333888387,380.4063594074064L511.8061547036337,380.01502900094323");
-  test.inDelta(properties.getLength(), 498.031, 0.1);
+  test.inDelta(properties.getTotalLength(), 498.031, 0.1);
 
   test.end();
 });

@@ -39,11 +39,11 @@ tape("getPointAtLength testing lineTo", function(test) {
   for(var i=0; i< paths.length; i++){
     for(var j=0; j<paths[i].xValues.length; j++){
       properties = path.svgPathProperties(paths[i].path);
-      var position = properties.getPointAtLength(j*properties.getLength()/(paths[i].xValues.length-1));
+      var position = properties.getPointAtLength(j*properties.getTotalLength()/(paths[i].xValues.length-1));
       test.inDelta(position.x, paths[i].xValues[j], 0.1);
       test.inDelta(position.y, paths[i].yValues[j], 0.1);
     }
-    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getTotalLength()));
     test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
 
@@ -81,11 +81,11 @@ tape("getPointAtLength testing Quadratic Bézier", function(test) {
   for(var i=0; i< paths.length; i++){
     for(var j=0; j<paths[i].xValues.length; j++){
       properties = path.svgPathProperties(paths[i].path);
-      var position = properties.getPointAtLength(j*properties.getLength()/(paths[i].xValues.length-1));
+      var position = properties.getPointAtLength(j*properties.getTotalLength()/(paths[i].xValues.length-1));
       test.inDelta(position.x, paths[i].xValues[j], 1);
       test.inDelta(position.y, paths[i].yValues[j], 1);
     }
-    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getTotalLength()));
     test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();
@@ -109,11 +109,11 @@ tape("getPointAtLength testing Cubic Bézier", function(test) {
   for(var i=0; i< paths.length; i++){
     for(var j=0; j<paths[i].xValues.length; j++){
       properties = path.svgPathProperties(paths[i].path);
-      var position = properties.getPointAtLength(j*properties.getLength()/(paths[i].xValues.length-1));
+      var position = properties.getPointAtLength(j*properties.getTotalLength()/(paths[i].xValues.length-1));
       test.inDelta(position.x, paths[i].xValues[j], 1);
       test.inDelta(position.y, paths[i].yValues[j], 1);
     }
-    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getLength()));
+    test.deepEqual(properties.getPointAtLength(10000000), properties.getPointAtLength(properties.getTotalLength()));
     test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();

@@ -57,12 +57,12 @@ export default function(svgString) {
       //Cubic Bezier curves
       else if(parsed[i][0] === "C"){
         curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4] , parsed[i][5], parsed[i][6]);
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         cur = [parsed[i][5], parsed[i][6]];
         functions.push(curve);
       } else if(parsed[i][0] === "c"){
         curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4] , cur[0] + parsed[i][5], cur[1] + parsed[i][6]);
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
         functions.push(curve);
       } else if(parsed[i][0] === "S"){
@@ -71,7 +71,7 @@ export default function(svgString) {
         } else {
           curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
         }
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         cur = [parsed[i][3], parsed[i][4]];
         functions.push(curve);
       }  else if(parsed[i][0] === "s"){
@@ -80,21 +80,21 @@ export default function(svgString) {
         } else {
           curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
         }
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
         functions.push(curve);
       }
       //Quadratic Bezier curves
       else if(parsed[i][0] === "Q"){
         curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         functions.push(curve);
         cur = [parsed[i][3], parsed[i][4]];
         prev_point = [parsed[i][1], parsed[i][2]];
 
       }  else if(parsed[i][0] === "q"){
         curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         prev_point = [cur[0] + parsed[i][1], cur[1] + parsed[i][2]];
         cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
         functions.push(curve);
@@ -105,7 +105,7 @@ export default function(svgString) {
           curve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
         }
         functions.push(curve);
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
         cur = [parsed[i][1], parsed[i][2]];
 
@@ -115,7 +115,7 @@ export default function(svgString) {
         } else {
           curve = new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
         }
-        length = length + curve.getLength();
+        length = length + curve.getTotalLength();
         prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
         functions.push(curve);
@@ -126,7 +126,7 @@ export default function(svgString) {
     return svgProperties;
   }
 
- svgProperties.getLength = function(){
+ svgProperties.getTotalLength = function(){
     return length;
   };
 

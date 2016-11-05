@@ -10,7 +10,7 @@ function LinearPosition(x0, x1, y0, y1){
   this.y1 = y1;
 }
 
-LinearPosition.prototype.getLength = function(){
+LinearPosition.prototype.getTotalLength = function(){
   return Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
          Math.pow(this.y0 - this.y1, 2));
 };

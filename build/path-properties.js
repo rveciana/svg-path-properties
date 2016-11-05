@@ -77,7 +77,7 @@
 	                                    [this.a.y, this.b.y, this.c.y, this.d.y]);
 	  },
 
-	  getLength: function() {
+	  getTotalLength: function() {
 	    return this.length;
 	  },
 	  getPointAtLength: function(length) {
@@ -278,7 +278,7 @@
 	  this.y1 = y1;
 	}
 
-	LinearPosition$1.prototype.getLength = function(){
+	LinearPosition$1.prototype.getTotalLength = function(){
 	  return Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
 	         Math.pow(this.y0 - this.y1, 2));
 	};
@@ -347,12 +347,12 @@
 	      //Cubic Bezier curves
 	      else if(parsed[i][0] === "C"){
 	        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4] , parsed[i][5], parsed[i][6]);
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        cur = [parsed[i][5], parsed[i][6]];
 	        functions.push(curve);
 	      } else if(parsed[i][0] === "c"){
 	        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4] , cur[0] + parsed[i][5], cur[1] + parsed[i][6]);
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
 	        functions.push(curve);
 	      } else if(parsed[i][0] === "S"){
@@ -361,7 +361,7 @@
 	        } else {
 	          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
 	        }
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        cur = [parsed[i][3], parsed[i][4]];
 	        functions.push(curve);
 	      }  else if(parsed[i][0] === "s"){
@@ -370,21 +370,21 @@
 	        } else {
 	          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
 	        }
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
 	        functions.push(curve);
 	      }
 	      //Quadratic Bezier curves
 	      else if(parsed[i][0] === "Q"){
 	        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        functions.push(curve);
 	        cur = [parsed[i][3], parsed[i][4]];
 	        prev_point = [parsed[i][1], parsed[i][2]];
 
 	      }  else if(parsed[i][0] === "q"){
 	        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        prev_point = [cur[0] + parsed[i][1], cur[1] + parsed[i][2]];
 	        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
 	        functions.push(curve);
@@ -395,7 +395,7 @@
 	          curve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
 	        }
 	        functions.push(curve);
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
 	        cur = [parsed[i][1], parsed[i][2]];
 
@@ -405,7 +405,7 @@
 	        } else {
 	          curve = new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
 	        }
-	        length = length + curve.getLength();
+	        length = length + curve.getTotalLength();
 	        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
 	        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
 	        functions.push(curve);
@@ -416,7 +416,7 @@
 	    return svgProperties;
 	  }
 
-	 svgProperties.getLength = function(){
+	 svgProperties.getTotalLength = function(){
 	    return length;
 	  };
 

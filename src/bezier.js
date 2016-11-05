@@ -30,7 +30,7 @@ Bezier.prototype = {
                                     [this.a.y, this.b.y, this.c.y, this.d.y]);
   },
 
-  getLength: function() {
+  getTotalLength: function() {
     return this.length;
   },
   getPointAtLength: function(length) {
