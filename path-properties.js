@@ -1,1 +1,449 @@
-!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.pathProperties=n():t.pathProperties=n()}(this,function(){return function(t){function n(e){if(r[e])return r[e].exports;var i=r[e]={exports:{},id:e,loaded:!1};return t[e].call(i.exports,i,i.exports,n),i.loaded=!0,i.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(n,"__esModule",{value:!0});var i=r(1);Object.defineProperty(n,"pathProperties",{enumerable:!0,get:function(){return e(i).default}})},function(t,n,r){"use strict";function e(t){return t&&t.__esModule?t:{default:t}}function i(t,n,r,e){function o(){return i}return i.get=function(i){var o=(n-t)*i,s=(e-r)*i;return{x:t+o,y:r+s}},o()}Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(t){function n(t){for(var u,f=(0,s.default)(t),h=[0,0],c=[0,0],p=0;p<f.length;p++)"M"===f[p][0]?(h=[f[p][1],f[p][2]],o.push(null)):"m"===f[p][0]?(h=[f[p][1]+h[0],f[p][2]+h[1]],o.push(null)):"L"===f[p][0]?(r+=Math.sqrt(Math.pow(h[0]-f[p][1],2)+Math.pow(h[1]-f[p][2],2)),o.push(i(h[0],f[p][1],h[1],f[p][2])),h=[f[p][1],f[p][2]]):"l"===f[p][0]?(r+=Math.sqrt(Math.pow(f[p][1],2)+Math.pow(f[p][2],2)),h=[f[p][1]+h[0],f[p][2]+h[1]],o.push()):"H"===f[p][0]?(r+=Math.abs(h[0]-f[p][1]),h[0]=f[p][1],o.push()):"h"===f[p][0]?(r+=Math.abs(f[p][1]),h[0]=f[p][1]+h[0],o.push()):"V"===f[p][0]?(r+=Math.abs(h[1]-f[p][1]),h[1]=f[p][1],o.push()):"v"===f[p][0]?(r+=Math.abs(f[p][1]),h[1]=f[p][1]+h[1],o.push()):"z"===f[p][0]||"Z"===f[p][0]?(r+=Math.sqrt(Math.pow(f[0][1]-h[0],2)+Math.pow(f[0][1]-h[1],2)),h=[f[0][1],f[0][2]],o.push()):"C"===f[p][0]?(u=new a.default(h[0],h[1],f[p][1],f[p][2],f[p][3],f[p][4],f[p][5],f[p][6]),r+=u.length(),h=[f[p][5],f[p][6]],o.push(u)):"c"===f[p][0]?(u=new a.default(h[0],h[1],h[0]+f[p][1],h[1]+f[p][2],h[0]+f[p][3],h[1]+f[p][4],h[0]+f[p][5],h[1]+f[p][6]),r+=u.length(),h=[f[p][5]+h[0],f[p][6]+h[1]],o.push(u)):"S"===f[p][0]?(u=p>0&&["C","c","S","s"].indexOf(f[p-1][0])>-1?new a.default(h[0],h[1],h[0]+f[p][1]-f[p][3],h[1]+f[p][2]-f[p][4],f[p][1],f[p][2],f[p][3],f[p][4]):new a.default(h[0],h[1],h[0],h[1],f[p][1],f[p][2],f[p][3],f[p][4]),r+=u.length(),h=[f[p][3],f[p][4]],o.push(u)):"s"===f[p][0]?(u=p>0&&["C","c","S","s"].indexOf(f[p-1][0])>-1?new a.default(h[0],h[1],h[0]+f[p][1]-f[p][3],h[1]+f[p][2]-f[p][4],h[0]+f[p][1],h[1]+f[p][2],h[0]+f[p][3],h[1]+f[p][4]):new a.default(h[0],h[1],h[0],h[1],h[0]+f[p][1],h[1]+f[p][2],h[0]+f[p][3],h[1]+f[p][4]),r+=u.length(),h=[f[p][3]+h[0],f[p][4]+h[1]],o.push(u)):"Q"===f[p][0]?(console.info(h[0],h[1],f[p][1],f[p][2],f[p][3],f[p][4]),u=new a.default(h[0],h[1],f[p][1],f[p][2],f[p][3],f[p][4]),r+=u.length(),o.push(u),h=[f[p][3],f[p][4]],c=[f[p][1],f[p][2]]):"q"===f[p][0]?(u=new a.default(h[0],h[1],h[0]+f[p][1],h[1]+f[p][2],h[0]+f[p][3],h[1]+f[p][4]),r+=u.length(),c=[h[0]+f[p][1],h[1]+f[p][2]],h=[f[p][3]+h[0],f[p][4]+h[1]],o.push(u)):"T"===f[p][0]?(u=p>0&&["Q","q","T","t"].indexOf(f[p-1][0])>-1?new a.default(h[0],h[1],2*h[0]-c[0],2*h[1]-c[1],f[p][1],f[p][2]):new a.default(h[0],h[1],h[0],h[1],f[p][1],f[p][2]),o.push(u),r+=u.length(),c=[2*h[0]-c[0],2*h[1]-c[1]],h=[f[p][1],f[p][2]]):"t"===f[p][0]&&(u=p>0&&["Q","q","T","t"].indexOf(f[p-1][0])>-1?new a.default(h[0],h[1],2*h[0]-c[0],2*h[1]-c[1],h[0]+f[p][1],h[1]+f[p][2]):new a.default(h[0],h[1],h[0],h[1],h[0]+f[p][1],h[1]+f[p][2]),r+=u.length(),c=[2*h[0]-c[0],2*h[1]-c[1]],h=[f[p][1]+h[0],f[p][2]+h[0]],o.push(u)),e.push(r);return n}var r=0,e=[],o=[];return n.getLength=function(){return r},n.getPointAt=function(t){for(var n=e.length-1;e[n]>=t&&e[n]>0;)n--;n++;var r=(t-e[n-1])/e[n];return console.info("--",r),o[n].get(r)},n(t)};var o=r(2),s=e(o),u=r(3),a=e(u)},function(t,n){"use strict";function r(t){var n=[];return t.replace(o,function(t,r,o){var s=r.toLowerCase();for(o=e(o),"m"==s&&o.length>2&&(n.push([r].concat(o.splice(0,2))),s="l",r="m"==r?"l":"L");;){if(o.length==i[s])return o.unshift(r),n.push(o);if(o.length<i[s])throw new Error("malformed path data");n.push([r].concat(o.splice(0,i[s])))}}),n}function e(t){var n=t.match(s);return n?n.map(Number):[]}t.exports=r;var i={a:7,c:6,h:1,l:2,m:2,q:4,s:4,t:2,v:1,z:0},o=/([astvzqmhlc])([^astvzqmhlc]*)/gi,s=/-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/gi},function(t,n,r){"use strict";t.exports=r(4)},function(t,n,r){"use strict";var e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};!function(){function n(t,n,r,e,i){"undefined"==typeof i&&(i=.5);var o=c.projectionratio(i,t),s=1-o,u={x:o*n.x+s*e.x,y:o*n.y+s*e.y},a=c.abcratio(i,t),f={x:r.x+(r.x-u.x)/a,y:r.y+(r.y-u.y)/a};return{A:f,B:r,C:u}}var i=Math.abs,o=Math.min,s=Math.max,u=Math.acos,a=Math.sqrt,f=Math.PI,h={x:0,y:0,z:0},c=r(5),p=r(6),l=function(t){var n=t&&t.forEach?t:[].slice.call(arguments),r=!1;if("object"===e(n[0])){r=n.length;var o=[];n.forEach(function(t){["x","y","z"].forEach(function(n){"undefined"!=typeof t[n]&&o.push(t[n])})}),n=o}var s=!1,u=n.length;if(r){if(r>4){if(1!==arguments.length)throw new Error("Only new Bezier(point[]) is accepted for 4th and higher order curves");s=!0}}else if(6!==u&&8!==u&&9!==u&&12!==u&&1!==arguments.length)throw new Error("Only new Bezier(point[]) is accepted for 4th and higher order curves");var a=!s&&(9===u||12===u)||t&&t[0]&&"undefined"!=typeof t[0].z;this._3d=a;for(var f=[],h=0,p=a?3:2;h<u;h+=p){var l={x:n[h],y:n[h+1]};a&&(l.z=n[h+2]),f.push(l)}this.order=f.length-1,this.points=f;var x=["x","y"];a&&x.push("z"),this.dims=x,this.dimlen=x.length,function(t){for(var n=t.order,r=t.points,e=c.align(r,{p1:r[0],p2:r[n]}),o=0;o<e.length;o++)if(i(e[o].y)>1e-4)return void(t._linear=!1);t._linear=!0}(this),this._t1=0,this._t2=1,this.update()};l.fromSVG=function(t){var n=t.match(/[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/g).map(parseFloat),r=/[cq]/.test(t);return r?(n=n.map(function(t,r){return r<2?t:t+n[r%2]}),new l(n)):new l(n)},l.quadraticFromPoints=function(t,r,e,i){if("undefined"==typeof i&&(i=.5),0===i)return new l(r,r,e);if(1===i)return new l(t,r,r);var o=n(2,t,r,e,i);return new l(t,o.A,e)},l.cubicFromPoints=function(t,r,e,i,o){"undefined"==typeof i&&(i=.5);var s=n(3,t,r,e,i);"undefined"==typeof o&&(o=c.dist(r,s.C));var u=o*(1-i)/i,a=c.dist(t,e),f=(e.x-t.x)/a,h=(e.y-t.y)/a,p=o*f,x=o*h,y=u*f,d=u*h,v={x:r.x-p,y:r.y-x},m={x:r.x+y,y:r.y+d},g=s.A,z={x:g.x+(v.x-g.x)/(1-i),y:g.y+(v.y-g.y)/(1-i)},b={x:g.x+(m.x-g.x)/i,y:g.y+(m.y-g.y)/i},_={x:t.x+(z.x-t.x)/i,y:t.y+(z.y-t.y)/i},w={x:e.x+(b.x-e.x)/(1-i),y:e.y+(b.y-e.y)/(1-i)};return new l(t,_,w,e)};var x=function(){return c};l.getUtils=x,l.prototype={getUtils:x,valueOf:function(){return this.toString()},toString:function(){return c.pointsToString(this.points)},toSVG:function(t){if(this._3d)return!1;for(var n=this.points,r=n[0].x,e=n[0].y,i=["M",r,e,2===this.order?"Q":"C"],o=1,s=n.length;o<s;o++)i.push(n[o].x),i.push(n[o].y);return i.join(" ")},update:function(){this.dpoints=[];for(var t=this.points,n=t.length,r=n-1;n>1;n--,r--){for(var e,i=[],o=0;o<r;o++)e={x:r*(t[o+1].x-t[o].x),y:r*(t[o+1].y-t[o].y)},this._3d&&(e.z=r*(t[o+1].z-t[o].z)),i.push(e);this.dpoints.push(i),t=i}this.computedirection()},computedirection:function(){var t=this.points,n=c.angle(t[0],t[this.order],t[1]);this.clockwise=n>0},length:function(){return c.length(this.derivative.bind(this))},_lut:[],getLUT:function(t){if(t=t||100,this._lut.length===t)return this._lut;this._lut=[];for(var n=0;n<=t;n++)this._lut.push(this.compute(n/t));return this._lut},on:function(t,n){n=n||5;for(var r,e=this.getLUT(),i=[],o=0,s=0;s<e.length;s++)r=e[s],c.dist(r,t)<n&&(i.push(r),o+=s/e.length);return!!i.length&&(o/=i.length)},project:function(t){var n=this.getLUT(),r=n.length-1,e=c.closest(n,t),i=e.mdist,o=e.mpos;if(0===o||o===r){var s=o/r,u=this.compute(s);return u.t=s,u.d=i,u}var a,s,f,h,p=(o-1)/r,l=(o+1)/r,x=.1/r;for(i+=1,s=p,a=s;s<l+x;s+=x)f=this.compute(s),h=c.dist(t,f),h<i&&(i=h,a=s);return f=this.compute(a),f.t=a,f.d=i,f},get:function(t){return this.compute(t)},point:function(t){return this.points[t]},compute:function(t){if(0===t)return this.points[0];if(1===t)return this.points[this.order];var n=this.points,r=1-t;if(1===this.order)return f={x:r*n[0].x+t*n[1].x,y:r*n[0].y+t*n[1].y},this._3d&&(f.z=r*n[0].z+t*n[1].z),f;if(this.order<4){var e,i,o,s=r*r,u=t*t,a=0;2===this.order?(n=[n[0],n[1],n[2],h],e=s,i=r*t*2,o=u):3===this.order&&(e=s*r,i=s*t*3,o=r*u*3,a=t*u);var f={x:e*n[0].x+i*n[1].x+o*n[2].x+a*n[3].x,y:e*n[0].y+i*n[1].y+o*n[2].y+a*n[3].y};return this._3d&&(f.z=e*n[0].z+i*n[1].z+o*n[2].z+a*n[3].z),f}for(var c=JSON.parse(JSON.stringify(this.points));c.length>1;){for(var p=0;p<c.length-1;p++)c[p]={x:c[p].x+(c[p+1].x-c[p].x)*t,y:c[p].y+(c[p+1].y-c[p].y)*t},"undefined"!=typeof c[p].z&&(c[p]=c[p].z+(c[p+1].z-c[p].z)*t);c.splice(c.length-1,1)}return c[0]},raise:function(){for(var t,n,r,e=this.points,i=[e[0]],o=e.length,t=1;t<o;t++)n=e[t],r=e[t-1],i[t]={x:(o-t)/o*n.x+t/o*r.x,y:(o-t)/o*n.y+t/o*r.y};return i[o]=e[o-1],new l(i)},derivative:function(t){var n,r,e=1-t,i=0,o=this.dpoints[0];2===this.order&&(o=[o[0],o[1],h],n=e,r=t),3===this.order&&(n=e*e,r=e*t*2,i=t*t);var s={x:n*o[0].x+r*o[1].x+i*o[2].x,y:n*o[0].y+r*o[1].y+i*o[2].y};return this._3d&&(s.z=n*o[0].z+r*o[1].z+i*o[2].z),s},inflections:function(){return c.inflections(this.points)},normal:function(t){return this._3d?this.__normal3(t):this.__normal2(t)},__normal2:function(t){var n=this.derivative(t),r=a(n.x*n.x+n.y*n.y);return{x:-n.y/r,y:n.x/r}},__normal3:function(t){var n=this.derivative(t),r=this.derivative(t+.01),e=a(n.x*n.x+n.y*n.y+n.z*n.z),i=a(r.x*r.x+r.y*r.y+r.z*r.z);n.x/=e,n.y/=e,n.z/=e,r.x/=i,r.y/=i,r.z/=i;var o={x:r.y*n.z-r.z*n.y,y:r.z*n.x-r.x*n.z,z:r.x*n.y-r.y*n.x},s=a(o.x*o.x+o.y*o.y+o.z*o.z);o.x/=s,o.y/=s,o.z/=s;var u=[o.x*o.x,o.x*o.y-o.z,o.x*o.z+o.y,o.x*o.y+o.z,o.y*o.y,o.y*o.z-o.x,o.x*o.z-o.y,o.y*o.z+o.x,o.z*o.z],f={x:u[0]*n.x+u[1]*n.y+u[2]*n.z,y:u[3]*n.x+u[4]*n.y+u[5]*n.z,z:u[6]*n.x+u[7]*n.y+u[8]*n.z};return f},hull:function(t){var n,r=this.points,e=[],i=[],o=0,s=0,u=0;for(i[o++]=r[0],i[o++]=r[1],i[o++]=r[2],3===this.order&&(i[o++]=r[3]);r.length>1;){for(e=[],s=0,u=r.length-1;s<u;s++)n=c.lerp(t,r[s],r[s+1]),i[o++]=n,e.push(n);r=e}return i},split:function(t,n){if(0===t&&n)return this.split(n).left;if(1===n)return this.split(t).right;var r=this.hull(t),e={left:new l(2===this.order?[r[0],r[3],r[5]]:[r[0],r[4],r[7],r[9]]),right:new l(2===this.order?[r[5],r[4],r[2]]:[r[9],r[8],r[6],r[3]]),span:r};if(e.left._t1=c.map(0,0,1,this._t1,this._t2),e.left._t2=c.map(t,0,1,this._t1,this._t2),e.right._t1=c.map(t,0,1,this._t1,this._t2),e.right._t2=c.map(1,0,1,this._t1,this._t2),!n)return e;n=c.map(n,t,1,0,1);var i=e.right.split(n);return i.left},extrema:function(){var t,n,r=this.dims,e={},i=[];return r.forEach(function(r){n=function(t){return t[r]},t=this.dpoints[0].map(n),e[r]=c.droots(t),3===this.order&&(t=this.dpoints[1].map(n),e[r]=e[r].concat(c.droots(t))),e[r]=e[r].filter(function(t){return t>=0&&t<=1}),i=i.concat(e[r].sort())}.bind(this)),i=i.sort().filter(function(t,n){return i.indexOf(t)===n}),e.values=i,e},bbox:function(){var t=this.extrema(),n={};return this.dims.forEach(function(r){n[r]=c.getminmax(this,r,t[r])}.bind(this)),n},overlaps:function(t){var n=this.bbox(),r=t.bbox();return c.bboxoverlap(n,r)},offset:function(t,n){if("undefined"!=typeof n){var r=this.get(t),e=this.normal(t),i={c:r,n:e,x:r.x+e.x*n,y:r.y+e.y*n};return this._3d&&(i.z=r.z+e.z*n),i}if(this._linear){var o=this.normal(0),s=this.points.map(function(n){var r={x:n.x+t*o.x,y:n.y+t*o.y};return n.z&&e.z&&(r.z=n.z+t*o.z),r});return[new l(s)]}var u=this.reduce();return u.map(function(n){return n.scale(t)})},simple:function(){if(3===this.order){var t=c.angle(this.points[0],this.points[3],this.points[1]),n=c.angle(this.points[0],this.points[3],this.points[2]);if(t>0&&n<0||t<0&&n>0)return!1}var r=this.normal(0),e=this.normal(1),o=r.x*e.x+r.y*e.y;this._3d&&(o+=r.z*e.z);var s=i(u(o));return s<f/3},reduce:function(){var t,n,r=0,e=0,o=.01,s=[],u=[],a=this.extrema().values;for(a.indexOf(0)===-1&&(a=[0].concat(a)),a.indexOf(1)===-1&&a.push(1),r=a[0],t=1;t<a.length;t++)e=a[t],n=this.split(r,e),n._t1=r,n._t2=e,s.push(n),r=e;return s.forEach(function(t){for(r=0,e=0;e<=1;)for(e=r+o;e<=1+o;e+=o)if(n=t.split(r,e),!n.simple()){if(e-=o,i(r-e)<o)return[];n=t.split(r,e),n._t1=c.map(r,0,1,t._t1,t._t2),n._t2=c.map(e,0,1,t._t1,t._t2),u.push(n),r=e;break}r<1&&(n=t.split(r,1),n._t1=c.map(r,0,1,t._t1,t._t2),n._t2=t._t2,u.push(n))}),u},scale:function(t){var n=this.order,r=!1;if("function"==typeof t&&(r=t),r&&2===n)return this.raise().scale(r);var e=this.clockwise,i=r?r(0):t,o=r?r(1):t,s=[this.offset(0,10),this.offset(1,10)],u=c.lli4(s[0],s[0].c,s[1],s[1].c);if(!u)throw new Error("cannot scale this curve. Try reducing it first.");var f=this.points,h=[];return[0,1].forEach(function(t){var r=h[t*n]=c.copy(f[t*n]);r.x+=(t?o:i)*s[t].n.x,r.y+=(t?o:i)*s[t].n.y}.bind(this)),r?([0,1].forEach(function(i){if(2!==this.order||!i){var o=f[i+1],s={x:o.x-u.x,y:o.y-u.y},c=r?r((i+1)/n):t;r&&!e&&(c=-c);var p=a(s.x*s.x+s.y*s.y);s.x/=p,s.y/=p,h[i+1]={x:o.x+c*s.x,y:o.y+c*s.y}}}.bind(this)),new l(h)):([0,1].forEach(function(t){if(2!==this.order||!t){var r=h[t*n],e=this.derivative(t),i={x:r.x+e.x,y:r.y+e.y};h[t+1]=c.lli4(r,i,u,f[t+1])}}.bind(this)),new l(h))},outline:function(t,n,r,e){function i(t,n,r,e,i){return function(o){var s=e/r,u=(e+i)/r,a=n-t;return c.map(o,0,1,t+s*a,t+u*a)}}n="undefined"==typeof n?t:n;var o,s=this.reduce(),u=s.length,a=[],f=[],h=0,l=this.length(),x="undefined"!=typeof r&&"undefined"!=typeof e;s.forEach(function(o){_=o.length(),x?(a.push(o.scale(i(t,r,l,h,_))),f.push(o.scale(i(-n,-e,l,h,_)))):(a.push(o.scale(t)),f.push(o.scale(-n))),h+=_}),f=f.map(function(t){return o=t.points,o[3]?t.points=[o[3],o[2],o[1],o[0]]:t.points=[o[2],o[1],o[0]],t}).reverse();var y=a[0].points[0],d=a[u-1].points[a[u-1].points.length-1],v=f[u-1].points[f[u-1].points.length-1],m=f[0].points[0],g=c.makeline(v,y),z=c.makeline(d,m),b=[g].concat(a).concat([z]).concat(f),_=b.length;return new p(b)},outlineshapes:function(t,n,r){n=n||t;for(var e=this.outline(t,n).curves,i=[],o=1,s=e.length;o<s/2;o++){var u=c.makeshape(e[o],e[s-o],r);u.startcap.virtual=o>1,u.endcap.virtual=o<s/2-1,i.push(u)}return i},intersects:function(t,n){return t?t.p1&&t.p2?this.lineIntersects(t):(t instanceof l&&(t=t.reduce()),this.curveintersects(this.reduce(),t,n)):this.selfintersects(n)},lineIntersects:function(t){var n=o(t.p1.x,t.p2.x),r=o(t.p1.y,t.p2.y),e=s(t.p1.x,t.p2.x),i=s(t.p1.y,t.p2.y),u=this;return c.roots(this.points,t).filter(function(t){var o=u.get(t);return c.between(o.x,n,e)&&c.between(o.y,r,i)})},selfintersects:function(t){var n,r,e,i,o=this.reduce(),s=o.length-2,u=[];for(n=0;n<s;n++)e=o.slice(n,n+1),i=o.slice(n+2),r=this.curveintersects(e,i,t),u=u.concat(r);return u},curveintersects:function(t,n,r){var e=[];t.forEach(function(t){n.forEach(function(n){t.overlaps(n)&&e.push({left:t,right:n})})});var i=[];return e.forEach(function(t){var n=c.pairiteration(t.left,t.right,r);n.length>0&&(i=i.concat(n))}),i},arcs:function(t){t=t||.5;var n=[];return this._iterate(t,n)},_error:function(t,n,r,e){var o=(e-r)/4,s=this.get(r+o),u=this.get(e-o),a=c.dist(t,n),f=c.dist(t,s),h=c.dist(t,u);return i(f-a)+i(h-a)},_iterate:function(t,n){var r,e=0,i=1;do{r=0,i=1;var o,s,u,a,f,h=this.get(e),p=!1,l=!1,x=i,y=1,d=0;do{l=p,a=u,x=(e+i)/2,d++,o=this.get(x),s=this.get(i),u=c.getccenter(h,o,s),u.interval={start:e,end:i};var v=this._error(u,h,e,i);if(p=v<=t,f=l&&!p,f||(y=i),p){if(i>=1){y=1,a=u;break}i+=(i-e)/2}else i=x}while(!f&&r++<100);if(r>=100){console.error("arc abstraction somehow failed...");break}a=a?a:u,n.push(a),e=y}while(i<1);return n}},t.exports=l}()},function(t,n,r){"use strict";!function(){var n=Math.abs,e=Math.cos,i=Math.sin,o=Math.acos,s=Math.atan2,u=Math.sqrt,a=Math.pow,f=function(t){return t<0?-a(-t,1/3):a(t,1/3)},h=Math.PI,c=2*h,p=h/2,l=1e-6,x={Tvalues:[-.06405689286260563,.06405689286260563,-.1911188674736163,.1911188674736163,-.3150426796961634,.3150426796961634,-.4337935076260451,.4337935076260451,-.5454214713888396,.5454214713888396,-.6480936519369755,.6480936519369755,-.7401241915785544,.7401241915785544,-.820001985973903,.820001985973903,-.8864155270044011,.8864155270044011,-.9382745520027328,.9382745520027328,-.9747285559713095,.9747285559713095,-.9951872199970213,.9951872199970213],Cvalues:[.12793819534675216,.12793819534675216,.1258374563468283,.1258374563468283,.12167047292780339,.12167047292780339,.1155056680537256,.1155056680537256,.10744427011596563,.10744427011596563,.09761865210411388,.09761865210411388,.08619016153195327,.08619016153195327,.0733464814110803,.0733464814110803,.05929858491543678,.05929858491543678,.04427743881741981,.04427743881741981,.028531388628933663,.028531388628933663,.0123412297999872,.0123412297999872],arcfn:function(t,n){var r=n(t),e=r.x*r.x+r.y*r.y;return"undefined"!=typeof r.z&&(e+=r.z*r.z),u(e)},between:function(t,n,r){return n<=t&&t<=r||x.approximately(t,n)||x.approximately(t,r)},approximately:function(t,r,e){return n(t-r)<=(e||l)},length:function(t){var n,r,e=.5,i=0,o=x.Tvalues.length;for(n=0;n<o;n++)r=e*x.Tvalues[n]+e,i+=x.Cvalues[n]*x.arcfn(r,t);return e*i},map:function(t,n,r,e,i){var o=r-n,s=i-e,u=t-n,a=u/o;return e+s*a},lerp:function(t,n,r){var e={x:n.x+t*(r.x-n.x),y:n.y+t*(r.y-n.y)};return n.z&&r.z&&(e.z=n.z+t*(r.z-n.z)),e},pointToString:function(t){var n=t.x+"/"+t.y;return"undefined"!=typeof t.z&&(n+="/"+t.z),n},pointsToString:function(t){return"["+t.map(x.pointToString).join(", ")+"]"},copy:function(t){return JSON.parse(JSON.stringify(t))},angle:function(t,n,r){var e,i=n.x-t.x,o=n.y-t.y,a=r.x-t.x,f=r.y-t.y,h=i*f-o*a,c=u(i*i+o*o),p=u(a*a+f*f);return i/=c,o/=c,a/=p,f/=p,e=i*a+o*f,s(h,e)},round:function(t,n){var r=""+t,e=r.indexOf(".");return parseFloat(r.substring(0,e+1+n))},dist:function(t,n){var r=t.x-n.x,e=t.y-n.y;return u(r*r+e*e)},closest:function(t,n){var r,e,i=a(2,63);return t.forEach(function(t,o){e=x.dist(n,t),e<i&&(i=e,r=o)}),{mdist:i,mpos:r}},abcratio:function(t,r){if(2!==r&&3!==r)return!1;if("undefined"==typeof t)t=.5;else if(0===t||1===t)return t;var e=a(t,r)+a(1-t,r),i=e-1;return n(i/e)},projectionratio:function(t,n){if(2!==n&&3!==n)return!1;if("undefined"==typeof t)t=.5;else if(0===t||1===t)return t;var r=a(1-t,n),e=a(t,n)+r;return r/e},lli8:function(t,n,r,e,i,o,s,u){var a=(t*e-n*r)*(i-s)-(t-r)*(i*u-o*s),f=(t*e-n*r)*(o-u)-(n-e)*(i*u-o*s),h=(t-r)*(o-u)-(n-e)*(i-s);return 0!=h&&{x:a/h,y:f/h}},lli4:function(t,n,r,e){var i=t.x,o=t.y,s=n.x,u=n.y,a=r.x,f=r.y,h=e.x,c=e.y;return x.lli8(i,o,s,u,a,f,h,c)},lli:function(t,n){return x.lli4(t,t.c,n,n.c)},makeline:function(t,n){var e=r(4),i=t.x,o=t.y,s=n.x,u=n.y,a=(s-i)/3,f=(u-o)/3;return new e(i,o,i+a,o+f,i+2*a,o+2*f,s,u)},findbbox:function(t){var n=99999999,r=n,e=-n,i=e;return t.forEach(function(t){var o=t.bbox();n>o.x.min&&(n=o.x.min),r>o.y.min&&(r=o.y.min),e<o.x.max&&(e=o.x.max),i<o.y.max&&(i=o.y.max)}),{x:{min:n,mid:(n+e)/2,max:e,size:e-n},y:{min:r,mid:(r+i)/2,max:i,size:i-r}}},shapeintersections:function(t,n,r,e,i){if(!x.bboxoverlap(n,e))return[];var o=[],s=[t.startcap,t.forward,t.back,t.endcap],u=[r.startcap,r.forward,r.back,r.endcap];return s.forEach(function(n){n.virtual||u.forEach(function(e){if(!e.virtual){var s=n.intersects(e,i);s.length>0&&(s.c1=n,s.c2=e,s.s1=t,s.s2=r,o.push(s))}})}),o},makeshape:function(t,n,r){var e=n.points.length,i=t.points.length,o=x.makeline(n.points[e-1],t.points[0]),s=x.makeline(t.points[i-1],n.points[0]),u={startcap:o,forward:t,back:n,endcap:s,bbox:x.findbbox([o,t,n,s])},a=x;return u.intersections=function(t){return a.shapeintersections(u,u.bbox,t,t.bbox,r)},u},getminmax:function(t,n,r){if(!r)return{min:0,max:0};var e,i,o=0x10000000000000000,s=-o;r.indexOf(0)===-1&&(r=[0].concat(r)),r.indexOf(1)===-1&&r.push(1);for(var u=0,a=r.length;u<a;u++)e=r[u],i=t.get(e),i[n]<o&&(o=i[n]),i[n]>s&&(s=i[n]);return{min:o,mid:(o+s)/2,max:s,size:s-o}},align:function(t,n){var r=n.p1.x,o=n.p1.y,u=-s(n.p2.y-o,n.p2.x-r),a=function(t){return{x:(t.x-r)*e(u)-(t.y-o)*i(u),y:(t.x-r)*i(u)+(t.y-o)*e(u)}};return t.map(a)},roots:function(t,n){n=n||{p1:{x:0,y:0},p2:{x:1,y:0}};var r=t.length-1,i=x.align(t,n),s=function(t){return 0<=t&&t<=1};if(2===r){var a=i[0].y,h=i[1].y,p=i[2].y,l=a-2*h+p;if(0!==l){var y=-u(h*h-a*p),d=-a+h,v=-(y+d)/l,m=-(-y+d)/l;return[v,m].filter(s)}return h!==p&&0===l?[(2*h-p)/2*(h-p)].filter(s):[]}var g,v,z,b,_,w=i[0].y,M=i[1].y,E=i[2].y,S=i[3].y,l=-w+3*M-3*E+S,a=(3*w-6*M+3*E)/l,h=(-3*w+3*M)/l,p=w/l,i=(3*h-a*a)/3,O=i/3,k=(2*a*a*a-9*a*h+27*p)/27,T=k/2,q=T*T+O*O*O;if(q<0){var j=-i/3,P=j*j*j,C=u(P),L=-k/(2*C),N=L<-1?-1:L>1?1:L,U=o(N),A=f(C),F=2*A;return z=F*e(U/3)-a/3,b=F*e((U+c)/3)-a/3,_=F*e((U+2*c)/3)-a/3,[z,b,_].filter(s)}if(0===q)return g=T<0?f(-T):-f(T),z=2*g-a/3,b=-g-a/3,[z,b].filter(s);var I=u(q);return g=f(-T+I),v=f(T+I),[g-v-a/3].filter(s)},droots:function(t){if(3===t.length){var n=t[0],r=t[1],e=t[2],i=n-2*r+e;if(0!==i){var o=-u(r*r-n*e),s=-n+r,a=-(o+s)/i,f=-(-o+s)/i;return[a,f]}return r!==e&&0===i?[(2*r-e)/(2*(r-e))]:[]}if(2===t.length){var n=t[0],r=t[1];return n!==r?[n/(n-r)]:[]}},inflections:function(t){if(t.length<4)return[];var n=x.align(t,{p1:t[0],p2:t.slice(-1)[0]}),r=n[2].x*n[1].y,e=n[3].x*n[1].y,i=n[1].x*n[2].y,o=n[3].x*n[2].y,s=18*(-3*r+2*e+3*i-o),u=18*(3*r-e-3*i),a=18*(i-r);if(x.approximately(s,0))return[];var f=u*u-4*s*a,h=Math.sqrt(f),o=2*s;return x.approximately(o,0)?[]:[(h-u)/o,-(u+h)/o].filter(function(t){return 0<=t&&t<=1})},bboxoverlap:function(t,r){var e,i,o,s,u,a=["x","y"],f=a.length;for(e=0;e<f;e++)if(i=a[e],o=t[i].mid,s=r[i].mid,u=(t[i].size+r[i].size)/2,n(o-s)>=u)return!1;return!0},expandbox:function(t,n){n.x.min<t.x.min&&(t.x.min=n.x.min),n.y.min<t.y.min&&(t.y.min=n.y.min),n.z&&n.z.min<t.z.min&&(t.z.min=n.z.min),n.x.max>t.x.max&&(t.x.max=n.x.max),n.y.max>t.y.max&&(t.y.max=n.y.max),n.z&&n.z.max>t.z.max&&(t.z.max=n.z.max),t.x.mid=(t.x.min+t.x.max)/2,t.y.mid=(t.y.min+t.y.max)/2,t.z&&(t.z.mid=(t.z.min+t.z.max)/2),t.x.size=t.x.max-t.x.min,t.y.size=t.y.max-t.y.min,t.z&&(t.z.size=t.z.max-t.z.min)},pairiteration:function(t,n,r){var e=t.bbox(),i=n.bbox(),o=1e5,s=r||.5;if(e.x.size+e.y.size<s&&i.x.size+i.y.size<s)return[(o*(t._t1+t._t2)/2|0)/o+"/"+(o*(n._t1+n._t2)/2|0)/o];var u=t.split(.5),a=n.split(.5),f=[{left:u.left,right:a.left},{left:u.left,right:a.right},{left:u.right,right:a.right},{left:u.right,right:a.left}];f=f.filter(function(t){return x.bboxoverlap(t.left.bbox(),t.right.bbox())});var h=[];return 0===f.length?h:(f.forEach(function(t){h=h.concat(x.pairiteration(t.left,t.right,s))}),h=h.filter(function(t,n){return h.indexOf(t)===n}))},getccenter:function(t,n,r){var o,u=n.x-t.x,a=n.y-t.y,f=r.x-n.x,h=r.y-n.y,l=u*e(p)-a*i(p),y=u*i(p)+a*e(p),d=f*e(p)-h*i(p),v=f*i(p)+h*e(p),m=(t.x+n.x)/2,g=(t.y+n.y)/2,z=(n.x+r.x)/2,b=(n.y+r.y)/2,_=m+l,w=g+y,M=z+d,E=b+v,S=x.lli8(m,g,_,w,z,b,M,E),O=x.dist(S,t),k=s(t.y-S.y,t.x-S.x),T=s(n.y-S.y,n.x-S.x),q=s(r.y-S.y,r.x-S.x);return k<q?((k>T||T>q)&&(k+=c),k>q&&(o=q,q=k,k=o)):q<T&&T<k?(o=q,q=k,k=o):q+=c,S.s=k,S.e=q,S.r=O,S}};t.exports=x}()},function(t,n,r){"use strict";!function(){var n=r(5),e=function(t){this.curves=[],this._3d=!1,t&&(this.curves=t,this._3d=this.curves[0]._3d)};e.prototype={valueOf:function(){return this.toString()},toString:function(){return n.pointsToString(this.points)},addCurve:function(t){this.curves.push(t),this._3d=this._3d||t._3d},length:function(){return this.curves.map(function(t){return t.length()}).reduce(function(t,n){return t+n})},curve:function(t){return this.curves[t]},bbox:function t(){for(var r=this.curves,t=r[0].bbox(),e=1;e<r.length;e++)n.expandbox(t,r[e].bbox());return t},offset:function t(n){var t=[];return this.curves.forEach(function(r){t=t.concat(r.offset(n))}),new e(t)}},t.exports=e}()}])});
+// http://geoexamples.com/path-properties/ Version 0.0.2. Copyright 2016 Roger Veciana i Rovira.
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.spp = global.spp || {})));
+}(this, (function (exports) { 'use strict';
+
+//Parses an SVG path into an object.
+//Taken from https://github.com/jkroso/parse-svg-path
+//Re-written so it can be used with rollup
+var length = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0};
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
+
+var parse = function(path) {
+  var data = [];
+	path.replace(segment, function(_, command, args){
+		var type = command.toLowerCase();
+		args = parseValues(args);
+
+		// overloaded moveTo
+		if (type === 'm' && args.length > 2) {
+			data.push([command].concat(args.splice(0, 2)));
+			type = 'l';
+			command = command === 'm' ? 'l' : 'L';
+		}
+
+		while (args.length >= 0) {
+			if (args.length === length[type]) {
+				args.unshift(command);
+				return data.push(args);
+			}
+			if (args.length < length[type]) {
+        throw new Error('malformed path data');
+      }
+			data.push([command].concat(args.splice(0, length[type])));
+		}
+	});
+  return data;
+};
+
+var number = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig;
+
+function parseValues(args) {
+	var numbers = args.match(number);
+	return numbers ? numbers.map(Number) : [];
+}
+
+//Calculate Bezier curve length and positionAtLength
+//Algorithms taken from http://bl.ocks.org/hnakamur/e7efd0602bfc15f66fc5, https://gist.github.com/tunght13488/6744e77c242cc7a94859 and http://stackoverflow.com/questions/11854907/calculate-the-length-of-a-segment-of-a-quadratic-bezier
+
+var Bezier = function(ax, ay, bx, by, cx, cy, dx, dy) {
+  return new Bezier$1(ax, ay, bx, by, cx, cy, dx, dy);
+};
+
+function Bezier$1(ax, ay, bx, by, cx, cy, dx, dy) {
+  this.a = {x:ax, y:ay};
+  this.b = {x:bx, y:by};
+  this.c = {x:cx, y:cy};
+  this.d = {x:dx, y:dy};
+
+  if(dx && dy){
+    this.getArcLength = getCubicArcLength;
+    this.getPoint = cubicPoint;
+  } else {
+    this.getArcLength = getQuadraticArcLength;
+    this.getPoint = quadraticPoint;
+  }
+
+  this.init();
+}
+
+Bezier$1.prototype = {
+  constructor: Bezier$1,
+  init: function() {
+
+    this.length = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+  },
+
+  getTotalLength: function() {
+    return this.length;
+  },
+  getPointAtLength: function(length) {
+    var error = 1;
+    var t = length/this.length;
+
+    while (error > 0.008){
+
+      var calcLength = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
+                                      [this.a.y, this.b.y, this.c.y, this.d.y],
+                                    t);
+      error = Math.abs(length - calcLength)/this.length;
+      t = t + (length-calcLength)/this.length;
+    }
+
+    return this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+                                  t);
+  }
+};
+
+function quadraticPoint(xs, ys, t){
+  var x = (1 - t) * (1 - t) * xs[0] + 2 * (1 - t) * t * xs[1] + t * t * xs[2];
+  var y = (1 - t) * (1 - t) * ys[0] + 2 * (1 - t) * t * ys[1] + t * t * ys[2];
+  return {x: x, y: y};
+}
+
+function cubicPoint(xs, ys, t){
+  var x = (1 - t) * (1 - t) * (1 - t) * xs[0] + 3 * (1 - t) * (1 - t) * t * xs[1] +
+  3 * (1 - t) * t * t * xs[2] + t * t * t * xs[3];
+  var y = (1 - t) * (1 - t) * (1 - t) * ys[0] + 3 * (1 - t) * (1 - t) * t * ys[1] +
+  3 * (1 - t) * t * t * ys[2] + t * t * t * ys[3];
+
+  return {x: x, y: y};
+}
+
+function getQuadraticArcLength(xs, ys, t) {
+  if (t === undefined) {
+    t = 1;
+  }
+
+   var ax = xs[0] - 2 * xs[1] + xs[2];
+   var ay = ys[0] - 2 * ys[1] + ys[2];
+   var bx = 2 * xs[1] - 2 * xs[0];
+   var by = 2 * ys[1] - 2 * ys[0];
+
+   var A = 4 * (ax * ax + ay * ay);
+   var B = 4 * (ax * bx + ay * by);
+   var C = bx * bx + by * by;
+
+   var b = B/(2*A);
+   var c = C/A;
+   var u = t + b;
+   var k = c - b*b;
+
+   return (Math.sqrt(A)/2)*(
+     u*Math.sqrt(u*u+k)-b*Math.sqrt(b*b+k)+
+     k*Math.log(Math.abs(
+       (u+Math.sqrt(u*u+k))/(b+Math.sqrt(b*b+k))
+     ))
+   );
+
+}
+
+// Legendre-Gauss abscissae (xi values, defined at i=n as the roots of the nth order Legendre polynomial Pn(x))
+var tValues = [
+  [],
+  [],
+  [-0.5773502691896257645091487805019574556476,0.5773502691896257645091487805019574556476],
+  [0,-0.7745966692414833770358530799564799221665,0.7745966692414833770358530799564799221665],
+  [-0.3399810435848562648026657591032446872005,0.3399810435848562648026657591032446872005,-0.8611363115940525752239464888928095050957,0.8611363115940525752239464888928095050957],
+  [0,-0.5384693101056830910363144207002088049672,0.5384693101056830910363144207002088049672,-0.9061798459386639927976268782993929651256,0.9061798459386639927976268782993929651256],
+  [0.6612093864662645136613995950199053470064,-0.6612093864662645136613995950199053470064,-0.2386191860831969086305017216807119354186,0.2386191860831969086305017216807119354186,-0.9324695142031520278123015544939946091347,0.9324695142031520278123015544939946091347],
+  [0, 0.4058451513773971669066064120769614633473,-0.4058451513773971669066064120769614633473,-0.7415311855993944398638647732807884070741,0.7415311855993944398638647732807884070741,-0.9491079123427585245261896840478512624007,0.9491079123427585245261896840478512624007],
+  [-0.1834346424956498049394761423601839806667,0.1834346424956498049394761423601839806667,-0.5255324099163289858177390491892463490419,0.5255324099163289858177390491892463490419,-0.7966664774136267395915539364758304368371,0.7966664774136267395915539364758304368371,-0.9602898564975362316835608685694729904282,0.9602898564975362316835608685694729904282],
+  [0,-0.8360311073266357942994297880697348765441,0.8360311073266357942994297880697348765441,-0.9681602395076260898355762029036728700494,0.9681602395076260898355762029036728700494,-0.3242534234038089290385380146433366085719,0.3242534234038089290385380146433366085719,-0.6133714327005903973087020393414741847857,0.6133714327005903973087020393414741847857],
+  [-0.1488743389816312108848260011297199846175,0.1488743389816312108848260011297199846175,-0.4333953941292471907992659431657841622000,0.4333953941292471907992659431657841622000,-0.6794095682990244062343273651148735757692,0.6794095682990244062343273651148735757692,-0.8650633666889845107320966884234930485275,0.8650633666889845107320966884234930485275,-0.9739065285171717200779640120844520534282,0.9739065285171717200779640120844520534282],
+  [0,-0.2695431559523449723315319854008615246796,0.2695431559523449723315319854008615246796,-0.5190961292068118159257256694586095544802,0.5190961292068118159257256694586095544802,-0.7301520055740493240934162520311534580496,0.7301520055740493240934162520311534580496,-0.8870625997680952990751577693039272666316,0.8870625997680952990751577693039272666316,-0.9782286581460569928039380011228573907714,0.9782286581460569928039380011228573907714],
+  [-0.1252334085114689154724413694638531299833,0.1252334085114689154724413694638531299833,-0.3678314989981801937526915366437175612563,0.3678314989981801937526915366437175612563,-0.5873179542866174472967024189405342803690,0.5873179542866174472967024189405342803690,-0.7699026741943046870368938332128180759849,0.7699026741943046870368938332128180759849,-0.9041172563704748566784658661190961925375,0.9041172563704748566784658661190961925375,-0.9815606342467192506905490901492808229601,0.9815606342467192506905490901492808229601],
+  [0,-0.2304583159551347940655281210979888352115,0.2304583159551347940655281210979888352115,-0.4484927510364468528779128521276398678019,0.4484927510364468528779128521276398678019,-0.6423493394403402206439846069955156500716,0.6423493394403402206439846069955156500716,-0.8015780907333099127942064895828598903056,0.8015780907333099127942064895828598903056,-0.9175983992229779652065478365007195123904,0.9175983992229779652065478365007195123904,-0.9841830547185881494728294488071096110649,0.9841830547185881494728294488071096110649],
+  [-0.1080549487073436620662446502198347476119,0.1080549487073436620662446502198347476119,-0.3191123689278897604356718241684754668342,0.3191123689278897604356718241684754668342,-0.5152486363581540919652907185511886623088,0.5152486363581540919652907185511886623088,-0.6872929048116854701480198030193341375384,0.6872929048116854701480198030193341375384,-0.8272013150697649931897947426503949610397,0.8272013150697649931897947426503949610397,-0.9284348836635735173363911393778742644770,0.9284348836635735173363911393778742644770,-0.9862838086968123388415972667040528016760,0.9862838086968123388415972667040528016760],
+  [0,-0.2011940939974345223006283033945962078128,0.2011940939974345223006283033945962078128,-0.3941513470775633698972073709810454683627,0.3941513470775633698972073709810454683627,-0.5709721726085388475372267372539106412383,0.5709721726085388475372267372539106412383,-0.7244177313601700474161860546139380096308,0.7244177313601700474161860546139380096308,-0.8482065834104272162006483207742168513662,0.8482065834104272162006483207742168513662,-0.9372733924007059043077589477102094712439,0.9372733924007059043077589477102094712439,-0.9879925180204854284895657185866125811469,0.9879925180204854284895657185866125811469],
+  [-0.0950125098376374401853193354249580631303,0.0950125098376374401853193354249580631303,-0.2816035507792589132304605014604961064860,0.2816035507792589132304605014604961064860,-0.4580167776572273863424194429835775735400,0.4580167776572273863424194429835775735400,-0.6178762444026437484466717640487910189918,0.6178762444026437484466717640487910189918,-0.7554044083550030338951011948474422683538,0.7554044083550030338951011948474422683538,-0.8656312023878317438804678977123931323873,0.8656312023878317438804678977123931323873,-0.9445750230732325760779884155346083450911,0.9445750230732325760779884155346083450911,-0.9894009349916499325961541734503326274262,0.9894009349916499325961541734503326274262],
+  [0,-0.1784841814958478558506774936540655574754,0.1784841814958478558506774936540655574754,-0.3512317634538763152971855170953460050405,0.3512317634538763152971855170953460050405,-0.5126905370864769678862465686295518745829,0.5126905370864769678862465686295518745829,-0.6576711592166907658503022166430023351478,0.6576711592166907658503022166430023351478,-0.7815140038968014069252300555204760502239,0.7815140038968014069252300555204760502239,-0.8802391537269859021229556944881556926234,0.8802391537269859021229556944881556926234,-0.9506755217687677612227169578958030214433,0.9506755217687677612227169578958030214433,-0.9905754753144173356754340199406652765077,0.9905754753144173356754340199406652765077],
+  [-0.0847750130417353012422618529357838117333,0.0847750130417353012422618529357838117333,-0.2518862256915055095889728548779112301628,0.2518862256915055095889728548779112301628,-0.4117511614628426460359317938330516370789,0.4117511614628426460359317938330516370789,-0.5597708310739475346078715485253291369276,0.5597708310739475346078715485253291369276,-0.6916870430603532078748910812888483894522,0.6916870430603532078748910812888483894522,-0.8037049589725231156824174550145907971032,0.8037049589725231156824174550145907971032,-0.8926024664975557392060605911271455154078,0.8926024664975557392060605911271455154078,-0.9558239495713977551811958929297763099728,0.9558239495713977551811958929297763099728,-0.9915651684209309467300160047061507702525,0.9915651684209309467300160047061507702525],
+  [0,-0.1603586456402253758680961157407435495048,0.1603586456402253758680961157407435495048,-0.3165640999636298319901173288498449178922,0.3165640999636298319901173288498449178922,-0.4645707413759609457172671481041023679762,0.4645707413759609457172671481041023679762,-0.6005453046616810234696381649462392798683,0.6005453046616810234696381649462392798683,-0.7209661773352293786170958608237816296571,0.7209661773352293786170958608237816296571,-0.8227146565371428249789224867127139017745,0.8227146565371428249789224867127139017745,-0.9031559036148179016426609285323124878093,0.9031559036148179016426609285323124878093,-0.9602081521348300308527788406876515266150,0.9602081521348300308527788406876515266150,-0.9924068438435844031890176702532604935893,0.9924068438435844031890176702532604935893],
+  [-0.0765265211334973337546404093988382110047,0.0765265211334973337546404093988382110047,-0.2277858511416450780804961953685746247430,0.2277858511416450780804961953685746247430,-0.3737060887154195606725481770249272373957,0.3737060887154195606725481770249272373957,-0.5108670019508270980043640509552509984254,0.5108670019508270980043640509552509984254,-0.6360536807265150254528366962262859367433,0.6360536807265150254528366962262859367433,-0.7463319064601507926143050703556415903107,0.7463319064601507926143050703556415903107,-0.8391169718222188233945290617015206853296,0.8391169718222188233945290617015206853296,-0.9122344282513259058677524412032981130491,0.9122344282513259058677524412032981130491,-0.9639719272779137912676661311972772219120,0.9639719272779137912676661311972772219120,-0.9931285991850949247861223884713202782226,0.9931285991850949247861223884713202782226],
+  [0,-0.1455618541608950909370309823386863301163,0.1455618541608950909370309823386863301163,-0.2880213168024010966007925160646003199090,0.2880213168024010966007925160646003199090,-0.4243421202074387835736688885437880520964,0.4243421202074387835736688885437880520964,-0.5516188358872198070590187967243132866220,0.5516188358872198070590187967243132866220,-0.6671388041974123193059666699903391625970,0.6671388041974123193059666699903391625970,-0.7684399634756779086158778513062280348209,0.7684399634756779086158778513062280348209,-0.8533633645833172836472506385875676702761,0.8533633645833172836472506385875676702761,-0.9200993341504008287901871337149688941591,0.9200993341504008287901871337149688941591,-0.9672268385663062943166222149076951614246,0.9672268385663062943166222149076951614246,-0.9937521706203895002602420359379409291933,0.9937521706203895002602420359379409291933],
+  [-0.0697392733197222212138417961186280818222,0.0697392733197222212138417961186280818222,-0.2078604266882212854788465339195457342156,0.2078604266882212854788465339195457342156,-0.3419358208920842251581474204273796195591,0.3419358208920842251581474204273796195591,-0.4693558379867570264063307109664063460953,0.4693558379867570264063307109664063460953,-0.5876404035069115929588769276386473488776,0.5876404035069115929588769276386473488776,-0.6944872631866827800506898357622567712673,0.6944872631866827800506898357622567712673,-0.7878168059792081620042779554083515213881,0.7878168059792081620042779554083515213881,-0.8658125777203001365364256370193787290847,0.8658125777203001365364256370193787290847,-0.9269567721871740005206929392590531966353,0.9269567721871740005206929392590531966353,-0.9700604978354287271239509867652687108059,0.9700604978354287271239509867652687108059,-0.9942945854823992920730314211612989803930,0.9942945854823992920730314211612989803930],
+  [0,-0.1332568242984661109317426822417661370104,0.1332568242984661109317426822417661370104,-0.2641356809703449305338695382833096029790,0.2641356809703449305338695382833096029790,-0.3903010380302908314214888728806054585780,0.3903010380302908314214888728806054585780,-0.5095014778460075496897930478668464305448,0.5095014778460075496897930478668464305448,-0.6196098757636461563850973116495956533871,0.6196098757636461563850973116495956533871,-0.7186613631319501944616244837486188483299,0.7186613631319501944616244837486188483299,-0.8048884016188398921511184069967785579414,0.8048884016188398921511184069967785579414,-0.8767523582704416673781568859341456716389,0.8767523582704416673781568859341456716389,-0.9329710868260161023491969890384229782357,0.9329710868260161023491969890384229782357,-0.9725424712181152319560240768207773751816,0.9725424712181152319560240768207773751816,-0.9947693349975521235239257154455743605736,0.9947693349975521235239257154455743605736],
+  [-0.0640568928626056260850430826247450385909,0.0640568928626056260850430826247450385909,-0.1911188674736163091586398207570696318404,0.1911188674736163091586398207570696318404,-0.3150426796961633743867932913198102407864,0.3150426796961633743867932913198102407864,-0.4337935076260451384870842319133497124524,0.4337935076260451384870842319133497124524,-0.5454214713888395356583756172183723700107,0.5454214713888395356583756172183723700107,-0.6480936519369755692524957869107476266696,0.6480936519369755692524957869107476266696,-0.7401241915785543642438281030999784255232,0.7401241915785543642438281030999784255232,-0.8200019859739029219539498726697452080761,0.8200019859739029219539498726697452080761,-0.8864155270044010342131543419821967550873,0.8864155270044010342131543419821967550873,-0.9382745520027327585236490017087214496548,0.9382745520027327585236490017087214496548,-0.9747285559713094981983919930081690617411,0.9747285559713094981983919930081690617411,-0.9951872199970213601799974097007368118745,0.9951872199970213601799974097007368118745]
+];
+
+// Legendre-Gauss weights (wi values, defined by a function linked to in the Bezier primer article)
+var cValues = [
+  [],[],
+  [1.0,1.0],
+  [0.8888888888888888888888888888888888888888,0.5555555555555555555555555555555555555555,0.5555555555555555555555555555555555555555],
+  [0.6521451548625461426269360507780005927646,0.6521451548625461426269360507780005927646,0.3478548451374538573730639492219994072353,0.3478548451374538573730639492219994072353],
+  [0.5688888888888888888888888888888888888888,0.4786286704993664680412915148356381929122,0.4786286704993664680412915148356381929122,0.2369268850561890875142640407199173626432,0.2369268850561890875142640407199173626432],
+  [0.3607615730481386075698335138377161116615,0.3607615730481386075698335138377161116615,0.4679139345726910473898703439895509948116,0.4679139345726910473898703439895509948116,0.1713244923791703450402961421727328935268,0.1713244923791703450402961421727328935268],
+  [0.4179591836734693877551020408163265306122,0.3818300505051189449503697754889751338783,0.3818300505051189449503697754889751338783,0.2797053914892766679014677714237795824869,0.2797053914892766679014677714237795824869,0.1294849661688696932706114326790820183285,0.1294849661688696932706114326790820183285],
+  [0.3626837833783619829651504492771956121941,0.3626837833783619829651504492771956121941,0.3137066458778872873379622019866013132603,0.3137066458778872873379622019866013132603,0.2223810344533744705443559944262408844301,0.2223810344533744705443559944262408844301,0.1012285362903762591525313543099621901153,0.1012285362903762591525313543099621901153],
+  [0.3302393550012597631645250692869740488788,0.1806481606948574040584720312429128095143,0.1806481606948574040584720312429128095143,0.0812743883615744119718921581105236506756,0.0812743883615744119718921581105236506756,0.3123470770400028400686304065844436655987,0.3123470770400028400686304065844436655987,0.2606106964029354623187428694186328497718,0.2606106964029354623187428694186328497718],
+  [0.2955242247147528701738929946513383294210,0.2955242247147528701738929946513383294210,0.2692667193099963550912269215694693528597,0.2692667193099963550912269215694693528597,0.2190863625159820439955349342281631924587,0.2190863625159820439955349342281631924587,0.1494513491505805931457763396576973324025,0.1494513491505805931457763396576973324025,0.0666713443086881375935688098933317928578,0.0666713443086881375935688098933317928578],
+  [0.2729250867779006307144835283363421891560,0.2628045445102466621806888698905091953727,0.2628045445102466621806888698905091953727,0.2331937645919904799185237048431751394317,0.2331937645919904799185237048431751394317,0.1862902109277342514260976414316558916912,0.1862902109277342514260976414316558916912,0.1255803694649046246346942992239401001976,0.1255803694649046246346942992239401001976,0.0556685671161736664827537204425485787285,0.0556685671161736664827537204425485787285],
+  [0.2491470458134027850005624360429512108304,0.2491470458134027850005624360429512108304,0.2334925365383548087608498989248780562594,0.2334925365383548087608498989248780562594,0.2031674267230659217490644558097983765065,0.2031674267230659217490644558097983765065,0.1600783285433462263346525295433590718720,0.1600783285433462263346525295433590718720,0.1069393259953184309602547181939962242145,0.1069393259953184309602547181939962242145,0.0471753363865118271946159614850170603170,0.0471753363865118271946159614850170603170],
+  [0.2325515532308739101945895152688359481566,0.2262831802628972384120901860397766184347,0.2262831802628972384120901860397766184347,0.2078160475368885023125232193060527633865,0.2078160475368885023125232193060527633865,0.1781459807619457382800466919960979955128,0.1781459807619457382800466919960979955128,0.1388735102197872384636017768688714676218,0.1388735102197872384636017768688714676218,0.0921214998377284479144217759537971209236,0.0921214998377284479144217759537971209236,0.0404840047653158795200215922009860600419,0.0404840047653158795200215922009860600419],
+  [0.2152638534631577901958764433162600352749,0.2152638534631577901958764433162600352749,0.2051984637212956039659240656612180557103,0.2051984637212956039659240656612180557103,0.1855383974779378137417165901251570362489,0.1855383974779378137417165901251570362489,0.1572031671581935345696019386238421566056,0.1572031671581935345696019386238421566056,0.1215185706879031846894148090724766259566,0.1215185706879031846894148090724766259566,0.0801580871597602098056332770628543095836,0.0801580871597602098056332770628543095836,0.0351194603317518630318328761381917806197,0.0351194603317518630318328761381917806197],
+  [0.2025782419255612728806201999675193148386,0.1984314853271115764561183264438393248186,0.1984314853271115764561183264438393248186,0.1861610000155622110268005618664228245062,0.1861610000155622110268005618664228245062,0.1662692058169939335532008604812088111309,0.1662692058169939335532008604812088111309,0.1395706779261543144478047945110283225208,0.1395706779261543144478047945110283225208,0.1071592204671719350118695466858693034155,0.1071592204671719350118695466858693034155,0.0703660474881081247092674164506673384667,0.0703660474881081247092674164506673384667,0.0307532419961172683546283935772044177217,0.0307532419961172683546283935772044177217],
+  [0.1894506104550684962853967232082831051469,0.1894506104550684962853967232082831051469,0.1826034150449235888667636679692199393835,0.1826034150449235888667636679692199393835,0.1691565193950025381893120790303599622116,0.1691565193950025381893120790303599622116,0.1495959888165767320815017305474785489704,0.1495959888165767320815017305474785489704,0.1246289712555338720524762821920164201448,0.1246289712555338720524762821920164201448,0.0951585116824927848099251076022462263552,0.0951585116824927848099251076022462263552,0.0622535239386478928628438369943776942749,0.0622535239386478928628438369943776942749,0.0271524594117540948517805724560181035122,0.0271524594117540948517805724560181035122],
+  [0.1794464703562065254582656442618856214487,0.1765627053669926463252709901131972391509,0.1765627053669926463252709901131972391509,0.1680041021564500445099706637883231550211,0.1680041021564500445099706637883231550211,0.1540457610768102880814315948019586119404,0.1540457610768102880814315948019586119404,0.1351363684685254732863199817023501973721,0.1351363684685254732863199817023501973721,0.1118838471934039710947883856263559267358,0.1118838471934039710947883856263559267358,0.0850361483171791808835353701910620738504,0.0850361483171791808835353701910620738504,0.0554595293739872011294401653582446605128,0.0554595293739872011294401653582446605128,0.0241483028685479319601100262875653246916,0.0241483028685479319601100262875653246916],
+  [0.1691423829631435918406564701349866103341,0.1691423829631435918406564701349866103341,0.1642764837458327229860537764659275904123,0.1642764837458327229860537764659275904123,0.1546846751262652449254180038363747721932,0.1546846751262652449254180038363747721932,0.1406429146706506512047313037519472280955,0.1406429146706506512047313037519472280955,0.1225552067114784601845191268002015552281,0.1225552067114784601845191268002015552281,0.1009420441062871655628139849248346070628,0.1009420441062871655628139849248346070628,0.0764257302548890565291296776166365256053,0.0764257302548890565291296776166365256053,0.0497145488949697964533349462026386416808,0.0497145488949697964533349462026386416808,0.0216160135264833103133427102664524693876,0.0216160135264833103133427102664524693876],
+  [0.1610544498487836959791636253209167350399,0.1589688433939543476499564394650472016787,0.1589688433939543476499564394650472016787,0.1527660420658596667788554008976629984610,0.1527660420658596667788554008976629984610,0.1426067021736066117757461094419029724756,0.1426067021736066117757461094419029724756,0.1287539625393362276755157848568771170558,0.1287539625393362276755157848568771170558,0.1115666455473339947160239016817659974813,0.1115666455473339947160239016817659974813,0.0914900216224499994644620941238396526609,0.0914900216224499994644620941238396526609,0.0690445427376412265807082580060130449618,0.0690445427376412265807082580060130449618,0.0448142267656996003328381574019942119517,0.0448142267656996003328381574019942119517,0.0194617882297264770363120414644384357529,0.0194617882297264770363120414644384357529],
+  [0.1527533871307258506980843319550975934919,0.1527533871307258506980843319550975934919,0.1491729864726037467878287370019694366926,0.1491729864726037467878287370019694366926,0.1420961093183820513292983250671649330345,0.1420961093183820513292983250671649330345,0.1316886384491766268984944997481631349161,0.1316886384491766268984944997481631349161,0.1181945319615184173123773777113822870050,0.1181945319615184173123773777113822870050,0.1019301198172404350367501354803498761666,0.1019301198172404350367501354803498761666,0.0832767415767047487247581432220462061001,0.0832767415767047487247581432220462061001,0.0626720483341090635695065351870416063516,0.0626720483341090635695065351870416063516,0.0406014298003869413310399522749321098790,0.0406014298003869413310399522749321098790,0.0176140071391521183118619623518528163621,0.0176140071391521183118619623518528163621],
+  [0.1460811336496904271919851476833711882448,0.1445244039899700590638271665537525436099,0.1445244039899700590638271665537525436099,0.1398873947910731547221334238675831108927,0.1398873947910731547221334238675831108927,0.1322689386333374617810525744967756043290,0.1322689386333374617810525744967756043290,0.1218314160537285341953671771257335983563,0.1218314160537285341953671771257335983563,0.1087972991671483776634745780701056420336,0.1087972991671483776634745780701056420336,0.0934444234560338615532897411139320884835,0.0934444234560338615532897411139320884835,0.0761001136283793020170516533001831792261,0.0761001136283793020170516533001831792261,0.0571344254268572082836358264724479574912,0.0571344254268572082836358264724479574912,0.0369537897708524937999506682993296661889,0.0369537897708524937999506682993296661889,0.0160172282577743333242246168584710152658,0.0160172282577743333242246168584710152658],
+  [0.1392518728556319933754102483418099578739,0.1392518728556319933754102483418099578739,0.1365414983460151713525738312315173965863,0.1365414983460151713525738312315173965863,0.1311735047870623707329649925303074458757,0.1311735047870623707329649925303074458757,0.1232523768105124242855609861548144719594,0.1232523768105124242855609861548144719594,0.1129322960805392183934006074217843191142,0.1129322960805392183934006074217843191142,0.1004141444428809649320788378305362823508,0.1004141444428809649320788378305362823508,0.0859416062170677274144436813727028661891,0.0859416062170677274144436813727028661891,0.0697964684245204880949614189302176573987,0.0697964684245204880949614189302176573987,0.0522933351526832859403120512732112561121,0.0522933351526832859403120512732112561121,0.0337749015848141547933022468659129013491,0.0337749015848141547933022468659129013491,0.0146279952982722006849910980471854451902,0.0146279952982722006849910980471854451902],
+  [0.1336545721861061753514571105458443385831,0.1324620394046966173716424647033169258050,0.1324620394046966173716424647033169258050,0.1289057221880821499785953393997936532597,0.1289057221880821499785953393997936532597,0.1230490843067295304675784006720096548158,0.1230490843067295304675784006720096548158,0.1149966402224113649416435129339613014914,0.1149966402224113649416435129339613014914,0.1048920914645414100740861850147438548584,0.1048920914645414100740861850147438548584,0.0929157660600351474770186173697646486034,0.0929157660600351474770186173697646486034,0.0792814117767189549228925247420432269137,0.0792814117767189549228925247420432269137,0.0642324214085258521271696151589109980391,0.0642324214085258521271696151589109980391,0.0480376717310846685716410716320339965612,0.0480376717310846685716410716320339965612,0.0309880058569794443106942196418845053837,0.0309880058569794443106942196418845053837,0.0134118594871417720813094934586150649766,0.0134118594871417720813094934586150649766],
+  [0.1279381953467521569740561652246953718517,0.1279381953467521569740561652246953718517,0.1258374563468282961213753825111836887264,0.1258374563468282961213753825111836887264,0.1216704729278033912044631534762624256070,0.1216704729278033912044631534762624256070,0.1155056680537256013533444839067835598622,0.1155056680537256013533444839067835598622,0.1074442701159656347825773424466062227946,0.1074442701159656347825773424466062227946,0.0976186521041138882698806644642471544279,0.0976186521041138882698806644642471544279,0.0861901615319532759171852029837426671850,0.0861901615319532759171852029837426671850,0.0733464814110803057340336152531165181193,0.0733464814110803057340336152531165181193,0.0592985849154367807463677585001085845412,0.0592985849154367807463677585001085845412,0.0442774388174198061686027482113382288593,0.0442774388174198061686027482113382288593,0.0285313886289336631813078159518782864491,0.0285313886289336631813078159518782864491,0.0123412297999871995468056670700372915759,0.0123412297999871995468056670700372915759]
+];
+
+// LUT for binomial coefficient arrays per curve order 'n'
+var binomialCoefficients = [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]];
+
+// Look up what the binomial coefficient is for pair {n,k}
+function binomials(n, k) {
+  return binomialCoefficients[n][k];
+}
+
+/**
+ * Compute the curve derivative (hodograph) at t.
+ */
+function getDerivative(derivative, t, vs) {
+  // the derivative of any 't'-less function is zero.
+  var n = vs.length - 1,
+      _vs,
+      value,
+      k;
+  if (n === 0) {
+    return 0;
+  }
+
+  // direct values? compute!
+  if (derivative === 0) {
+    value = 0;
+    for (k = 0; k <= n; k++) {
+      value += binomials(n, k) * Math.pow(1 - t, n - k) * Math.pow(t, k) * vs[k];
+    }
+    return value;
+  } else {
+    // Still some derivative? go down one order, then try
+    // for the lower order curve's.
+    _vs = new Array(n);
+    for (k = 0; k < n; k++) {
+      _vs[k] = n * (vs[k + 1] - vs[k]);
+    }
+    return getDerivative(derivative - 1, t, _vs);
+  }
+}
+
+function B(xs, ys, t) {
+  var xbase = getDerivative(1, t, xs);
+  var ybase = getDerivative(1, t, ys);
+  var combined = xbase * xbase + ybase * ybase;
+  return Math.sqrt(combined);
+}
+
+function getCubicArcLength(xs, ys, t) {
+  var z, sum, i, correctedT;
+
+  /*if (xs.length >= tValues.length) {
+    throw new Error('too high n bezier');
+  }*/
+
+  if (t === undefined) {
+    t = 1;
+  }
+  var n = 20;
+
+  z = t / 2;
+  sum = 0;
+  for (i = 0; i < n; i++) {
+    correctedT = z * tValues[n][i] + z;
+    sum += cValues[n][i] * B(xs, ys, correctedT);
+  }
+  return z * sum;
+}
+
+var LinearPosition = function(x0, x1, y0, y1) {
+  return new LinearPosition$1(x0, x1, y0, y1);
+
+};
+
+function LinearPosition$1(x0, x1, y0, y1){
+  this.x0 = x0;
+  this.x1 = x1;
+  this.y0 = y0;
+  this.y1 = y1;
+}
+
+LinearPosition$1.prototype.getTotalLength = function(){
+  return Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+         Math.pow(this.y0 - this.y1, 2));
+};
+
+LinearPosition$1.prototype.getPointAtLength = function(pos){
+  var fraction = pos/ (Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+         Math.pow(this.y0 - this.y1, 2)));
+
+  var newDeltaX = (this.x1 - this.x0)*fraction;
+  var newDeltaY = (this.y1 - this.y0)*fraction;
+  return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
+};
+
+var pathProperties = function(svgString) {
+  var length = 0;
+  var partial_lengths = [];
+  var functions = [];
+
+  function svgProperties(string){
+    var parsed = parse(string);
+    var cur = [0, 0];
+    var prev_point = [0, 0];
+    var curve;
+    for (var i = 0; i < parsed.length; i++){
+      //moveTo
+      if(parsed[i][0] === "M"){
+        cur = [parsed[i][1], parsed[i][2]];
+        functions.push(null);
+      } else if(parsed[i][0] === "m"){
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
+        functions.push(null);
+      }
+      //lineTo
+      else if(parsed[i][0] === "L"){
+        length = length + Math.sqrt(Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2));
+        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
+        cur = [parsed[i][1], parsed[i][2]];
+
+      } else if(parsed[i][0] === "l"){
+        length = length + Math.sqrt(Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2));
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
+        functions.push();
+      } else if(parsed[i][0] === "H"){
+        length = length + Math.abs(cur[0] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]));
+        cur[0] = parsed[i][1];
+      } else if(parsed[i][0] === "h"){
+        length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1]));
+        cur[0] = parsed[i][1] + cur[0];
+      } else if(parsed[i][0] === "V"){
+        length = length + Math.abs(cur[1] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1]));
+        cur[1] = parsed[i][1];
+      } else if(parsed[i][0] === "v"){
+        length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]));
+        cur[1] = parsed[i][1] + cur[1];
+        functions.push();
+      //Close path
+      }  else if(parsed[i][0] === "z" || parsed[i][0] === "Z"){
+        length = length + Math.sqrt(Math.pow(parsed[0][1] - cur[0], 2) + Math.pow(parsed[0][2] - cur[1], 2));
+        functions.push(new LinearPosition(cur[0], parsed[0][1], cur[1], parsed[0][2]));
+        cur = [parsed[0][1], parsed[0][2]];
+      }
+      //Cubic Bezier curves
+      else if(parsed[i][0] === "C"){
+        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4] , parsed[i][5], parsed[i][6]);
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][5], parsed[i][6]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "c"){
+        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4] , cur[0] + parsed[i][5], cur[1] + parsed[i][6]);
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "S"){
+        if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2*cur[0] - parsed[i-1][parsed[i-1].length - 4], 2*cur[1] - parsed[i-1][parsed[i-1].length - 3], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][3], parsed[i][4]];
+        functions.push(curve);
+      }  else if(parsed[i][0] === "s"){ //240 225
+        if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , cur[0] + curve.d.x - curve.c.x, cur[1] + curve.d.y - curve.c.y, cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
+        functions.push(curve);
+      }
+      //Quadratic Bezier curves
+      else if(parsed[i][0] === "Q"){
+        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        length = length + curve.getTotalLength();
+        functions.push(curve);
+        cur = [parsed[i][3], parsed[i][4]];
+        prev_point = [parsed[i][1], parsed[i][2]];
+
+      }  else if(parsed[i][0] === "q"){
+        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        length = length + curve.getTotalLength();
+        prev_point = [cur[0] + parsed[i][1], cur[1] + parsed[i][2]];
+        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "T"){
+        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , parsed[i][1], parsed[i][2]);
+        } else {
+          curve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
+        }
+        functions.push(curve);
+        length = length + curve.getTotalLength();
+        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
+        cur = [parsed[i][1], parsed[i][2]];
+
+      } else if(parsed[i][0] === "t"){
+        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2]);
+        } else {
+          curve = new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
+        }
+        length = length + curve.getTotalLength();
+        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
+        functions.push(curve);
+      }
+      partial_lengths.push(length);
+
+    }
+    return svgProperties;
+  }
+
+ svgProperties.getTotalLength = function(){
+    return length;
+  };
+
+  svgProperties.getPointAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
+    var i = partial_lengths.length - 1;
+
+    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
+      i--;
+    }
+    i++;
+    var fractionPart = fractionLength-partial_lengths[i-1];
+    return functions[i].getPointAtLength(fractionPart);
+  };
+
+  return svgProperties(svgString);
+};
+
+exports.svgPathProperties = pathProperties;
+exports.parse = parse;
+exports.Bezier = Bezier;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
