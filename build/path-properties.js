@@ -358,11 +358,10 @@ var pathProperties = function(svgString) {
         length = length + Math.sqrt(Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2));
         functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
         cur = [parsed[i][1], parsed[i][2]];
-
       } else if(parsed[i][0] === "l"){
         length = length + Math.sqrt(Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2));
+        functions.push(new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1]));
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
-        functions.push();
       } else if(parsed[i][0] === "H"){
         length = length + Math.abs(cur[0] - parsed[i][1]);
         functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]));
@@ -379,7 +378,6 @@ var pathProperties = function(svgString) {
         length = length + Math.abs(parsed[i][1]);
         functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]));
         cur[1] = parsed[i][1] + cur[1];
-        functions.push();
       //Close path
       }  else if(parsed[i][0] === "z" || parsed[i][0] === "Z"){
         length = length + Math.sqrt(Math.pow(parsed[0][1] - cur[0], 2) + Math.pow(parsed[0][2] - cur[1], 2));

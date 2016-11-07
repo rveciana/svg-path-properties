@@ -33,7 +33,7 @@ tape("Testing getPointAtLength Cubic", function(test) {
   test.end();
 });
 
-tape("Testing getTangentAtLength Cubic", function(test) {
+tape("Testing getTangentAtLength", function(test) {
   var curve = new path.Bezier(200,200,275,100,575,100,500,200);
   //console.info(curve.getTangentAtLength(curve.getTotalLength()/2));
 

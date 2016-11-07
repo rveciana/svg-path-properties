@@ -27,8 +27,7 @@
               "M240,100C290,100,240,225,290,200S290,75,340,50S515,100,390,150S215,200,90,150S90,25,140,50S140,175,190,200S190,100,240,100",
               "m240,100c50,0,0,125,50,100s0,-125,50,-150s175,50,50,100s-175,50,-300,0s0,-125,50,-100s0,125,50,150s0,-100,50,-100"
               ];
-              //190,200  S240,100
-              //240,100  C290,200 S 340,50  S390,150  S90,150  S140,50   S190,200  S240,100
+
   for(var i=0; i<paths.length; i++){
     pathEl = d3.select("body").append("svg")
       .attr("width", 960)
@@ -83,6 +82,8 @@
     console.info(paths[i]);
     var xValues= [];
     var yValues= [];
+    var xValuesTangent= [];
+    var yValuesTangent= [];
 
     for(var j=0; j<=6; j++){
 
@@ -105,6 +106,9 @@
         .attr("fill", "green");
 
       var tangent = properties.getTangentAtLength(j*browserLength/6);
+      xValuesTangent.push(tangent.x);
+      yValuesTangent.push(tangent.y);
+
       pathEl
         .append("line")
         .attr("x1", position2.x)
@@ -118,6 +122,8 @@
     }
     console.info(xValues);
     console.info(yValues);
+    console.info(xValuesTangent);
+    console.info(yValuesTangent);
   }
   </script>
 </body>
