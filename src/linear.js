@@ -23,3 +23,8 @@ LinearPosition.prototype.getPointAtLength = function(pos){
   var newDeltaY = (this.y1 - this.y0)*fraction;
   return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
 };
+LinearPosition.prototype.getTangentAtLength = function(){
+  var module = Math.sqrt((this.x1 - this.x0) * (this.x1 - this.x0) +
+              (this.y1 - this.y0) * (this.y1 - this.y0));
+  return { x: (this.x1 - this.x0)/module, y: (this.y1 - this.y0)/module };
+};

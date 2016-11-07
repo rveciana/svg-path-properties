@@ -33,6 +33,20 @@
     pathEl = d3.select("body").append("svg")
       .attr("width", 960)
       .attr("height", 300);
+
+    pathEl.append("defs")
+    .append("marker")
+    .attr("id", "arrow")
+    .attr("markerWidth", 10)
+    .attr("markerHeight", 10)
+    .attr("refX", 0)
+    .attr("refY", 2)
+    .attr("orient", "auto")
+    .attr("markerUnits", "strokeWidth")
+    .append("path")
+    .attr("d","M0,0 L0,4 L6,2 z")
+    .attr("fill","purple");
+
     path = pathEl
       .append("path")
       .attr("fill", "none")
@@ -73,7 +87,6 @@
     for(var j=0; j<=6; j++){
 
       var position = path.node().getPointAtLength(j*browserLength/6);
-      //console.info(j/5, j*browserLength/5, position);
       xValues.push(position.x);
       yValues.push(position.y);
       pathEl
@@ -90,6 +103,17 @@
         .attr("cy", position2.y)
         .attr("r", 4)
         .attr("fill", "green");
+
+      var tangent = properties.getTangentAtLength(j*browserLength/6);
+      pathEl
+        .append("line")
+        .attr("x1", position2.x)
+        .attr("y1", position2.y)
+        .attr("x2", position2.x + 20 * tangent.x)
+        .attr("y2", position2.y + 20 * tangent.y)
+        .attr("stroke", "purple")
+        .attr("stroke-width", 2)
+        .attr("marker-end", "url(#arrow)");
 
     }
     console.info(xValues);

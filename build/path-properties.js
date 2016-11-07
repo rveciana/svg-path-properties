@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.0.1. Copyright 2016 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.0.2. Copyright 2016 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -61,9 +61,11 @@ function Bezier$1(ax, ay, bx, by, cx, cy, dx, dy) {
   if(dx && dy){
     this.getArcLength = getCubicArcLength;
     this.getPoint = cubicPoint;
+    this.getDerivative = cubicDerivative;
   } else {
     this.getArcLength = getQuadraticArcLength;
     this.getPoint = quadraticPoint;
+    this.getDerivative = quadraticDerivative;
   }
 
   this.init();
@@ -81,23 +83,58 @@ Bezier$1.prototype = {
     return this.length;
   },
   getPointAtLength: function(length) {
-    var error = 1;
-    var t = length/this.length;
-
-    while (error > 0.008){
-
-      var calcLength = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
-                                      [this.a.y, this.b.y, this.c.y, this.d.y],
-                                    t);
-      error = Math.abs(length - calcLength)/this.length;
-      t = t + (length-calcLength)/this.length;
-    }
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
 
     return this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
                                     [this.a.y, this.b.y, this.c.y, this.d.y],
                                   t);
+  },
+  getTangentAtLength: function(length){
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    var derivative = this.getDerivative([this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y], t);
+    var mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+    var tangent;
+    if (mdl > 0){
+      tangent = {x: derivative.x/mdl, y: derivative.y/mdl};
+    } else {
+      tangent = {x: 0, y: 0};
+    }
+    return tangent;
   }
 };
+
+function quadraticDerivative(xs, ys, t){
+  return {x: (1 - t) * 2*(xs[1] - xs[0]) +t * 2*(xs[2] - xs[1]),
+    y: (1 - t) * 2*(ys[1] - ys[0]) +t * 2*(ys[2] - ys[1])
+  };
+}
+
+function cubicDerivative(xs, ys, t){
+  var derivative = quadraticPoint(
+            [3*(xs[1] - xs[0]), 3*(xs[2] - xs[1]), 3*(xs[3] - xs[2])],
+            [3*(ys[1] - ys[0]), 3*(ys[2] - ys[1]), 3*(ys[3] - ys[2])],
+            t);
+  return derivative;
+}
+
+function t2length(length, total_length, func, xs, ys){
+  var error = 1;
+  var t = length/total_length;
+
+  while (error > 0.008){
+
+    var calcLength = func(xs, ys, t);
+    error = Math.abs(length - calcLength)/total_length;
+    t = t + (length-calcLength)/total_length;
+  }
+  return t;
+}
 
 function quadraticPoint(xs, ys, t){
   var x = (1 - t) * (1 - t) * xs[0] + 2 * (1 - t) * t * xs[1] + t * t * xs[2];
@@ -291,6 +328,11 @@ LinearPosition$1.prototype.getPointAtLength = function(pos){
   var newDeltaY = (this.y1 - this.y0)*fraction;
   return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
 };
+LinearPosition$1.prototype.getTangentAtLength = function(){
+  var module = Math.sqrt((this.x1 - this.x0) * (this.x1 - this.x0) +
+              (this.y1 - this.y0) * (this.y1 - this.y0));
+  return { x: (this.x1 - this.x0)/module, y: (this.y1 - this.y0)/module };
+};
 
 var pathProperties = function(svgString) {
   var length = 0;
@@ -435,6 +477,23 @@ var pathProperties = function(svgString) {
     i++;
     var fractionPart = fractionLength-partial_lengths[i-1];
     return functions[i].getPointAtLength(fractionPart);
+  };
+
+  svgProperties.getTangentAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
+    var i = partial_lengths.length - 1;
+
+    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
+      i--;
+    }
+    i++;
+    var fractionPart = fractionLength-partial_lengths[i-1];
+    return functions[i].getTangentAtLength(fractionPart);
   };
 
   return svgProperties(svgString);

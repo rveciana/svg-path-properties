@@ -32,3 +32,10 @@ tape("Testing getPointAtLength Cubic", function(test) {
   test.inDelta(point.y, 160.37, 1);
   test.end();
 });
+
+tape("Testing getTangentAtLength Cubic", function(test) {
+  var curve = new path.Bezier(200,200,275,100,575,100,500,200);
+  //console.info(curve.getTangentAtLength(curve.getTotalLength()/2));
+
+  test.end();
+});
