@@ -16,10 +16,12 @@ To use with npm, just type
 USAGE
 =====
 
-  var path = require("svg-path-properties");
-  var properties = path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
-  var length = properties.getTotalLength();
-  var point = properties.getPointAtLength(200);
+    var path = require("svg-path-properties");
+    var properties = path.svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
+    var length = properties.getTotalLength();
+    var point = properties.getPointAtLength(200);
+    var tangent = properties.getTangentAtLength(200);
+    var allProperties = properties.getPropertiesAtLength(200);
 
 [Check this block](http://bl.ocks.org/rveciana/209fa7efeb01f05fa4a544a76ac8ed91) to see how it works with the browser.
 
@@ -30,9 +32,10 @@ Some parts of the code are taken from other libraries or questions at StackOverf
 
 For Bézier curves:
 
-http://bl.ocks.org/hnakamur/e7efd0602bfc15f66fc5, https://gist.github.com/tunght13488/6744e77c242cc7a94859, http://stackoverflow.com/questions/11854907/calculate-the-length-of-a-segment-of-a-quadratic-bezier and
-http://pomax.github.io/bezierinfo
+* http://bl.ocks.org/hnakamur/e7efd0602bfc15f66fc5, https://gist.github.com/tunght13488/6744e77c242cc7a94859
+* http://stackoverflow.com/questions/11854907/calculate-the-length-of-a-segment-of-a-quadratic-bezier
+* http://pomax.github.io/bezierinfo
 
 For path parsing:
 
-https://github.com/jkroso/parse-svg-path
+* https://github.com/jkroso/parse-svg-path
