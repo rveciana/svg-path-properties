@@ -485,40 +485,21 @@ var pathProperties = function(svgString) {
   };
 
   svgProperties.getPointAtLength = function(fractionLength){
-    if(fractionLength < 0){
-      fractionLength = 0;
-    } else if(fractionLength > length){
-      fractionLength = length;
-    }
-
-    var i = partial_lengths.length - 1;
-
-    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
-      i--;
-    }
-    i++;
-    var fractionPart = fractionLength-partial_lengths[i-1];
-    return functions[i].getPointAtLength(fractionPart);
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getPointAtLength(fractionPart.fraction);
   };
 
   svgProperties.getTangentAtLength = function(fractionLength){
-    if(fractionLength < 0){
-      fractionLength = 0;
-    } else if(fractionLength > length){
-      fractionLength = length;
-    }
-
-    var i = partial_lengths.length - 1;
-
-    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
-      i--;
-    }
-    i++;
-    var fractionPart = fractionLength-partial_lengths[i-1];
-    return functions[i].getTangentAtLength(fractionPart);
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getTangentAtLength(fractionPart.fraction);
   };
 
   svgProperties.getPropertiesAtLength = function(fractionLength){
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getPropertiesAtLength(fractionPart.fraction);
+  };
+
+  var getPartAtLength = function(fractionLength){
     if(fractionLength < 0){
       fractionLength = 0;
     } else if(fractionLength > length){
@@ -531,9 +512,7 @@ var pathProperties = function(svgString) {
       i--;
     }
     i++;
-    var fractionPart = fractionLength-partial_lengths[i-1];
-    
-    return functions[i].getPropertiesAtLength(fractionPart);
+    return {fraction: fractionLength-partial_lengths[i-1], i: i};
   };
 
   return svgProperties(svgString);
