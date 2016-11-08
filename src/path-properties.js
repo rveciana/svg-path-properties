@@ -162,5 +162,23 @@ export default function(svgString) {
     return functions[i].getTangentAtLength(fractionPart);
   };
 
+  svgProperties.getPropertiesAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
+    var i = partial_lengths.length - 1;
+
+    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
+      i--;
+    }
+    i++;
+    var fractionPart = fractionLength-partial_lengths[i-1];
+    
+    return functions[i].getPropertiesAtLength(fractionPart);
+  };
+
   return svgProperties(svgString);
 }

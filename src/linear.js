@@ -28,3 +28,8 @@ LinearPosition.prototype.getTangentAtLength = function(){
               (this.y1 - this.y0) * (this.y1 - this.y0));
   return { x: (this.x1 - this.x0)/module, y: (this.y1 - this.y0)/module };
 };
+LinearPosition.prototype.getPropertiesAtLength = function(pos){
+  var point = this.getPointAtLength(pos);
+  var tangent = this.getTangentAtLength();
+  return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
+};

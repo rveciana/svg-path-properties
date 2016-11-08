@@ -106,6 +106,25 @@ Bezier$1.prototype = {
       tangent = {x: 0, y: 0};
     }
     return tangent;
+  },
+  getPropertiesAtLength: function(length){
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    var derivative = this.getDerivative([this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y], t);
+    var mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+    var tangent;
+    if (mdl > 0){
+      tangent = {x: derivative.x/mdl, y: derivative.y/mdl};
+    } else {
+      tangent = {x: 0, y: 0};
+    }
+    var point = this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+                                  t);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
   }
 };
 
@@ -333,6 +352,11 @@ LinearPosition$1.prototype.getTangentAtLength = function(){
               (this.y1 - this.y0) * (this.y1 - this.y0));
   return { x: (this.x1 - this.x0)/module, y: (this.y1 - this.y0)/module };
 };
+LinearPosition$1.prototype.getPropertiesAtLength = function(pos){
+  var point = this.getPointAtLength(pos);
+  var tangent = this.getTangentAtLength();
+  return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
+};
 
 var pathProperties = function(svgString) {
   var length = 0;
@@ -492,6 +516,24 @@ var pathProperties = function(svgString) {
     i++;
     var fractionPart = fractionLength-partial_lengths[i-1];
     return functions[i].getTangentAtLength(fractionPart);
+  };
+
+  svgProperties.getPropertiesAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
+    var i = partial_lengths.length - 1;
+
+    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
+      i--;
+    }
+    i++;
+    var fractionPart = fractionLength-partial_lengths[i-1];
+    
+    return functions[i].getPropertiesAtLength(fractionPart);
   };
 
   return svgProperties(svgString);

@@ -59,6 +59,25 @@ Bezier.prototype = {
       tangent = {x: 0, y: 0};
     }
     return tangent;
+  },
+  getPropertiesAtLength: function(length){
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    var derivative = this.getDerivative([this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y], t);
+    var mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+    var tangent;
+    if (mdl > 0){
+      tangent = {x: derivative.x/mdl, y: derivative.y/mdl};
+    } else {
+      tangent = {x: 0, y: 0};
+    }
+    var point = this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+                                  t);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
   }
 };
 
