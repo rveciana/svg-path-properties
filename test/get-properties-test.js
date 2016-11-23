@@ -2,6 +2,12 @@ var tape = require("tape"),
 path = require("../");
 require("./inDelta");
 
+tape("error testing", function(test) {
+  var properties = path.svgPathProperties(null);
+  test.equals(properties, null, "Null input -> null output");
+  test.end();
+
+});
 tape("getTangentAtLength testing", function(test) {
 var paths = ["M0,50L500,50",
             "M0,50L300,300",

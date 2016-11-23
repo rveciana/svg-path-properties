@@ -8,6 +8,7 @@ export default function(svgString) {
   var functions = [];
 
   function svgProperties(string){
+    if(!string){return null;}
     var parsed = parse(string);
     var cur = [0, 0];
     var prev_point = [0, 0];
