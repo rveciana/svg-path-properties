@@ -98,13 +98,24 @@ function cubicDerivative(xs, ys, t){
 function t2length(length, total_length, func, xs, ys){
   var error = 1;
   var t = length/total_length;
+  var step = (length - func(xs, ys, t))/total_length
 
-  while (error > 0.008){
-
-    var calcLength = func(xs, ys, t);
-    error = Math.abs(length - calcLength)/total_length;
-    t = t + (length-calcLength)/total_length;
+  while (error > 0.001){
+    var increasedTLength = func(xs, ys, t + step);
+    var decreasedTLength = func(xs, ys, t - step);
+    var increasedTError = Math.abs(length - increasedTLength)/total_length;
+    var decreasedTError = Math.abs(length - decreasedTLength)/total_length;
+    if (increasedTError < error) {
+      error = increasedTError
+      t += step
+    } else if (decreasedTError < error) {
+      error = decreasedTError
+      t -= step
+    } else {
+      step /= 2
+    }
   }
+
   return t;
 }
 
