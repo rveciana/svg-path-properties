@@ -11,7 +11,7 @@ function Bezier(ax, ay, bx, by, cx, cy, dx, dy) {
   this.c = {x:cx, y:cy};
   this.d = {x:dx, y:dy};
 
-  if(dx && dy){
+  if(dx !== null && dx !== undefined && dy !== null && dy !== undefined){
     this.getArcLength = getCubicArcLength;
     this.getPoint = cubicPoint;
     this.getDerivative = cubicDerivative;
