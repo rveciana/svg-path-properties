@@ -126,3 +126,17 @@ tape("getPointAtLength testing Cubic Bézier", function(test) {
   }
   test.end();
 });
+
+tape("getPointAtLength bug testing", function(test) {
+  //Testing https://github.com/rveciana/svg-path-properties/issues/1
+  var properties = path.svgPathProperties("M 211.6687111164928,312.6478542077994 C 211.6687111164928,312.6478542077994 211.6687111164928,312.6478542077994 219,293");
+  var pos1 = properties.getPointAtLength(12);
+  var pos2 = properties.getPointAtLength(11.95);
+  var pos3 = properties.getPointAtLength(12.05);
+  test.inDelta(pos1.x,pos2.x, 0.1);
+  test.inDelta(pos1.x,pos3.x, 0.1);
+  test.inDelta(pos1.y,pos2.y, 0.1);
+  test.inDelta(pos1.y,pos3.y, 0.1);
+
+  test.end();
+});
