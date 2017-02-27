@@ -140,3 +140,19 @@ tape("getPointAtLength bug testing", function(test) {
 
   test.end();
 });
+
+tape("Testing getPointAtLength with straigh line bezier curve (bug)", function(test) {
+  //https://github.com/rveciana/svg-path-properties/issues/4
+  var pathData = new path.svgPathProperties("M500,300Q425,325 350,350");
+  var pathLen = pathData.getTotalLength();
+  test.inDelta(pathLen, 158.11, 0.1); //Gave undefined
+
+  var pos = pathData.getPointAtLength(0);
+  test.inDelta(pos.x, 500, 0.00001);
+  test.inDelta(pos.y, 300, 0.00001);
+  pos = pathData.getPointAtLength(pathLen);
+  test.inDelta(pos.x, 350, 0.00001);
+  test.inDelta(pos.y, 350, 0.00001);
+
+  test.end();
+});

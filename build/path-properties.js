@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.1.1. Copyright 2017 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.1.2. Copyright 2017 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -185,7 +185,6 @@ function getQuadraticArcLength(xs, ys, t) {
   if (t === undefined) {
     t = 1;
   }
-
    var ax = xs[0] - 2 * xs[1] + xs[2];
    var ay = ys[0] - 2 * ys[1] + ys[2];
    var bx = 2 * xs[1] - 2 * xs[0];
@@ -195,6 +194,9 @@ function getQuadraticArcLength(xs, ys, t) {
    var B = 4 * (ax * bx + ay * by);
    var C = bx * bx + by * by;
 
+   if(A === 0){
+     return t * Math.sqrt(Math.pow(xs[2] - xs[0], 2) + Math.pow(ys[2] - ys[0], 2));
+   }
    var b = B/(2*A);
    var c = C/A;
    var u = t + b;
