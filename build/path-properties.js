@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.2.0. Copyright 2017 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.2.1. Copyright 2017 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -335,6 +335,7 @@ function getCubicArcLength(xs, ys, t) {
   return z * sum;
 }
 
+//This file is taken from the following project: https://github.com/fontello/svgpath
 // Convert an arc to a sequence of cubic bézier curves
 //
 var TAU = Math.PI * 2;
