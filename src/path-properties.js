@@ -1,5 +1,6 @@
 import parse from "./parse";
 import Bezier from "./bezier";
+import Arc from "./arc";
 import LinearPosition from "./linear";
 
 export default function(svgString) {
@@ -117,6 +118,12 @@ export default function(svgString) {
         length = length + curve.getTotalLength();
         prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "A"){
+        curve = new Arc(cur[0], cur[1], parsed[i][1], parsed[i][2], parsed[i][3], parsed[i][4], parsed[i][5], parsed[i][6], parsed[i][7]);
+
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][6], parsed[i][7]];
         functions.push(curve);
       }
       partial_lengths.push(length);
