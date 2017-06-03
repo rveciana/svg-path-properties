@@ -1,3 +1,4 @@
+//This file is taken from the following project: https://github.com/fontello/svgpath
 // Convert an arc to a sequence of cubic bézier curves
 //
 'use strict';
