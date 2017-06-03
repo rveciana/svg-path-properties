@@ -79,5 +79,10 @@ Arc.prototype = {
         }
 
     return this.curves[i].getTangentAtLength(fractionLength - lengthOffset);
+  },
+  getPropertiesAtLength: function(fractionLength){
+    var tangent = this.getTangentAtLength(fractionLength);
+    var point = this.getPointAtLength(fractionLength);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
   }
 };

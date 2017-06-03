@@ -598,6 +598,11 @@ Arc$1.prototype = {
         }
 
     return this.curves[i].getTangentAtLength(fractionLength - lengthOffset);
+  },
+  getPropertiesAtLength: function(fractionLength){
+    var tangent = this.getTangentAtLength(fractionLength);
+    var point = this.getPointAtLength(fractionLength);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
   }
 };
 
@@ -758,6 +763,12 @@ var pathProperties = function(svgString) {
 
         length = length + curve.getTotalLength();
         cur = [parsed[i][6], parsed[i][7]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "a"){
+        curve = new Arc(cur[0], cur[1], parsed[i][1], parsed[i][2], parsed[i][3], parsed[i][4], parsed[i][5], cur[0] + parsed[i][6], cur[1] + parsed[i][7]);
+
+        length = length + curve.getTotalLength();
+        cur = [cur[0] + parsed[i][6], cur[1] + parsed[i][7]];
         functions.push(curve);
       }
       partial_lengths.push(length);
