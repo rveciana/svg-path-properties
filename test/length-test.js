@@ -124,6 +124,7 @@ tape("Some complex examples", function(test){
   test.inDelta(properties.getTotalLength(), 1329.45, 0.1);
   properties = path.svgPathProperties("m240,100c50,0,0,125,50,100s0,-125,50,-150s175,50,50,100s-175,50,-300,0s0,-125,50,-100s0,125,50,150s0,-100,50,-100");
   test.inDelta(properties.getTotalLength(), 1329.45, 0.1);
-  
+  properties = path.svgPathProperties("M100,100h100v100h-100Z m200,0h1v1h-1z");
+  test.inDelta(properties.getTotalLength(), 404);
   test.end();
 });
