@@ -654,13 +654,16 @@ var pathProperties = function(svgString) {
     var cur = [0, 0];
     var prev_point = [0, 0];
     var curve;
+    var ringStart;
     for (var i = 0; i < parsed.length; i++){
       //moveTo
       if(parsed[i][0] === "M"){
         cur = [parsed[i][1], parsed[i][2]];
+        ringStart = [cur[0], cur[1]];
         functions.push(null);
       } else if(parsed[i][0] === "m"){
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
+        ringStart = [cur[0], cur[1]];
         functions.push(null);
       }
       //lineTo
@@ -690,9 +693,9 @@ var pathProperties = function(svgString) {
         cur[1] = parsed[i][1] + cur[1];
       //Close path
       }  else if(parsed[i][0] === "z" || parsed[i][0] === "Z"){
-        length = length + Math.sqrt(Math.pow(parsed[0][1] - cur[0], 2) + Math.pow(parsed[0][2] - cur[1], 2));
-        functions.push(new LinearPosition(cur[0], parsed[0][1], cur[1], parsed[0][2]));
-        cur = [parsed[0][1], parsed[0][2]];
+        length = length + Math.sqrt(Math.pow(ringStart[0] - cur[0], 2) + Math.pow(ringStart[1] - cur[1], 2));
+        functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1]));
+        cur = [ringStart[0], ringStart[1]];
       }
       //Cubic Bezier curves
       else if(parsed[i][0] === "C"){

@@ -156,3 +156,20 @@ tape("Testing getPointAtLength with straigh line bezier curve (bug)", function(t
 
   test.end();
 });
+
+tape("Testing with multiple rings", function(test){
+  var properties = path.svgPathProperties("M100,100h100v100h-100Z m200,0h1v1h-1z");
+  test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
+  test.deepEqual(properties.getPointAtLength(401), { x: 301, y: 100 });
+
+  properties = path.svgPathProperties("M100,100L200,100 M300,100L400,100")
+  test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
+  test.deepEqual(properties.getPointAtLength(100), { x: 200, y: 100 });
+  test.deepEqual(properties.getPointAtLength(200), { x: 400, y: 100 });
+  test.deepEqual(properties.getPointAtLength(200), properties.getPointAtLength(500));
+  properties = path.svgPathProperties("M100,100 L101,100 M200,0 M500,600 M0,0L1,0L1,1L0,1Z")
+  test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
+  test.deepEqual(properties.getPointAtLength(1), { x: 101, y: 100 });
+  test.deepEqual(properties.getPointAtLength(2), { x: 1, y: 0 });
+  test.end();
+});
