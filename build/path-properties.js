@@ -808,11 +808,12 @@ var pathProperties = function(svgString) {
         properties['start'] = functions[i].getPointAtLength(0);
         properties['end'] = functions[i].getPointAtLength(partial_lengths[i] - partial_lengths[i-1]);
         properties['length'] = partial_lengths[i] - partial_lengths[i-1];
-        let func = functions[i];
-        properties['getPointAtLength'] = function(d){return func.getPointAtLength(d);};
-        properties['getTangentAtLength'] = function(d){return func.getTangentAtLength(d);};
-        properties['getPropertiesAtLength'] = function(d){return func.getPropertiesAtLength(d);};
-
+        (function(func){
+          properties['getPointAtLength'] = function(d){return func.getPointAtLength(d);};
+          properties['getTangentAtLength'] = function(d){return func.getTangentAtLength(d);};
+          properties['getPropertiesAtLength'] = function(d){return func.getPropertiesAtLength(d);};
+        })(functions[i]);
+        
         parts.push(properties);
       }
     }
