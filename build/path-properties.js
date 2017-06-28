@@ -800,6 +800,26 @@ var pathProperties = function(svgString) {
     return functions[fractionPart.i].getPropertiesAtLength(fractionPart.fraction);
   };
 
+  svgProperties.getParts = function(){
+    var parts = [];
+    for(var i = 0; i< functions.length; i++){
+      if(functions[i] != null){
+        var properties = {};
+        properties['start'] = functions[i].getPointAtLength(0);
+        properties['end'] = functions[i].getPointAtLength(partial_lengths[i] - partial_lengths[i-1]);
+        properties['length'] = partial_lengths[i] - partial_lengths[i-1];
+        let func = functions[i];
+        properties['getPointAtLength'] = function(d){return func.getPointAtLength(d);};
+        properties['getTangentAtLength'] = function(d){return func.getTangentAtLength(d);};
+        properties['getPropertiesAtLength'] = function(d){return func.getPropertiesAtLength(d);};
+
+        parts.push(properties);
+      }
+    }
+  
+    return parts;
+  };
+
   var getPartAtLength = function(fractionLength){
     if(fractionLength < 0){
       fractionLength = 0;
