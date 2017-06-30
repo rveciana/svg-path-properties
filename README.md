@@ -22,6 +22,7 @@ USAGE
     var point = properties.getPointAtLength(200);
     var tangent = properties.getTangentAtLength(200);
     var allProperties = properties.getPropertiesAtLength(200);
+    var parts = properties.getParts(); --> Gets an array with the different sections of the path, each element containing the initial and final points, the length and the curve function
 
 [Check this block](http://bl.ocks.org/rveciana/209fa7efeb01f05fa4a544a76ac8ed91) to see how it works with the browser.
 
