@@ -173,3 +173,13 @@ tape("Testing with multiple rings", function(test){
   test.deepEqual(properties.getPointAtLength(2), { x: 1, y: 0 });
   test.end();
 });
+
+tape("TestingDegenerated quadratic curves, issue 9", function(test){
+  var properties = path.svgPathProperties("M60,20Q60,20 150,20");
+  test.deepEqual(properties.getPointAtLength(2), { x: 62, y: 20 });
+  test.equal(properties.getTotalLength(), 90);
+  properties = path.svgPathProperties("M60,20q0,0 90,0");
+  test.deepEqual(properties.getPointAtLength(2), { x: 62, y: 20 });
+  test.equal(properties.getTotalLength(), 90);
+  test.end();
+});

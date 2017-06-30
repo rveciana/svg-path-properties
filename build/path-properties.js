@@ -729,14 +729,22 @@ var pathProperties = function(svgString) {
       }
       //Quadratic Bezier curves
       else if(parsed[i][0] === "Q"){
-        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        if(cur[0] != parsed[i][1] && cur[1] != parsed[i][2]){
+          curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        } else {
+          curve = new LinearPosition(parsed[i][1], parsed[i][3], parsed[i][2], parsed[i][4]);
+        }
         length = length + curve.getTotalLength();
         functions.push(curve);
         cur = [parsed[i][3], parsed[i][4]];
         prev_point = [parsed[i][1], parsed[i][2]];
 
       }  else if(parsed[i][0] === "q"){
-        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        if(!(parsed[i][1] == 0 && parsed[i][2] == 0)){
+          curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        } else {
+          curve = new LinearPosition(cur[0] + parsed[i][1], cur[0] + parsed[i][3], cur[1] + parsed[i][2], cur[1] + parsed[i][4]);
+        }
         length = length + curve.getTotalLength();
         prev_point = [cur[0] + parsed[i][1], cur[1] + parsed[i][2]];
         cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
