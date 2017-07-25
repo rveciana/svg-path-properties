@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.3.0. Copyright 2017 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.4.0. Copyright 2017 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -729,10 +729,10 @@ var pathProperties = function(svgString) {
       }
       //Quadratic Bezier curves
       else if(parsed[i][0] === "Q"){
-        if(cur[0] != parsed[i][1] && cur[1] != parsed[i][2]){
-          curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
-        } else {
+        if(cur[0] == parsed[i][1] && cur[1] == parsed[i][2]){
           curve = new LinearPosition(parsed[i][1], parsed[i][3], parsed[i][2], parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
         }
         length = length + curve.getTotalLength();
         functions.push(curve);
