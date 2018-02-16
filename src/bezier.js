@@ -155,11 +155,10 @@ function getQuadraticArcLength(xs, ys, t) {
    var u = t + b;
    var k = c - b*b;
 
+   var term = ((b+Math.sqrt(b*b+k)))!==0?k*Math.log(Math.abs((u+Math.sqrt(u*u+k))/(b+Math.sqrt(b*b+k)))):0;
    return (Math.sqrt(A)/2)*(
      u*Math.sqrt(u*u+k)-b*Math.sqrt(b*b+k)+
-     k*Math.log(Math.abs(
-       (u+Math.sqrt(u*u+k))/(b+Math.sqrt(b*b+k))
-     ))
+     term
    );
 
 }

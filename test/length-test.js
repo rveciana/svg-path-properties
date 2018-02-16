@@ -126,5 +126,10 @@ tape("Some complex examples", function(test){
   test.inDelta(properties.getTotalLength(), 1329.45, 0.1);
   properties = path.svgPathProperties("M100,100h100v100h-100Z m200,0h1v1h-1z");
   test.inDelta(properties.getTotalLength(), 404);
+  //https://github.com/rveciana/svg-path-properties/issues/12. getQuadraticArcLength zero division
+  properties = path.svgPathProperties("M470,623Q468,627,467,629");
+  test.inDelta(properties.getTotalLength(), 6.71, 0.1); 
+  properties = path.svgPathProperties("M 408 666 Q 408 569 276 440 Q 270 435 270 429 Q 269 427 270 426 Q 271 426 274 426 Q 347 445 443 578 Q 456 598 466 609 Q 472 616 470 623 Q 468 627 467 629");
+  test.inDelta(properties.getTotalLength(), 580, 0.1);
   test.end();
 });
