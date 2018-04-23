@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.4.1. Copyright 2018 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.4.2. Copyright 2018 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -334,214 +334,30 @@ function getCubicArcLength(xs, ys, t) {
   return z * sum;
 }
 
-//This file is taken from the following project: https://github.com/fontello/svgpath
-// Convert an arc to a sequence of cubic bézier curves
-//
-var TAU = Math.PI * 2;
-
-
-/* eslint-disable space-infix-ops */
-
-// Calculate an angle between two unit vectors
-//
-// Since we measure angle between radii of circular arcs,
-// we can use simplified math (without length normalization)
-//
-function unit_vector_angle(ux, uy, vx, vy) {
-  var sign = (ux * vy - uy * vx < 0) ? -1 : 1;
-  var dot  = ux * vx + uy * vy;
-
-  // Add this to work with arbitrary vectors:
-  // dot /= Math.sqrt(ux * ux + uy * uy) * Math.sqrt(vx * vx + vy * vy);
-
-  // rounding errors, e.g. -1.0000000000000002 can screw up this
-  if (dot >  1.0) { dot =  1.0; }
-  if (dot < -1.0) { dot = -1.0; }
-
-  return sign * Math.acos(dot);
-}
-
-
-// Convert from endpoint to center parameterization,
-// see http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
-//
-// Return [cx, cy, theta1, delta_theta]
-//
-function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
-  // Step 1.
-  //
-  // Moving an ellipse so origin will be the middlepoint between our two
-  // points. After that, rotate it to line up ellipse axes with coordinate
-  // axes.
-  //
-  var x1p =  cos_phi*(x1-x2)/2 + sin_phi*(y1-y2)/2;
-  var y1p = -sin_phi*(x1-x2)/2 + cos_phi*(y1-y2)/2;
-
-  var rx_sq  =  rx * rx;
-  var ry_sq  =  ry * ry;
-  var x1p_sq = x1p * x1p;
-  var y1p_sq = y1p * y1p;
-
-  // Step 2.
-  //
-  // Compute coordinates of the centre of this ellipse (cx', cy')
-  // in the new coordinate system.
-  //
-  var radicant = (rx_sq * ry_sq) - (rx_sq * y1p_sq) - (ry_sq * x1p_sq);
-
-  if (radicant < 0) {
-    // due to rounding errors it might be e.g. -1.3877787807814457e-17
-    radicant = 0;
-  }
-
-  radicant /=   (rx_sq * y1p_sq) + (ry_sq * x1p_sq);
-  radicant = Math.sqrt(radicant) * (fa === fs ? -1 : 1);
-
-  var cxp = radicant *  rx/ry * y1p;
-  var cyp = radicant * -ry/rx * x1p;
-
-  // Step 3.
-  //
-  // Transform back to get centre coordinates (cx, cy) in the original
-  // coordinate system.
-  //
-  var cx = cos_phi*cxp - sin_phi*cyp + (x1+x2)/2;
-  var cy = sin_phi*cxp + cos_phi*cyp + (y1+y2)/2;
-
-  // Step 4.
-  //
-  // Compute angles (theta1, delta_theta).
-  //
-  var v1x =  (x1p - cxp) / rx;
-  var v1y =  (y1p - cyp) / ry;
-  var v2x = (-x1p - cxp) / rx;
-  var v2y = (-y1p - cyp) / ry;
-
-  var theta1 = unit_vector_angle(1, 0, v1x, v1y);
-  var delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
-
-  if (fs === 0 && delta_theta > 0) {
-    delta_theta -= TAU;
-  }
-  if (fs === 1 && delta_theta < 0) {
-    delta_theta += TAU;
-  }
-
-  return [ cx, cy, theta1, delta_theta ];
-}
-
-//
-// Approximate one unit arc segment with bézier curves,
-// see http://math.stackexchange.com/questions/873224
-//
-function approximate_unit_arc(theta1, delta_theta) {
-  var alpha = 4/3 * Math.tan(delta_theta/4);
-
-  var x1 = Math.cos(theta1);
-  var y1 = Math.sin(theta1);
-  var x2 = Math.cos(theta1 + delta_theta);
-  var y2 = Math.sin(theta1 + delta_theta);
-
-  return [ x1, y1, x1 - y1*alpha, y1 + x1*alpha, x2 + y2*alpha, y2 - x2*alpha, x2, y2 ];
-}
-
-var a2c = function(x1, y1, rx, ry, phi, fa, fs, x2, y2) {
-  var sin_phi = Math.sin(phi * TAU / 360);
-  var cos_phi = Math.cos(phi * TAU / 360);
-
-  // Make sure radii are valid
-  //
-  var x1p =  cos_phi*(x1-x2)/2 + sin_phi*(y1-y2)/2;
-  var y1p = -sin_phi*(x1-x2)/2 + cos_phi*(y1-y2)/2;
-
-  if (x1p === 0 && y1p === 0) {
-    // we're asked to draw line to itself
-    return [];
-  }
-
-  if (rx === 0 || ry === 0) {
-    // one of the radii is zero
-    return [];
-  }
-
-
-  // Compensate out-of-range radii
-  //
-  rx = Math.abs(rx);
-  ry = Math.abs(ry);
-
-  var lambda = (x1p * x1p) / (rx * rx) + (y1p * y1p) / (ry * ry);
-  if (lambda > 1) {
-    rx *= Math.sqrt(lambda);
-    ry *= Math.sqrt(lambda);
-  }
-
-
-  // Get center parameters (cx, cy, theta1, delta_theta)
-  //
-  var cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
-
-  var result = [];
-  var theta1 = cc[2];
-  var delta_theta = cc[3];
-
-  // Split an arc to multiple segments, so each segment
-  // will be less than τ/4 (= 90°)
-  //
-  var segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
-  delta_theta /= segments;
-
-  for (var i = 0; i < segments; i++) {
-    result.push(approximate_unit_arc(theta1, delta_theta));
-    theta1 += delta_theta;
-  }
-
-  // We have a bezier approximation of a unit circle,
-  // now need to transform back to the original ellipse
-  //
-  return result.map(function (curve) {
-    for (var i = 0; i < curve.length; i += 2) {
-      var x = curve[i + 0];
-      var y = curve[i + 1];
-
-      // scale
-      x *= rx;
-      y *= ry;
-
-      // rotate
-      var xp = cos_phi*x - sin_phi*y;
-      var yp = sin_phi*x + cos_phi*y;
-
-      // translate
-      curve[i + 0] = xp + cc[0];
-      curve[i + 1] = yp + cc[1];
-    }
-
-    return curve;
-  });
-};
-
 //Calculate ans Arc curve length and positionAtLength
-//Definitions taken from https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+//The point in ellipse functions have been taken from https://github.com/MadLittleMods/svg-curve-lib/tree/f07d6008a673816f4cb74a3269164b430c3a95cb
+
 var Arc = function(x0, y0, rx,ry, xAxisRotate, LargeArcFlag,SweepFlag, x,y) {
   return new Arc$1(x0, y0, rx,ry, xAxisRotate, LargeArcFlag,SweepFlag, x,y);
 };
 
-function Arc$1(x0, y0,rx,ry, xAxisRotate, LargeArcFlag,SweepFlag,x,y) {
-    var length = 0;
-    var partialLengths = [];
-    var curves = [];
-    var res = a2c(x0, y0,rx,ry, xAxisRotate, LargeArcFlag,SweepFlag,x,y);
-    res.forEach(function(d){
-        var curve = new Bezier(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7]);
-        var curveLength = curve.getTotalLength();
-        length += curveLength;
-        partialLengths.push(curveLength);
-        curves.push(curve);
-    });
-    this.length = length;
-    this.partialLengths = partialLengths;
-    this.curves = curves;
+function Arc$1(x0, y0,rx,ry, xAxisRotate, LargeArcFlag, SweepFlag,x1,y1) {
+  this.x0 = x0;
+  this.y0 = y0;
+  this.rx = rx;
+  this.ry = ry;
+  this.xAxisRotate = xAxisRotate;
+  this.LargeArcFlag = LargeArcFlag;
+  this.SweepFlag = SweepFlag;
+  this.x1 = x1;
+  this.y1 = y1;
+
+  var lengthProperties = approximateArcLengthOfCurve(300, function(t) {
+    return pointOnEllipticalArc({x: x0, y:y0}, rx, ry, xAxisRotate,
+                                 LargeArcFlag, SweepFlag, {x: x1, y:y1}, t);
+  });
+
+  this.length = lengthProperties.arcLength;
 }
 
 Arc$1.prototype = {
@@ -561,21 +377,15 @@ Arc$1.prototype = {
     } else if(fractionLength > this.length){
       fractionLength = this.length;
     }
-    var i = this.partialLengths.length - 1;
+    
+    var position = pointOnEllipticalArc({x: this.x0, y:this.y0}, 
+      this.rx, this.ry, this.xAxisRotate,
+      this.LargeArcFlag, this.SweepFlag,
+      {x: this.x1, y: this.y1},
+      fractionLength/this.length);
+     
+    return {x: position.x, y: position.y};
 
-    while(this.partialLengths[i] >= fractionLength && this.partialLengths[i] > 0){
-      i--;
-    }
-    if(i<this.partialLengths.length-1){
-        i++;
-    }
-
-    var lengthOffset = 0;
-    for(var j=0; j<i; j++){
-        lengthOffset += this.partialLengths[j];
-    }
-
-    return this.curves[i].getPointAtLength(fractionLength - lengthOffset);
   },
   getTangentAtLength: function(fractionLength) {
     if(fractionLength < 0){
@@ -583,21 +393,14 @@ Arc$1.prototype = {
         } else if(fractionLength > this.length){
         fractionLength = this.length;
         }
-        var i = this.partialLengths.length - 1;
-
-        while(this.partialLengths[i] >= fractionLength && this.partialLengths[i] > 0){
-        i--;
-        }
-        if(i<this.partialLengths.length-1){
-            i++;
-        }
-
-        var lengthOffset = 0;
-        for(var j=0; j<i; j++){
-            lengthOffset += this.partialLengths[j];
-        }
-
-    return this.curves[i].getTangentAtLength(fractionLength - lengthOffset);
+        var position = pointOnEllipticalArc({x: this.x0, y:this.y0}, 
+          this.rx, this.ry, this.xAxisRotate,
+          this.LargeArcFlag, this.SweepFlag,
+          {x: this.x1, y: this.y1},
+          fractionLength/this.length);
+    
+        return {x: position.x, y: position.y};
+        
   },
   getPropertiesAtLength: function(fractionLength){
     var tangent = this.getTangentAtLength(fractionLength);
@@ -605,6 +408,178 @@ Arc$1.prototype = {
     return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
   }
 };
+
+function pointOnEllipticalArc(p0, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, p1, t) {
+
+  // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+  rx = Math.abs(rx);
+  ry = Math.abs(ry);
+  xAxisRotation = mod(xAxisRotation, 360);
+  var xAxisRotationRadians = toRadians(xAxisRotation);
+  // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
+  if(p0.x === p1.x && p0.y === p1.y) {
+    return p0;
+  }
+  
+  // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.    
+  if(rx === 0 || ry === 0) {
+    return this.pointOnLine(p0, p1, t);
+  }
+
+  
+  // Following "Conversion from endpoint to center parameterization"
+  // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
+  
+  // Step #1: Compute transformedPoint
+  var dx = (p0.x-p1.x)/2;
+  var dy = (p0.y-p1.y)/2;
+  var transformedPoint = {
+    x: Math.cos(xAxisRotationRadians)*dx + Math.sin(xAxisRotationRadians)*dy,
+    y: -Math.sin(xAxisRotationRadians)*dx + Math.cos(xAxisRotationRadians)*dy
+  };
+  // Ensure radii are large enough
+  var radiiCheck = Math.pow(transformedPoint.x, 2)/Math.pow(rx, 2) + Math.pow(transformedPoint.y, 2)/Math.pow(ry, 2);
+  if(radiiCheck > 1) {
+    rx = Math.sqrt(radiiCheck)*rx;
+    ry = Math.sqrt(radiiCheck)*ry;
+  }
+
+  // Step #2: Compute transformedCenter
+  var cSquareNumerator = Math.pow(rx, 2)*Math.pow(ry, 2) - Math.pow(rx, 2)*Math.pow(transformedPoint.y, 2) - Math.pow(ry, 2)*Math.pow(transformedPoint.x, 2);
+  var cSquareRootDenom = Math.pow(rx, 2)*Math.pow(transformedPoint.y, 2) + Math.pow(ry, 2)*Math.pow(transformedPoint.x, 2);
+  var cRadicand = cSquareNumerator/cSquareRootDenom;
+  // Make sure this never drops below zero because of precision
+  cRadicand = cRadicand < 0 ? 0 : cRadicand;
+  var cCoef = (largeArcFlag !== sweepFlag ? 1 : -1) * Math.sqrt(cRadicand);
+  var transformedCenter = {
+    x: cCoef*((rx*transformedPoint.y)/ry),
+    y: cCoef*(-(ry*transformedPoint.x)/rx)
+  };
+
+  // Step #3: Compute center
+  var center = {
+    x: Math.cos(xAxisRotationRadians)*transformedCenter.x - Math.sin(xAxisRotationRadians)*transformedCenter.y + ((p0.x+p1.x)/2),
+    y: Math.sin(xAxisRotationRadians)*transformedCenter.x + Math.cos(xAxisRotationRadians)*transformedCenter.y + ((p0.y+p1.y)/2)
+  };
+
+  
+  // Step #4: Compute start/sweep angles
+  // Start angle of the elliptical arc prior to the stretch and rotate operations.
+  // Difference between the start and end angles
+  var startVector = {
+    x: (transformedPoint.x-transformedCenter.x)/rx,
+    y: (transformedPoint.y-transformedCenter.y)/ry
+  };
+  var startAngle = angleBetween({
+    x: 1,
+    y: 0
+  }, startVector);
+  
+  var endVector = {
+    x: (-transformedPoint.x-transformedCenter.x)/rx,
+    y: (-transformedPoint.y-transformedCenter.y)/ry
+  };
+  var sweepAngle = angleBetween(startVector, endVector);
+  
+  if(!sweepFlag && sweepAngle > 0) {
+    sweepAngle -= 2*Math.PI;
+  }
+  else if(sweepFlag && sweepAngle < 0) {
+    sweepAngle += 2*Math.PI;
+  }
+  // We use % instead of `mod(..)` because we want it to be -360deg to 360deg(but actually in radians)
+  sweepAngle %= 2*Math.PI;
+  
+  // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
+  var angle = startAngle+(sweepAngle*t);
+  var ellipseComponentX = rx*Math.cos(angle);
+  var ellipseComponentY = ry*Math.sin(angle);
+  
+  var point = {
+    x: Math.cos(xAxisRotationRadians)*ellipseComponentX - Math.sin(xAxisRotationRadians)*ellipseComponentY + center.x,
+    y: Math.sin(xAxisRotationRadians)*ellipseComponentX + Math.cos(xAxisRotationRadians)*ellipseComponentY + center.y
+  };
+
+  // Attach some extra info to use
+  point.ellipticalArcStartAngle = startAngle;
+  point.ellipticalArcEndAngle = startAngle+sweepAngle;
+  point.ellipticalArcAngle = angle;
+
+  point.ellipticalArcCenter = center;
+  point.resultantRx = rx;
+  point.resultantRy = ry;
+
+  
+
+  return point;
+}
+
+function approximateArcLengthOfCurve(resolution, pointOnCurveFunc) {
+  // Resolution is the number of segments we use
+  resolution = resolution ? resolution : 500;
+  
+  var resultantArcLength = 0;
+  var arcLengthMap = [];
+  var approximationLines = [];
+
+  var prevPoint = pointOnCurveFunc(0);
+  var nextPoint;
+  for(var i = 0; i < resolution; i++) {
+    var t = clamp(i*(1/resolution), 0, 1);
+    nextPoint = pointOnCurveFunc(t);
+    resultantArcLength += distance(prevPoint, nextPoint);
+    approximationLines.push([prevPoint, nextPoint]);
+
+    arcLengthMap.push({
+      t: t,
+      arcLength: resultantArcLength
+    });
+    
+    prevPoint = nextPoint;
+  }
+  // Last stretch to the endpoint
+  nextPoint = pointOnCurveFunc(1);
+  approximationLines.push([prevPoint, nextPoint]);
+  resultantArcLength += distance(prevPoint, nextPoint);
+  arcLengthMap.push({
+    t: 1,
+    arcLength: resultantArcLength
+  });
+
+  return {
+    arcLength: resultantArcLength,
+    arcLengthMap: arcLengthMap,
+    approximationLines: approximationLines
+  };
+}
+
+function mod(x, m) {
+  return (x%m + m)%m;
+}
+
+function toRadians(angle) {
+  return angle * (Math.PI / 180);
+}
+
+function distance(p0, p1) {
+  return Math.sqrt(Math.pow(p1.x-p0.x, 2) + Math.pow(p1.y-p0.y, 2));
+}
+
+function clamp(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+
+function angleBetween(v0, v1) {
+  var p = v0.x*v1.x + v0.y*v1.y;
+  var n = Math.sqrt((Math.pow(v0.x, 2)+Math.pow(v0.y, 2)) * (Math.pow(v1.x, 2)+Math.pow(v1.y, 2)));
+  var sign = v0.x*v1.y - v0.y*v1.x < 0 ? -1 : 1;
+  var angle = sign*Math.acos(p/n);
+  
+  //var angle = Math.atan2(v0.y, v0.x) - Math.atan2(v1.y,  v1.x);
+  
+  return angle;
+}
 
 var LinearPosition = function(x0, x1, y0, y1) {
   return new LinearPosition$1(x0, x1, y0, y1);

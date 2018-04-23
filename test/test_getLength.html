@@ -5,8 +5,11 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../build/path-properties.js"></script>
 <script>
-
-  var paths = ["M0,50L500,50",
+  var paths = ["M66,50A100,100,0,1,0,299,140"];
+/*
+  var paths = ["M66,50A100,100,0,1,0,299,140",
+              "M66,50A150,150,0,1,0,299,140",
+              "M0,50L500,50",
               "M0,50L300,300",
               "M0,50H300",
               "M50,50h300",
@@ -33,7 +36,7 @@
               "M60,20q0,0 90,0",
               "M164,32Q164,409 347,375",
               "M470,623Q468,627,467,629",
-              ];
+              ];*/
 
   for(var i=0; i<paths.length; i++){
     pathEl = d3.select("body").append("svg")
@@ -103,7 +106,6 @@
         .attr("cy", position.y)
         .attr("r", 4)
         .attr("fill", "blue");
-
       var position2 = properties.getPointAtLength(j*browserLength/6);
       pathEl
         .append("circle")

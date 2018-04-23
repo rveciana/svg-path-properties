@@ -30,10 +30,10 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "3.19.0",
+    "eslint": "4.19",
     "package-preamble": "0.1.0",
-    "rollup": "0.42.0",
-    "tape": "4.6.3",
-    "uglify-js": "2.8.28"
+    "rollup": "0.58",
+    "tape": "4.9",
+    "uglify-js": "3.3"
   }
 }

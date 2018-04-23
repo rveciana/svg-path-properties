@@ -36,6 +36,7 @@ For Bézier curves:
 * http://bl.ocks.org/hnakamur/e7efd0602bfc15f66fc5, https://gist.github.com/tunght13488/6744e77c242cc7a94859
 * http://stackoverflow.com/questions/11854907/calculate-the-length-of-a-segment-of-a-quadratic-bezier
 * http://pomax.github.io/bezierinfo
+* Arc elements calculation: https://github.com/MadLittleMods/svg-curve-lib/tree/f07d6008a673816f4cb74a3269164b430c3a95cb
 
 For path parsing:
 
