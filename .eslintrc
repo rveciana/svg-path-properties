@@ -1,15 +1,18 @@
-parserOptions:
-    sourceType: "module"
+{
+"parserOptions":
+    {"sourceType": "module"},
 
-env:
-    es6: true
-    browser: true
+"env": {
+    "es6": true,
+    "browser": true
+},
 
-extends:
-    "eslint:recommended"
+"extends": "eslint:recommended",
 
-rules:
-    no-cond-assign: 0
-no-constant-condition: 0
+"rules": {
+    "no-cond-assign": 0,
+    "no-constant-condition": 0
+},
 
-global-require: "error"
+"global-require": "error"
+}

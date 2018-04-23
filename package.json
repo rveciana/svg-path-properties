@@ -19,9 +19,9 @@
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
     "test": "tape 'test/*-test.js' && eslint index.js src",
-    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js",
     "postpublish": "git push && git push --tags",
-    "postversion": "npm run prepublish"
+    "preversion": "npm run uglify && git add build && git commit -am \"new version\"",
+    "uglify": "uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js"
   },
   "author": {
     "name": "Roger Veciana i Rovira",
