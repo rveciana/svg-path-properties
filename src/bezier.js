@@ -27,7 +27,7 @@ function Bezier(ax, ay, bx, by, cx, cy, dx, dy) {
 Bezier.prototype = {
   constructor: Bezier,
   init: function() {
-
+    
     this.length = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
                                     [this.a.y, this.b.y, this.c.y, this.d.y]);
   },
@@ -155,9 +155,12 @@ function getQuadraticArcLength(xs, ys, t) {
    var u = t + b;
    var k = c - b*b;
 
-   var term = ((b+Math.sqrt(b*b+k)))!==0?k*Math.log(Math.abs((u+Math.sqrt(u*u+k))/(b+Math.sqrt(b*b+k)))):0;
+   var uuk = (u*u+k)>0?Math.sqrt(u*u+k):0;
+   var bbk = (b*b+k)>0?Math.sqrt(b*b+k):0;
+   var term = ((b+Math.sqrt(b*b+k)))!==0?k*Math.log(Math.abs((u+uuk)/(b+bbk))):0;
+   
    return (Math.sqrt(A)/2)*(
-     u*Math.sqrt(u*u+k)-b*Math.sqrt(b*b+k)+
+     u*uuk-b*bbk+
      term
    );
 

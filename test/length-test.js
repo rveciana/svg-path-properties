@@ -131,5 +131,11 @@ tape("Some complex examples", function(test){
   test.inDelta(properties.getTotalLength(), 6.71, 0.1); 
   properties = path.svgPathProperties("M 408 666 Q 408 569 276 440 Q 270 435 270 429 Q 269 427 270 426 Q 271 426 274 426 Q 347 445 443 578 Q 456 598 466 609 Q 472 616 470 623 Q 468 627 467 629");
   test.inDelta(properties.getTotalLength(), 580, 0.1);
+
+
+  //https://github.com/rveciana/svg-path-properties/issues/14
+  properties = path.svgPathProperties("M0,0L31.081620209059235,726.1062992125984Q41.44216027874565,726.1062992125984,41.44216027874565,726.1062992125984");
+  test.inDelta(properties.getTotalLength(), 737.13, 0.1);
+
   test.end();
 });
