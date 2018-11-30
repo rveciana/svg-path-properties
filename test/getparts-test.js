@@ -50,6 +50,11 @@ tape("Testing the getParts with simple path", function(test) {
 tape("Issue 15", function(test) {
     var def = "M0,0 c 0.025,-0.052 0.081,-0.1387 0.2031,-0.2598 0,0 0,0 0,0";
     var properties = path.svgPathProperties(def);
-    properties.getParts(); //The above path used to hang the program
+    properties.getParts(); //The above path used to hang the programd
+
+    def = "M0,0 c 0.025,-0.052 0.081,-0.1387 0.2031,-0.2598 0,0 0,0 0,0 c 0.1865,-0.31055 0.3632,-0.71289 0.5371,-1.22266 0.1963,-0.40625 0.3261,-0.78516 0.3857,-1.13184 0,-0.008 0,-0.0156 0,-0.0225";
+    properties = path.svgPathProperties(def);
+    properties.getParts(); 
+
     test.end();
 });
