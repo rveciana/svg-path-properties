@@ -46,3 +46,10 @@ tape("Testing the getParts with simple path", function(test) {
     test.deepEqual(parts[1].getPointAtLength(5), properties.getPointAtLength(parts[0]['length'] + 5), "Second part must have equal distances");
     test.end();
 });
+
+tape("Issue 15", function(test) {
+    var def = "M0,0 c 0.025,-0.052 0.081,-0.1387 0.2031,-0.2598 0,0 0,0 0,0";
+    var properties = path.svgPathProperties(def);
+    properties.getParts(); //The above path used to hang the program
+    test.end();
+});

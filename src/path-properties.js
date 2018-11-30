@@ -65,9 +65,11 @@ export default function(svgString) {
         functions.push(curve);
       } else if(parsed[i][0] === "c"){
         curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4] , cur[0] + parsed[i][5], cur[1] + parsed[i][6]);
-        length = length + curve.getTotalLength();
-        cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
-        functions.push(curve);
+        if(curve.getTotalLength() > 0){
+          length = length + curve.getTotalLength();
+          cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
+          functions.push(curve);
+        }
       } else if(parsed[i][0] === "S"){
         if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
           curve = new Bezier(cur[0], cur[1] , 2*cur[0] - parsed[i-1][parsed[i-1].length - 4], 2*cur[1] - parsed[i-1][parsed[i-1].length - 3], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
