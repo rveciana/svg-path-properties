@@ -99,20 +99,21 @@ function t2length(length, total_length, func, xs, ys){
   var error = 1;
   var t = length/total_length;
   var step = (length - func(xs, ys, t))/total_length
-
-  while (error > 0.001){
+ 
+ // reasonable number 500? Seems to usually require around 10
+  for (var repeats = 0; error > 0.001 && repeats < 500; repeats++) {
     var increasedTLength = func(xs, ys, t + step);
     var decreasedTLength = func(xs, ys, t - step);
-    var increasedTError = Math.abs(length - increasedTLength)/total_length;
-    var decreasedTError = Math.abs(length - decreasedTLength)/total_length;
+    var increasedTError = Math.abs(length - increasedTLength) / total_length;
+    var decreasedTError = Math.abs(length - decreasedTLength) / total_length;
     if (increasedTError < error) {
-      error = increasedTError
-      t += step
+      error = increasedTError;
+      t += step;
     } else if (decreasedTError < error) {
-      error = decreasedTError
-      t -= step
+      error = decreasedTError;
+      t -= step;
     } else {
-      step /= 2
+      step /= 2;
     }
   }
 
