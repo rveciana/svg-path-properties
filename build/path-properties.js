@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.4.6. Copyright 2018 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.4.7. Copyright 2019 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -147,11 +147,12 @@
 	  var t = length/total_length;
 	  var step = (length - func(xs, ys, t))/total_length;
 
+	  var numIterations = 0;
 	  while (error > 0.001){
 	    var increasedTLength = func(xs, ys, t + step);
 	    var decreasedTLength = func(xs, ys, t - step);
-	    var increasedTError = Math.abs(length - increasedTLength)/total_length;
-	    var decreasedTError = Math.abs(length - decreasedTLength)/total_length;
+	    var increasedTError = Math.abs(length - increasedTLength) / total_length;
+	    var decreasedTError = Math.abs(length - decreasedTLength) / total_length;
 	    if (increasedTError < error) {
 	      error = increasedTError;
 	      t += step;
@@ -160,6 +161,11 @@
 	      t -= step;
 	    } else {
 	      step /= 2;
+	    }
+
+	    numIterations++;
+	    if(numIterations > 500){
+	      break;
 	    }
 	  }
 

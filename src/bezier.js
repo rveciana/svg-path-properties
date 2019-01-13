@@ -100,19 +100,25 @@ function t2length(length, total_length, func, xs, ys){
   var t = length/total_length;
   var step = (length - func(xs, ys, t))/total_length
 
+  var numIterations = 0;
   while (error > 0.001){
     var increasedTLength = func(xs, ys, t + step);
     var decreasedTLength = func(xs, ys, t - step);
-    var increasedTError = Math.abs(length - increasedTLength)/total_length;
-    var decreasedTError = Math.abs(length - decreasedTLength)/total_length;
+    var increasedTError = Math.abs(length - increasedTLength) / total_length;
+    var decreasedTError = Math.abs(length - decreasedTLength) / total_length;
     if (increasedTError < error) {
-      error = increasedTError
-      t += step
+      error = increasedTError;
+      t += step;
     } else if (decreasedTError < error) {
-      error = decreasedTError
-      t -= step
+      error = decreasedTError;
+      t -= step;
     } else {
-      step /= 2
+      step /= 2;
+    }
+
+    numIterations++;
+    if(numIterations > 500){
+      break;
     }
   }
 
