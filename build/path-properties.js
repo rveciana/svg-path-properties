@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.4.7. Copyright 2019 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.4.8. Copyright 2019 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :

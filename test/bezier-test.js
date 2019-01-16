@@ -39,3 +39,12 @@ tape("Testing getTangentAtLength", function(test) {
 
   test.end();
 });
+
+tape("Testing pull request #16 solution", function(test) {
+  var curve = new path.Bezier(640.48, 1285.21, 642.39, 644.73); 
+  var tangent = curve.getTangentAtLength(curve.getTotalLength()/2);
+  test.inDelta(tangent.y, 0, 1);
+  test.inDelta(tangent.x, 0, 1);
+
+  test.end();
+});
