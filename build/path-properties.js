@@ -2,8 +2,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.spp = {})));
-}(this, (function (exports) { 'use strict';
+	(global = global || self, factory(global.spp = {}));
+}(this, function (exports) { 'use strict';
 
 	//Parses an SVG path into an object.
 	//Taken from https://github.com/jkroso/parse-svg-path
@@ -835,10 +835,10 @@
 	  return svgProperties(svgString);
 	}
 
-	exports.svgPathProperties = pathProperties;
-	exports.parse = parse;
 	exports.Bezier = Bezier;
+	exports.parse = parse;
+	exports.svgPathProperties = pathProperties;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
