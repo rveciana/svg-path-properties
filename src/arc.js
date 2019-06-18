@@ -61,9 +61,8 @@ Arc.prototype = {
           this.rx, this.ry, this.xAxisRotate,
           this.LargeArcFlag, this.SweepFlag,
           {x: this.x1, y: this.y1},
-          fractionLength/this.length);
-    
-        return {x: position.x, y: position.y};
+          fractionLength/this.length); 
+        return {x: Math.cos(position.ellipticalArcAngle - Math.PI/2), y: Math.sin(position.ellipticalArcAngle - Math.PI/2)};
         
   },
   getPropertiesAtLength: function(fractionLength){

@@ -1,4 +1,4 @@
-// http://geoexamples.com/path-properties/ Version 0.4.8. Copyright 2019 Roger Veciana i Rovira.
+// http://geoexamples.com/path-properties/ Version 0.4.9. Copyright 2019 Roger Veciana i Rovira.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -406,9 +406,8 @@
 	          this.rx, this.ry, this.xAxisRotate,
 	          this.LargeArcFlag, this.SweepFlag,
 	          {x: this.x1, y: this.y1},
-	          fractionLength/this.length);
-	    
-	        return {x: position.x, y: position.y};
+	          fractionLength/this.length); 
+	        return {x: Math.cos(position.ellipticalArcAngle - Math.PI/2), y: Math.sin(position.ellipticalArcAngle - Math.PI/2)};
 	        
 	  },
 	  getPropertiesAtLength: function(fractionLength){

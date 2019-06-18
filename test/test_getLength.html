@@ -71,7 +71,7 @@ var paths = ["M0,50L500,50",
     browserLength = path.node().getTotalLength();
 
     properties = spp.svgPathProperties(paths[i]);
-    if((properties.getTotalLength()).toFixed(2) == (browserLength.toFixed(2))){
+    if((properties.getTotalLength()).toFixed(1) == (browserLength.toFixed(1))){
       color = "green";
       text = "OK";
     } else {
