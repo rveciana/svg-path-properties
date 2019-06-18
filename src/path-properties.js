@@ -74,7 +74,7 @@ export default function(svgString) {
         }
       } else if(parsed[i][0] === "S"){
         if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
-          curve = new Bezier(cur[0], cur[1] , 2*cur[0] - parsed[i-1][parsed[i-1].length - 4], 2*cur[1] - parsed[i-1][parsed[i-1].length - 3], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+          curve = new Bezier(cur[0], cur[1] , 2*cur[0] - curve.c.x, 2*cur[1] - curve.c.y, parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
         } else {
           curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
         }
