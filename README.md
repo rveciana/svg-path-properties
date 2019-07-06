@@ -26,6 +26,8 @@ USAGE
 
 [Check this block](http://bl.ocks.org/rveciana/209fa7efeb01f05fa4a544a76ac8ed91) to see how it works with the browser.
 
+The TypeScript declaration file is available too, since version 0.5
+
 CREDITS
 =======
 
