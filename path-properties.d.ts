@@ -44,7 +44,7 @@ declare module "svg-path-properties" {
 
   /** Provides information about an SVG path. */
   export type SvgPathProperties = {
-    getTotalLength: (length: number) => number;
+    getTotalLength: () => number;
     getPointAtLength: (length: number) => Point;
     getTangentAtLength: (length: number) => Point;
     getPropertiesAtLength: (length: number) => Properties;

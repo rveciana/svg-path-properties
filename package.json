@@ -11,6 +11,7 @@
   ],
   "homepage": "http://geoexamples.com/path-properties/",
   "main": "build/path-properties.js",
+  "types": "./path-properties.d.ts",
   "jsnext:main": "index",
   "repository": {
     "type": "git",
