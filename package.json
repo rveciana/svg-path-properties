@@ -31,7 +31,7 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "5.16",
+    "eslint": "^6.1.0",
     "package-preamble": "0.1.0",
     "rollup": "1.14",
     "tape": "4.10",
