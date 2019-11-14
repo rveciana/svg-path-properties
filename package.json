@@ -10,19 +10,20 @@
     "svg"
   ],
   "homepage": "http://geoexamples.com/path-properties/",
-  "main": "build/path-properties.js",
-  "types": "./path-properties.d.ts",
-  "jsnext:main": "index",
+  "main": "dist/svg-path-properties.cjs.js",
+  "module": "dist/svg-path-properties.esm.js",
+  "browser": "dist/svg-path-properties.iife.js",
+  "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/rveciana/svg-path-properties.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n spp -o build/path-properties.js -- index.js",
-    "test": "tape 'test/*-test.js' && eslint index.js src",
-    "postpublish": "git push && git push --tags",
-    "preversion": "npm run uglify && git add build && git commit --allow-empty -am \"new version\"",
-    "uglify": "uglifyjs --preamble \"$(preamble)\" build/path-properties.js -c -m -o build/path-properties.min.js"
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "rollup -c",
+    "build": "npm run build:types && npm run build:js"
   },
   "author": {
     "name": "Roger Veciana i Rovira",
@@ -31,10 +32,18 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-typescript": "^7.7.2",
+    "eslint": "^6.6.0",
     "package-preamble": "0.1.0",
-    "rollup": "1.14",
-    "tape": "4.10",
-    "uglify-js": "3.6"
+    "prettier": "^1.19.1",
+    "rollup": "^1.27.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "typescript": "^3.7.2"
   }
 }
