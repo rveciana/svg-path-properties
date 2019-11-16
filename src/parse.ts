@@ -1,4 +1,5 @@
-type pathOrders = "a" | "c" | "h" | "l" | "m" | "q" | "s" | "t" | "v" | "z";
+import { pathOrders } from "./types";
+
 const length: { [key in pathOrders]: number } = {
   a: 7,
   c: 6,
