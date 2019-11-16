@@ -53,6 +53,6 @@ export default (path: string) => {
 };
 
 const parseValues = (args: string) => {
-  var numbers = args.match(numberRegExp);
+  const numbers = args.match(numberRegExp);
   return numbers ? numbers.map(Number) : [];
 };

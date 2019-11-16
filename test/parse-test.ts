@@ -23,8 +23,8 @@ test("overloaded moveTo", test => {
 });
 
 test("curveTo", function(test) {
-  var a = parse("c 50,0 50,100 100,100 50,0 50,-100 100,-100");
-  var b = parse("c 50,0 50,100 100,100 c 50,0 50,-100 100,-100");
+  const a = parse("c 50,0 50,100 100,100 50,0 50,-100 100,-100");
+  const b = parse("c 50,0 50,100 100,100 c 50,0 50,-100 100,-100");
 
   test.deepEqual(
     a,

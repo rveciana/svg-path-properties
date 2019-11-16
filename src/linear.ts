@@ -20,19 +20,19 @@ export class LinearPosition implements Properties {
   };
 
   public getPointAtLength = (pos: number): Point => {
-    var fraction =
+    const fraction =
       pos /
       Math.sqrt(
         Math.pow(this.x0 - this.x1, 2) + Math.pow(this.y0 - this.y1, 2)
       );
 
-    var newDeltaX = (this.x1 - this.x0) * fraction;
-    var newDeltaY = (this.y1 - this.y0) * fraction;
+    const newDeltaX = (this.x1 - this.x0) * fraction;
+    const newDeltaY = (this.y1 - this.y0) * fraction;
     return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
   };
 
   public getTangentAtLength = (_: number): Point => {
-    var module = Math.sqrt(
+    const module = Math.sqrt(
       (this.x1 - this.x0) * (this.x1 - this.x0) +
         (this.y1 - this.y0) * (this.y1 - this.y0)
     );
@@ -40,8 +40,8 @@ export class LinearPosition implements Properties {
   };
 
   public getPropertiesAtLength = (pos: number): PointProperties => {
-    var point = this.getPointAtLength(pos);
-    var tangent = this.getTangentAtLength(pos);
+    const point = this.getPointAtLength(pos);
+    const tangent = this.getTangentAtLength(pos);
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y };
   };
 }

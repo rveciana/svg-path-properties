@@ -1,6 +1,7 @@
 import parse from "./parse";
 import { PointArray, Properties } from "./types";
 import { LinearPosition } from "./linear";
+import { Arc } from "./arc";
 
 export default class SVGPathProperties implements Properties {
   private length: number = 0;
@@ -12,7 +13,7 @@ export default class SVGPathProperties implements Properties {
     let prev_point: PointArray = [0, 0];
     let curve;
     let ringStart: PointArray = [0, 0];
-    for (var i = 0; i < parsed.length; i++) {
+    for (let i = 0; i < parsed.length; i++) {
       //moveTo
       if (parsed[i][0] === "M") {
         cur = [parsed[i][1], parsed[i][2]];
@@ -79,6 +80,38 @@ export default class SVGPathProperties implements Properties {
           new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1])
         );
         cur = [ringStart[0], ringStart[1]];
+      } else if (parsed[i][0] === "A") {
+        curve = new Arc(
+          cur[0],
+          cur[1],
+          parsed[i][1],
+          parsed[i][2],
+          parsed[i][3],
+          parsed[i][4] === 1,
+          parsed[i][5] === 1,
+          parsed[i][6],
+          parsed[i][7]
+        );
+
+        this.length += curve.getTotalLength();
+        cur = [parsed[i][6], parsed[i][7]];
+        this.functions.push(curve);
+      } else if (parsed[i][0] === "a") {
+        curve = new Arc(
+          cur[0],
+          cur[1],
+          parsed[i][1],
+          parsed[i][2],
+          parsed[i][3],
+          parsed[i][4] === 1,
+          parsed[i][5] === 1,
+          cur[0] + parsed[i][6],
+          cur[1] + parsed[i][7]
+        );
+
+        this.length += curve.getTotalLength();
+        cur = [cur[0] + parsed[i][6], cur[1] + parsed[i][7]];
+        this.functions.push(curve);
       }
     }
   }
@@ -107,7 +140,7 @@ export default class SVGPathProperties implements Properties {
   };
 
   public getPointAtLength = (fractionLength: number) => {
-    var fractionPart = this.getPartAtLength(fractionLength);
+    const fractionPart = this.getPartAtLength(fractionLength);
     const functionAtPart = this.functions[fractionPart.i];
     if (functionAtPart) {
       return functionAtPart.getPointAtLength(fractionPart.fraction);
@@ -116,7 +149,7 @@ export default class SVGPathProperties implements Properties {
   };
 
   public getTangentAtLength = (fractionLength: number) => {
-    var fractionPart = this.getPartAtLength(fractionLength);
+    const fractionPart = this.getPartAtLength(fractionLength);
     const functionAtPart = this.functions[fractionPart.i];
     if (functionAtPart) {
       return functionAtPart.getTangentAtLength(fractionPart.fraction);
@@ -125,7 +158,7 @@ export default class SVGPathProperties implements Properties {
   };
 
   public getPropertiesAtLength = (fractionLength: number) => {
-    var fractionPart = this.getPartAtLength(fractionLength);
+    const fractionPart = this.getPartAtLength(fractionLength);
     const functionAtPart = this.functions[fractionPart.i];
     if (functionAtPart) {
       return functionAtPart.getPropertiesAtLength(fractionPart.fraction);
