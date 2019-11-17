@@ -1,12 +1,12 @@
 import parse from "./parse";
-import { PointArray, Properties } from "./types";
+import { PointArray, Properties, PartProperties } from "./types";
 import { LinearPosition } from "./linear";
 import { Arc } from "./arc";
 import { Bezier } from "./bezier";
 
 export default class SVGPathProperties implements Properties {
   private length: number = 0;
-  private partial_lengths = [];
+  private partial_lengths: number[] = [];
   private functions: (null | Properties)[] = [];
   constructor(string: string) {
     const parsed = parse(string);
@@ -325,14 +325,15 @@ export default class SVGPathProperties implements Properties {
         cur = [cur[0] + parsed[i][6], cur[1] + parsed[i][7]];
         this.functions.push(arcCurve);
       }
+      this.partial_lengths.push(this.length);
     }
   }
 
   private getPartAtLength = (fractionLength: number) => {
     if (fractionLength < 0) {
       fractionLength = 0;
-    } else if (fractionLength > length) {
-      fractionLength = length;
+    } else if (fractionLength > this.length) {
+      fractionLength = this.length;
     }
 
     let i = this.partial_lengths.length - 1;
@@ -376,5 +377,27 @@ export default class SVGPathProperties implements Properties {
       return functionAtPart.getPropertiesAtLength(fractionPart.fraction);
     }
     throw new Error("Wrong function at this part.");
+  };
+
+  public getParts = () => {
+    const parts = [];
+    for (var i = 0; i < this.functions.length; i++) {
+      if (this.functions[i] !== null) {
+        this.functions[i] = this.functions[i] as Properties;
+        const properties: PartProperties = {
+          start: this.functions[i]!.getPointAtLength(0),
+          end: this.functions[i]!.getPointAtLength(
+            this.partial_lengths[i] - this.partial_lengths[i - 1]
+          ),
+          length: this.partial_lengths[i] - this.partial_lengths[i - 1],
+          getPointAtLength: this.functions[i]!.getPointAtLength,
+          getTangentAtLength: this.functions[i]!.getTangentAtLength,
+          getPropertiesAtLength: this.functions[i]!.getPropertiesAtLength
+        };
+        parts.push(properties);
+      }
+    }
+
+    return parts;
   };
 }
