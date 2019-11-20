@@ -4,6 +4,14 @@ export interface Properties {
     getTangentAtLength(pos: number): Point;
     getPropertiesAtLength(pos: number): PointProperties;
 }
+export interface PartProperties {
+    start: Point;
+    end: Point;
+    length: number;
+    getPointAtLength(pos: number): Point;
+    getTangentAtLength(pos: number): Point;
+    getPropertiesAtLength(pos: number): PointProperties;
+}
 export interface Point {
     x: number;
     y: number;

@@ -1,4 +1,4 @@
+import SVGPathProperties from "./svg-path-properties";
 export declare class SvgPathProperties {
-    private length;
-    constructor(pathString: string);
+    dddd: typeof SVGPathProperties;
 }
