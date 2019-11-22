@@ -12,7 +12,7 @@
   "homepage": "http://geoexamples.com/path-properties/",
   "main": "dist/svg-path-properties.cjs.js",
   "module": "dist/svg-path-properties.esm.js",
-  "browser": "dist/svg-path-properties.iife.js",
+  "browser": "dist/svg-path-properties.min.js",
   "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
@@ -40,12 +40,12 @@
     "@babel/preset-typescript": "^7.7.2",
     "@types/tape": "^4.2.33",
     "eslint": "^6.6.0",
-    "package-preamble": "0.1.0",
     "prettier": "^1.19.1",
     "rollup": "^1.27.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
     "tape": "^4.11.0",
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
