@@ -952,13 +952,43 @@ var RollupTypeScriptBabel = (function (exports) {
     }
   };
 
-  var SvgPathProperties = function SvgPathProperties() {
-    _classCallCheck(this, SvgPathProperties);
+  var _svgPathProperties = function _svgPathProperties(svgPath) {
+    var _this = this;
 
-    _defineProperty(this, "dddd", SVGPathProperties);
+    _classCallCheck(this, _svgPathProperties);
+
+    _defineProperty(this, "inst", void 0);
+
+    _defineProperty(this, "getTotalLength", function () {
+      return _this.inst.getTotalLength();
+    });
+
+    _defineProperty(this, "getPointAtLength", function (fractionLength) {
+      return _this.inst.getPointAtLength(fractionLength);
+    });
+
+    _defineProperty(this, "getTangentAtLength", function (fractionLength) {
+      return _this.inst.getTangentAtLength(fractionLength);
+    });
+
+    _defineProperty(this, "getPropertiesAtLength", function (fractionLength) {
+      return _this.inst.getPropertiesAtLength(fractionLength);
+    });
+
+    _defineProperty(this, "getParts", function () {
+      return _this.inst.getParts();
+    });
+
+    this.inst = new SVGPathProperties(svgPath);
+
+    if (!(this instanceof svgPathProperties)) {
+      return new svgPathProperties(svgPath);
+    }
   };
 
-  exports.SvgPathProperties = SvgPathProperties;
+  var svgPathProperties = _svgPathProperties;
+
+  exports.svgPathProperties = svgPathProperties;
 
   return exports;
 
