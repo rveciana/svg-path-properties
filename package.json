@@ -39,6 +39,7 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-typescript": "^7.7.2",
     "@types/tape": "^4.2.33",
+    "babel6-plugin-strip-class-callcheck": "^6.0.0",
     "eslint": "^6.6.0",
     "prettier": "^1.19.1",
     "rollup": "^1.27.0",
