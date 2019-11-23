@@ -24,7 +24,9 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
     "build": "npm run build:types && npm run build:js",
-    "test": "ts-node --skip-project node_modules/tape/bin/tape test/**/*-test.ts"
+    "test": "ts-node --skip-project node_modules/tape/bin/tape test/**/*-test.ts",
+    "preversion": "npm run build && git add dist && git commit --allow-empty -am \"new version\"",
+    "postpublish": "git push && git push --tags"
   },
   "author": {
     "name": "Roger Veciana i Rovira",
