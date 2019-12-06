@@ -41,10 +41,10 @@ export default {
     },
     {
       file: pkg.module,
-      format: "esm"
+      format: "es"
     },
     {
-      file: pkg.browser,
+      file: pkg.unpkg,
       format: "umd",
       name,
 
