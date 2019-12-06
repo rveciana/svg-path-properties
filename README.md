@@ -36,7 +36,7 @@ The available methods are:
 
 ## Including it from an import:
 
-    import { svgPathProperties } from "../src/index";
+    import { svgPathProperties } from "svg-path-properties";
     const properties = new svgPathProperties("M0,100 Q50,-50 100,100 T200,100");
 
 ## Including the script in the browser
