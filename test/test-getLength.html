@@ -36,7 +36,8 @@
       "M0,0L31.081620209059235,726.1062992125984Q41.44216027874565,726.1062992125984,41.44216027874565,726.1062992125984",
       "M66,50A100,100,0,1,0,299,140",
       "M66,50A150,150,0,1,0,299,140",
-      "M356,245c0,17.241,-13,31,-31,31s-31,-13,-31,-31s13,-31,31,-31S356,228,356,245z"
+      "M356,245c0,17.241,-13,31,-31,31s-31,-13,-31,-31s13,-31,31,-31S356,228,356,245z",
+      "M560,200a260,160,0,1,1,-520,0a260,160,0,1,1,520,0z"
     ];
     for (var i = 0; i < paths.length; i++) {
       pathEl = d3
@@ -99,8 +100,8 @@
       var yValues = [];
       var xValuesTangent = [];
       var yValuesTangent = [];
-      for (var j = 0; j <= 6; j++) {
-        var position = path.node().getPointAtLength((j * browserLength) / 6);
+      for (var j = 0; j <= 16; j++) {
+        var position = path.node().getPointAtLength((j * browserLength) / 16);
         xValues.push(position.x);
         yValues.push(position.y);
         pathEl
@@ -109,22 +110,22 @@
           .attr("cy", position.y)
           .attr("r", 4)
           .attr("fill", "blue");
-        var position2 = properties.getPointAtLength((j * browserLength) / 6);
+        var position2 = properties.getPointAtLength((j * browserLength) / 16);
         pathEl
           .append("circle")
           .attr("cx", position2.x)
           .attr("cy", position2.y)
           .attr("r", 4)
           .attr("fill", "green");
-        var tangent = properties.getTangentAtLength((j * browserLength) / 6);
+        var tangent = properties.getTangentAtLength((j * browserLength) / 16);
         xValuesTangent.push(tangent.x);
         yValuesTangent.push(tangent.y);
         pathEl
           .append("line")
           .attr("x1", position2.x)
           .attr("y1", position2.y)
-          .attr("x2", position2.x + 20 * tangent.x)
-          .attr("y2", position2.y + 20 * tangent.y)
+          .attr("x2", position2.x + 50 * tangent.y)
+          .attr("y2", position2.y - 50 * tangent.x)
           .attr("stroke", "purple")
           .attr("stroke-width", 2)
           .attr("marker-end", "url(#arrow)");

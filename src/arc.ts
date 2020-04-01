@@ -32,9 +32,7 @@ export class Arc implements Properties {
     this.x1 = x1;
     this.y1 = y1;
 
-    const lengthProperties = approximateArcLengthOfCurve(300, function(
-      t: number
-    ) {
+    const lengthProperties = approximateArcLengthOfCurve(300, function(t: number) {
       return pointOnEllipticalArc(
         { x: x0, y: y0 },
         rx,
@@ -80,20 +78,31 @@ export class Arc implements Properties {
     } else if (fractionLength > this.length) {
       fractionLength = this.length;
     }
-    const position = pointOnEllipticalArc(
-      { x: this.x0, y: this.y0 },
-      this.rx,
-      this.ry,
-      this.xAxisRotate,
-      this.LargeArcFlag,
-      this.SweepFlag,
-      { x: this.x1, y: this.y1 },
-      fractionLength / this.length
-    );
-    return {
-      x: Math.cos(position.ellipticalArcAngle - Math.PI / 2),
-      y: Math.sin(position.ellipticalArcAngle - Math.PI / 2)
-    };
+    const point_dist = 0.05; // needs testing
+    const p1 = this.getPointAtLength(fractionLength);
+    let p2: Point;
+
+    if (fractionLength < 0) {
+      fractionLength = 0;
+    } else if (fractionLength > this.length) {
+      fractionLength = this.length;
+    }
+
+    if (fractionLength < this.length - point_dist) {
+      p2 = this.getPointAtLength(fractionLength + point_dist);
+    } else {
+      p2 = this.getPointAtLength(fractionLength - point_dist);
+    }
+
+    const xDist = p2.x - p1.x;
+    const yDist = p2.y - p1.y;
+    const dist = Math.sqrt(xDist * xDist + yDist * yDist);
+
+    if (fractionLength < this.length - point_dist) {
+      return { x: -xDist / dist, y: -yDist / dist };
+    } else {
+      return { x: xDist / dist, y: yDist / dist };
+    }
   };
 
   public getPropertiesAtLength = (fractionLength: number): PointProperties => {
@@ -142,10 +151,8 @@ const pointOnEllipticalArc = (
   const dx = (p0.x - p1.x) / 2;
   const dy = (p0.y - p1.y) / 2;
   const transformedPoint = {
-    x:
-      Math.cos(xAxisRotationRadians) * dx + Math.sin(xAxisRotationRadians) * dy,
-    y:
-      -Math.sin(xAxisRotationRadians) * dx + Math.cos(xAxisRotationRadians) * dy
+    x: Math.cos(xAxisRotationRadians) * dx + Math.sin(xAxisRotationRadians) * dy,
+    y: -Math.sin(xAxisRotationRadians) * dx + Math.cos(xAxisRotationRadians) * dy
   };
   // Ensure radii are large enough
   const radiiCheck =
@@ -300,8 +307,7 @@ const clamp = (val: number, min: number, max: number) => {
 const angleBetween = (v0: Point, v1: Point) => {
   const p = v0.x * v1.x + v0.y * v1.y;
   const n = Math.sqrt(
-    (Math.pow(v0.x, 2) + Math.pow(v0.y, 2)) *
-      (Math.pow(v1.x, 2) + Math.pow(v1.y, 2))
+    (Math.pow(v0.x, 2) + Math.pow(v0.y, 2)) * (Math.pow(v1.x, 2) + Math.pow(v1.y, 2))
   );
   const sign = v0.x * v1.y - v0.y * v1.x < 0 ? -1 : 1;
   const angle = sign * Math.acos(p / n);
