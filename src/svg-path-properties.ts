@@ -340,7 +340,7 @@ export default class SVGPathProperties implements Properties {
 
     while (
       this.partial_lengths[i] >= fractionLength &&
-      this.partial_lengths[i] > 0
+      i > 0
     ) {
       i--;
     }
