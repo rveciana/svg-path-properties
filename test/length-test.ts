@@ -60,14 +60,10 @@ test("Testing Cubic Bézier", function(test) {
   test.true(inDelta(properties.getTotalLength(), 213.8, 0.1));
 
   //S & s
-  properties = new SVGPathProperties(
-    "M100,200 C100,100 250,100 250,200 S400,300 400,200"
-  );
+  properties = new SVGPathProperties("M100,200 C100,100 250,100 250,200 S400,300 400,200");
   test.true(inDelta(properties.getTotalLength(), 475.746, 0.1));
 
-  properties = new SVGPathProperties(
-    "M100,200 c0,-100 150,-100 150,0 s150,100 150,0"
-  );
+  properties = new SVGPathProperties("M100,200 c0,-100 150,-100 150,0 s150,100 150,0");
   test.true(inDelta(properties.getTotalLength(), 475.746, 0.1));
 
   //S & s without previous C or c
@@ -95,9 +91,7 @@ test("Testing Quadratic Bézier", function(test) {
   properties = new SVGPathProperties("M0,100 q50,-150 100,0 t100,0");
   test.true(inDelta(properties.getTotalLength(), 376.84, 0.1));
 
-  properties = new SVGPathProperties(
-    "M0,100 Q50,-50 100,100 T200,100 T300,100"
-  );
+  properties = new SVGPathProperties("M0,100 Q50,-50 100,100 T200,100 T300,100");
   test.true(inDelta(properties.getTotalLength(), 565.26, 0.1));
 
   //T & t without previous values
@@ -152,5 +146,8 @@ test("Some complex examples", function(test) {
   );
   test.true(inDelta(properties.getTotalLength(), 737.13, 0.1));
 
+  //https://github.com/rveciana/svg-path-properties/issues/32
+  properties = new SVGPathProperties("M270 830 Q270 830 270 830");
+  test.true(inDelta(properties.getTotalLength(), 0, 0.1));
   test.end();
 });
