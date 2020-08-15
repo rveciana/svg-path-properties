@@ -94,7 +94,7 @@ export const getQuadraticArcLength = (
 export const quadraticDerivative = (xs: number[], ys: number[], t: number) => {
   return {
     x: (1 - t) * 2 * (xs[1] - xs[0]) + t * 2 * (xs[2] - xs[1]),
-    y: (1 - t) * 2 * (ys[1] - ys[0]) + t * 2 * (ys[2] - ys[1])
+    y: (1 - t) * 2 * (ys[1] - ys[0]) + t * 2 * (ys[2] - ys[1]),
   };
 };
 
@@ -143,28 +143,29 @@ const getDerivative = (derivative: number, t: number, vs: number[]): number => {
 export const t2length = (
   length: number,
   total_length: number,
-  func: (xs: number[], ys: number[], t: number) => number,
-  xs: number[],
-  ys: number[]
-) => {
+  func: (t: number) => number
+): number => {
   let error = 1;
   let t = length / total_length;
-  let step = (length - func(xs, ys, t)) / total_length;
+  let step = (length - func(t)) / total_length;
 
   let numIterations = 0;
   while (error > 0.001) {
-    const increasedTLength = func(xs, ys, t + step);
-    const decreasedTLength = func(xs, ys, t - step);
+    const increasedTLength = func(t + step);
     const increasedTError = Math.abs(length - increasedTLength) / total_length;
-    const decreasedTError = Math.abs(length - decreasedTLength) / total_length;
     if (increasedTError < error) {
       error = increasedTError;
       t += step;
-    } else if (decreasedTError < error) {
-      error = decreasedTError;
-      t -= step;
     } else {
-      step /= 2;
+      const decreasedTLength = func(t - step);
+      const decreasedTError =
+        Math.abs(length - decreasedTLength) / total_length;
+      if (decreasedTError < error) {
+        error = decreasedTError;
+        t -= step;
+      } else {
+        step /= 2;
+      }
     }
 
     numIterations++;
