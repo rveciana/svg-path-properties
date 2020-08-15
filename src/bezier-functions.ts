@@ -1,6 +1,6 @@
 import { tValues, cValues, binomialCoefficients } from "./bezier-values";
 import { Point } from "./types";
-export const cubicPoint = (xs: number[], ys: number[], t: number) => {
+export const cubicPoint = (xs: number[], ys: number[], t: number): Point => {
   const x =
     (1 - t) * (1 - t) * (1 - t) * xs[0] +
     3 * (1 - t) * (1 - t) * t * xs[1] +
@@ -33,13 +33,13 @@ export const getCubicArcLength = (xs: number[], ys: number[], t: number) => {
         throw new Error('too high n bezier');
       }*/
 
-  let n = 20;
+  const n = 20;
 
   z = t / 2;
   sum = 0;
   for (let i = 0; i < n; i++) {
     correctedT = z * tValues[n][i] + z;
-    sum += cValues[n][i] * B(xs, ys, correctedT);
+    sum += cValues[n][i] * BFunc(xs, ys, correctedT);
   }
   return z * sum;
 };
@@ -98,7 +98,7 @@ export const quadraticDerivative = (xs: number[], ys: number[], t: number) => {
   };
 };
 
-function B(xs: number[], ys: number[], t: number) {
+function BFunc(xs: number[], ys: number[], t: number) {
   const xbase = getDerivative(1, t, xs);
   const ybase = getDerivative(1, t, ys);
   const combined = xbase * xbase + ybase * ybase;
@@ -142,24 +142,23 @@ const getDerivative = (derivative: number, t: number, vs: number[]): number => {
 
 export const t2length = (
   length: number,
-  total_length: number,
+  totalLength: number,
   func: (t: number) => number
 ): number => {
   let error = 1;
-  let t = length / total_length;
-  let step = (length - func(t)) / total_length;
+  let t = length / totalLength;
+  let step = (length - func(t)) / totalLength;
 
   let numIterations = 0;
   while (error > 0.001) {
     const increasedTLength = func(t + step);
-    const increasedTError = Math.abs(length - increasedTLength) / total_length;
+    const increasedTError = Math.abs(length - increasedTLength) / totalLength;
     if (increasedTError < error) {
       error = increasedTError;
       t += step;
     } else {
       const decreasedTLength = func(t - step);
-      const decreasedTError =
-        Math.abs(length - decreasedTLength) / total_length;
+      const decreasedTError = Math.abs(length - decreasedTLength) / totalLength;
       if (decreasedTError < error) {
         error = decreasedTError;
         t -= step;
