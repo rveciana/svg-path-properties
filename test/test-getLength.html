@@ -5,6 +5,12 @@
   <script src="http://d3js.org/d3.v5.min.js"></script>
   <script src="../dist/svg-path-properties.min.js"></script>
   <script>
+    function now() {
+      if (performance) {
+        return performance.now()
+      }
+      return Date.now()
+    }
     var paths = [
       "M0,50L500,50",
       "M0,50L300,300",
@@ -39,6 +45,9 @@
       "M356,245c0,17.241,-13,31,-31,31s-31,-13,-31,-31s13,-31,31,-31S356,228,356,245z",
       "M560,200a260,160,0,1,1,-520,0a260,160,0,1,1,520,0z"
     ];
+
+    var totalLibMs = 0
+    var totalBrowserMs = 0
     for (var i = 0; i < paths.length; i++) {
       pathEl = d3
         .select("body")
@@ -71,15 +80,23 @@
         .attr("font-family", "Verdana")
         .attr("fill", "black")
         .text(paths[i]);
-      browserLength = path.node().getTotalLength();
+      var browserMs = 0;
+      var libMs = 0;
+      var timeBefore = now()
+      var browserLength = path.node().getTotalLength();
+      browserMs += now() - timeBefore;
       properties = new svgPathProperties.svgPathProperties(paths[i]);
-      if (properties.getTotalLength().toFixed(1) == browserLength.toFixed(1)) {
+      timeBefore = now();
+      propLength = properties.getTotalLength();
+      libMs += now() - timeBefore;
+      if (propLength.toFixed(1) == browserLength.toFixed(1)) {
         color = "green";
         text = "OK";
       } else {
         color = "red";
         text = "Fail";
       }
+
       pathEl
         .append("text")
         .attr("x", 25)
@@ -89,11 +106,11 @@
         .attr("fill", color)
         .attr("stroke", color)
         .text(
-          text +
-            " Browser: " +
-            browserLength.toFixed(2) +
-            " Library: " +
-            properties.getTotalLength().toFixed(2)
+          'Test: ' + (i + 1) + " " + text +
+          " Browser: " +
+          browserLength.toFixed(2) +
+          " Library: " +
+          propLength.toFixed(2)
         );
       console.info(paths[i]);
       var xValues = [];
@@ -101,7 +118,9 @@
       var xValuesTangent = [];
       var yValuesTangent = [];
       for (var j = 0; j <= 16; j++) {
+        timeBefore = now();
         var position = path.node().getPointAtLength((j * browserLength) / 16);
+        browserMs += now() - timeBefore;
         xValues.push(position.x);
         yValues.push(position.y);
         pathEl
@@ -110,7 +129,9 @@
           .attr("cy", position.y)
           .attr("r", 4)
           .attr("fill", "blue");
+        timeBefore = now();
         var position2 = properties.getPointAtLength((j * browserLength) / 16);
+        libMs += now() - timeBefore;
         pathEl
           .append("circle")
           .attr("cx", position2.x)
@@ -130,10 +151,14 @@
           .attr("stroke-width", 2)
           .attr("marker-end", "url(#arrow)");
       }
+      console.info('Test:' + (i + 1) + '. Browser:' + browserMs + 'ms.' + 'Library:' + libMs);
       console.info(xValues);
       console.info(yValues);
       console.info(xValuesTangent);
       console.info(yValuesTangent);
+      totalLibMs += libMs;
+      totalBrowserMs += browserMs;
     }
+    console.log('Total time:' + totalLibMs + 'ms. Browser:' + totalBrowserMs + 'ms');
   </script>
 </body>

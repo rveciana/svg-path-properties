@@ -7,7 +7,7 @@ import {
   getQuadraticArcLength,
   quadraticPoint,
   quadraticDerivative,
-  t2length
+  t2length,
 } from "./bezier-functions";
 
 export class Bezier implements Properties {
@@ -54,34 +54,22 @@ export class Bezier implements Properties {
     return this.length;
   };
   public getPointAtLength = (length: number) => {
-    const t = t2length(
-      length,
-      this.length,
-      this.getArcLength,
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y]
+    const xs = [this.a.x, this.b.x, this.c.x, this.d.x];
+    const xy = [this.a.y, this.b.y, this.c.y, this.d.y];
+    const t = t2length(length, this.length, (i) =>
+      this.getArcLength(xs, xy, i)
     );
 
-    return this.getPoint(
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y],
-      t
-    );
+    return this.getPoint(xs, xy, t);
   };
   public getTangentAtLength = (length: number) => {
-    const t = t2length(
-      length,
-      this.length,
-      this.getArcLength,
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y]
+    const xs = [this.a.x, this.b.x, this.c.x, this.d.x];
+    const xy = [this.a.y, this.b.y, this.c.y, this.d.y];
+    const t = t2length(length, this.length, (i) =>
+      this.getArcLength(xs, xy, i)
     );
 
-    const derivative = this.getDerivative(
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y],
-      t
-    );
+    const derivative = this.getDerivative(xs, xy, t);
     const mdl = Math.sqrt(
       derivative.x * derivative.x + derivative.y * derivative.y
     );
@@ -94,19 +82,13 @@ export class Bezier implements Properties {
     return tangent;
   };
   public getPropertiesAtLength = (length: number) => {
-    const t = t2length(
-      length,
-      this.length,
-      this.getArcLength,
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y]
+    const xs = [this.a.x, this.b.x, this.c.x, this.d.x];
+    const xy = [this.a.y, this.b.y, this.c.y, this.d.y];
+    const t = t2length(length, this.length, (i) =>
+      this.getArcLength(xs, xy, i)
     );
 
-    const derivative = this.getDerivative(
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y],
-      t
-    );
+    const derivative = this.getDerivative(xs, xy, t);
     const mdl = Math.sqrt(
       derivative.x * derivative.x + derivative.y * derivative.y
     );
@@ -116,11 +98,7 @@ export class Bezier implements Properties {
     } else {
       tangent = { x: 0, y: 0 };
     }
-    const point = this.getPoint(
-      [this.a.x, this.b.x, this.c.x, this.d.x],
-      [this.a.y, this.b.y, this.c.y, this.d.y],
-      t
-    );
+    const point = this.getPoint(xs, xs, t);
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y };
   };
 
