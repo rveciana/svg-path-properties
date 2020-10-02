@@ -8,5 +8,6 @@ declare class _svgPathProperties {
     getPropertiesAtLength: (fractionLength: number) => import("./types").PointProperties;
     getParts: () => import("./types").PartProperties[];
 }
-export declare const svgPathProperties: typeof _svgPathProperties & ((val: string) => _svgPathProperties);
+declare type svgPathProperties = _svgPathProperties;
+export declare const svgPathProperties: typeof _svgPathProperties & ((val: string) => svgPathProperties);
 export {};
