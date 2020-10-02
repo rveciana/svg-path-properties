@@ -22,7 +22,7 @@ test("overloaded moveTo", test => {
   test.end();
 });
 
-test("curveTo", function(test) {
+test("curveTo", function (test) {
   const a = parse("c 50,0 50,100 100,100 50,0 50,-100 100,-100");
   const b = parse("c 50,0 50,100 100,100 c 50,0 50,-100 100,-100");
 
@@ -38,8 +38,8 @@ test("curveTo", function(test) {
   test.end();
 });
 
-test("lineTo, h, v, l", function(test) {
-  test.throws(function() {
+test("lineTo, h, v, l", function (test) {
+  test.throws(function () {
     parse("l 10 10 0");
   }, /Malformed/);
   test.deepEqual(parse("l 10,10"), [["l", 10, 10]]);
@@ -55,7 +55,7 @@ test("lineTo, h, v, l", function(test) {
   test.end();
 });
 
-test("arcTo, quadratic curveTo, smooth curveTo, smooth quadratic curveTo", function(test) {
+test("arcTo, quadratic curveTo, smooth curveTo, smooth quadratic curveTo", function (test) {
   test.deepEqual(parse("A 30 50 0 0 1 162.55 162.45"), [["A", 30, 50, 0, 0, 1, 162.55, 162.45]]);
 
   test.deepEqual(parse("M10 80 Q 95 10 180 80"), [
@@ -65,7 +65,7 @@ test("arcTo, quadratic curveTo, smooth curveTo, smooth quadratic curveTo", funct
   test.deepEqual(parse("S 1 2, 3 4"), [["S", 1, 2, 3, 4]]);
   test.deepEqual(parse("T 1 -2e2"), [["T", 1, -2e2]]);
 
-  test.throws(function() {
+  test.throws(function () {
     parse("t 1 2 3");
   }, Error);
   test.end();
@@ -73,6 +73,7 @@ test("arcTo, quadratic curveTo, smooth curveTo, smooth quadratic curveTo", funct
 
 test("Empty string", test => {
   test.deepEqual(parse(""), [["M", 0, 0]]);
+  test.deepEqual(parse(null), [["M", 0, 0]]);
 
   test.end();
 });

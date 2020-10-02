@@ -16,7 +16,7 @@ const segmentRegExp = /([astvzqmhlc])([^astvzqmhlc]*)/gi;
 const numberRegExp = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/gi;
 
 export default (path: string) => {
-  const segments = (path.length > 0 ? path : "M0,0").match(segmentRegExp);
+  const segments = (path && path.length > 0 ? path : "M0,0").match(segmentRegExp);
   if (!segments) {
     throw new Error(`No path elements found in string ${path}`);
   }
