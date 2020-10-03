@@ -2,7 +2,7 @@ import * as test from "tape";
 import SVGPathProperties from "../src/svg-path-properties";
 import { inDelta } from "./inDelta";
 
-test("getPointAtLength testing lineTo", function(test) {
+test("getPointAtLength testing lineTo", function (test) {
   const paths = [
     {
       path: "M0,50L500,50",
@@ -11,14 +11,7 @@ test("getPointAtLength testing lineTo", function(test) {
     },
     {
       path: "M0,50L300,300",
-      xValues: [
-        0,
-        59.999996185302734,
-        119.99999237060547,
-        180,
-        239.99998474121094,
-        300
-      ],
+      xValues: [0, 59.999996185302734, 119.99999237060547, 180, 239.99998474121094, 300],
       yValues: [50, 100, 150, 200, 249.99998474121094, 300]
     },
     {
@@ -77,16 +70,13 @@ test("getPointAtLength testing lineTo", function(test) {
       properties.getPointAtLength(10000000),
       properties.getPointAtLength(properties.getTotalLength())
     );
-    test.deepEqual(
-      properties.getPointAtLength(-1),
-      properties.getPointAtLength(0)
-    );
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
 
   test.end();
 });
 
-test("getPointAtLength testing Quadratic Bézier", function(test) {
+test("getPointAtLength testing Quadratic Bézier", function (test) {
   const paths = [
     {
       path: "M200,300 Q400,50 600,300",
@@ -200,15 +190,12 @@ test("getPointAtLength testing Quadratic Bézier", function(test) {
       properties.getPointAtLength(10000000),
       properties.getPointAtLength(properties.getTotalLength())
     );
-    test.deepEqual(
-      properties.getPointAtLength(-1),
-      properties.getPointAtLength(0)
-    );
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();
 });
 
-test("getPointAtLength testing Cubic Bézier", function(test) {
+test("getPointAtLength testing Cubic Bézier", function (test) {
   const paths = [
     {
       path: "M200,200 C275,100 575,100 500,200",
@@ -332,15 +319,12 @@ test("getPointAtLength testing Cubic Bézier", function(test) {
       properties.getPointAtLength(10000000),
       properties.getPointAtLength(properties.getTotalLength())
     );
-    test.deepEqual(
-      properties.getPointAtLength(-1),
-      properties.getPointAtLength(0)
-    );
+    test.deepEqual(properties.getPointAtLength(-1), properties.getPointAtLength(0));
   }
   test.end();
 });
 
-test("getPointAtLength bug testing", function(test) {
+test("getPointAtLength bug testing", function (test) {
   //Testing https://github.com/rveciana/svg-path-properties/issues/1
   const properties = new SVGPathProperties(
     "M 211.6687111164928,312.6478542077994 C 211.6687111164928,312.6478542077994 211.6687111164928,312.6478542077994 219,293"
@@ -356,7 +340,7 @@ test("getPointAtLength bug testing", function(test) {
   test.end();
 });
 
-test("Testing getPointAtLength with straigh line bezier curve (bug)", function(test) {
+test("Testing getPointAtLength with straigh line bezier curve (bug)", function (test) {
   //https://github.com/rveciana/svg-path-properties/issues/4
   const pathData = new SVGPathProperties("M500,300Q425,325 350,350");
   const pathLen = pathData.getTotalLength();
@@ -372,10 +356,8 @@ test("Testing getPointAtLength with straigh line bezier curve (bug)", function(t
   test.end();
 });
 
-test("Testing with multiple rings", function(test) {
-  let properties = new SVGPathProperties(
-    "M100,100h100v100h-100Z m200,0h1v1h-1z"
-  );
+test("Testing with multiple rings", function (test) {
+  let properties = new SVGPathProperties("M100,100h100v100h-100Z m200,0h1v1h-1z");
   test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
   test.deepEqual(properties.getPointAtLength(401), { x: 301, y: 100 });
 
@@ -383,25 +365,41 @@ test("Testing with multiple rings", function(test) {
   test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
   test.deepEqual(properties.getPointAtLength(100), { x: 200, y: 100 });
   test.deepEqual(properties.getPointAtLength(200), { x: 400, y: 100 });
-  test.deepEqual(
-    properties.getPointAtLength(200),
-    properties.getPointAtLength(500)
-  );
-  properties = new SVGPathProperties(
-    "M100,100 L101,100 M200,0 M500,600 M0,0L1,0L1,1L0,1Z"
-  );
+  test.deepEqual(properties.getPointAtLength(200), properties.getPointAtLength(500));
+  properties = new SVGPathProperties("M100,100 L101,100 M200,0 M500,600 M0,0L1,0L1,1L0,1Z");
   test.deepEqual(properties.getPointAtLength(0), { x: 100, y: 100 });
   test.deepEqual(properties.getPointAtLength(1), { x: 101, y: 100 });
   test.deepEqual(properties.getPointAtLength(2), { x: 1, y: 0 });
   test.end();
 });
 
-test("TestingDegenerated quadratic curves, issue 9", function(test) {
+test("TestingDegenerated quadratic curves, issue 9", function (test) {
   let properties = new SVGPathProperties("M60,20Q60,20 150,20");
   test.deepEqual(properties.getPointAtLength(2), { x: 62, y: 20 });
   test.equal(properties.getTotalLength(), 90);
   properties = new SVGPathProperties("M60,20q0,0 90,0");
   test.deepEqual(properties.getPointAtLength(2), { x: 62, y: 20 });
   test.equal(properties.getTotalLength(), 90);
+  test.end();
+});
+
+test("Check null path, issue 35", function (test) {
+  let properties = new SVGPathProperties("M0, 0");
+  test.deepEqual(properties.getPointAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getTangentAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getPropertiesAtLength(0), { x: 0, y: 0, tangentX: 0, tangentY: 0 });
+  properties = new SVGPathProperties(null);
+  test.deepEqual(properties.getPointAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getTangentAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getPropertiesAtLength(0), { x: 0, y: 0, tangentX: 0, tangentY: 0 });
+  properties = new SVGPathProperties("");
+  test.deepEqual(properties.getPointAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getTangentAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getPropertiesAtLength(0), { x: 0, y: 0, tangentX: 0, tangentY: 0 });
+  properties = new SVGPathProperties("M10, 10");
+  test.deepEqual(properties.getPointAtLength(0), { x: 10, y: 10 });
+  test.deepEqual(properties.getTangentAtLength(0), { x: 0, y: 0 });
+  test.deepEqual(properties.getPropertiesAtLength(0), { x: 10, y: 10, tangentX: 0, tangentY: 0 });
+
   test.end();
 });
