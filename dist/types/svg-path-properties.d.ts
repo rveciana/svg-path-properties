@@ -1,13 +1,14 @@
-import { Properties, PartProperties } from "./types";
+import { Properties, PartProperties, Point } from "./types";
 export default class SVGPathProperties implements Properties {
     private length;
     private partial_lengths;
     private functions;
+    private initial_point;
     constructor(string: string);
     private getPartAtLength;
     getTotalLength: () => number;
-    getPointAtLength: (fractionLength: number) => import("./types").Point;
-    getTangentAtLength: (fractionLength: number) => import("./types").Point;
+    getPointAtLength: (fractionLength: number) => Point;
+    getTangentAtLength: (fractionLength: number) => Point;
     getPropertiesAtLength: (fractionLength: number) => import("./types").PointProperties;
     getParts: () => PartProperties[];
 }
