@@ -1,7 +1,7 @@
 import { pathOrders } from "./types";
 
 const length: { [key in pathOrders]: number } = {
-  a: 7,
+  a: 6,
   c: 6,
   h: 1,
   l: 2,
