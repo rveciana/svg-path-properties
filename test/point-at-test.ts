@@ -403,3 +403,23 @@ test("Check null path, issue 35", function (test) {
 
   test.end();
 });
+test("TestingDegenerated quadratic curves, issue 43", function (test) {
+  let properties = new SVGPathProperties(
+    "M224,32C153,195,69,366,76,544C77,567,97,585,105,606C133,683,137,768,175,840C193,875,225,902,250,932"
+  );
+  test.deepEqual(properties.getPointAtLength(300), { x: 111.7377391058728, y: 310.0179550672576 });
+
+  test.deepEqual(properties.getTangentAtLength(300), {
+    x: -0.29770950875462776,
+    y: 0.9546565080682572
+  });
+
+  test.deepEqual(properties.getPropertiesAtLength(300), {
+    x: 111.7377391058728,
+    y: 310.0179550672576,
+    tangentX: -0.29770950875462776,
+    tangentY: 0.9546565080682572
+  });
+
+  test.end();
+});
