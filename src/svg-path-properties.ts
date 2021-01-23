@@ -328,6 +328,7 @@ export default class SVGPathProperties implements Properties {
   public getPointAtLength = (fractionLength: number) => {
     const fractionPart = this.getPartAtLength(fractionLength);
     const functionAtPart = this.functions[fractionPart.i];
+
     if (functionAtPart) {
       return functionAtPart.getPointAtLength(fractionPart.fraction);
     } else if (this.initial_point) {
