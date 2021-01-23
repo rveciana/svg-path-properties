@@ -423,3 +423,14 @@ test("TestingDegenerated quadratic curves, issue 43", function (test) {
 
   test.end();
 });
+
+//https://github.com/rveciana/svg-path-properties/pull/44/files
+test("Testing first point of zero length fraction", function (test) {
+  let properties = new SVGPathProperties("M 0,0 l 0 0 l 10 10");
+  test.deepEqual(properties.getPointAtLength(0), { x: 0, y: 0 });
+
+  properties = new SVGPathProperties("M 1,1 l 1 1");
+  test.deepEqual(properties.getPointAtLength(0), { x: 1, y: 1 });
+
+  test.end();
+});
