@@ -13,7 +13,6 @@
   "main": "dist/svg-path-properties.cjs.js",
   "module": "dist/svg-path-properties.esm.js",
   "unpkg": "dist/svg-path-properties.min.js",
-  "jsnext:main": "dist/index",
   "types": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
