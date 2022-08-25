@@ -267,7 +267,7 @@ export default class SVGPathProperties implements Properties {
         }
 
         prev_point = [2 * cur[0] - prev_point[0], 2 * cur[1] - prev_point[1]];
-        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
       } else if (parsed[i][0] === "A") {
         const arcCurve = new Arc(
           cur[0],
