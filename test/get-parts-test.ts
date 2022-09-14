@@ -1,7 +1,7 @@
 import * as test from "tape";
 import SVGPathProperties from "../src/svg-path-properties";
 
-test("Testing the getParts with simple path", function(test) {
+test("Testing the getParts with simple path", function (test) {
   var properties = new SVGPathProperties("m10,0l10,0");
   var parts = properties.getParts();
 
@@ -51,30 +51,30 @@ test("Testing the getParts with simple path", function(test) {
 
   test.deepEqual(
     parts[0].getTangentAtLength(5),
-    { x: 1, y: 0 },
+    { x: -1, y: -0 },
     "testing getTangentAtLength"
   );
   test.deepEqual(
     parts[1].getTangentAtLength(5),
-    { x: 1, y: 0 },
+    { x: -1, y: -0 },
     "testing getTangentAtLength"
   );
 
   test.deepEqual(
     parts[0].getPropertiesAtLength(5),
-    { tangentX: 1, tangentY: 0, x: 15, y: 0 },
+    { tangentX: -1, tangentY: -0, x: 15, y: 0 },
     "testing getPropertiesAtLength"
   );
   test.deepEqual(
     parts[1].getPropertiesAtLength(5),
-    { tangentX: 1, tangentY: 0, x: 25, y: 0 },
+    { tangentX: -1, tangentY: -0, x: 25, y: 0 },
     "testing getPropertiesAtLength"
   );
 
   test.end();
 });
 
-test("Testing the getParts with simple path", function(test) {
+test("Testing the getParts with simple path", function (test) {
   var properties = new SVGPathProperties(
     "M100,200 C100,100 250,100 250,200 S400,300 400,200"
   );
@@ -93,7 +93,7 @@ test("Testing the getParts with simple path", function(test) {
   test.end();
 });
 
-test("Issue 15", function(test) {
+test("Issue 15", function (test) {
   var def = "M0,0 c 0.025,-0.052 0.081,-0.1387 0.2031,-0.2598 0,0 0,0 0,0";
   var properties = new SVGPathProperties(def);
   properties.getParts(); //The above path used to hang the programd
