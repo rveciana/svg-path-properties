@@ -10,7 +10,7 @@ export default class SVGPathProperties implements Properties {
   private functions: (null | Properties)[] = [];
   private initial_point: null | Point = null;
   constructor(source: string | [string, ...Array<number>][]) {
-    const parsed = Array.isArray(source) ? source : parse(string);
+    const parsed = Array.isArray(source) ? source : parse(source);
     let cur: PointArray = [0, 0];
     let prev_point: PointArray = [0, 0];
     let curve: Bezier | undefined;
@@ -31,38 +31,59 @@ export default class SVGPathProperties implements Properties {
         //lineTo
       } else if (parsed[i][0] === "L") {
         this.length += Math.sqrt(
-          Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2)
+          Math.pow(cur[0] - parsed[i][1], 2) +
+            Math.pow(cur[1] - parsed[i][2], 2)
         );
-        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
+        this.functions.push(
+          new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2])
+        );
         cur = [parsed[i][1], parsed[i][2]];
       } else if (parsed[i][0] === "l") {
-        this.length += Math.sqrt(Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2));
+        this.length += Math.sqrt(
+          Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2)
+        );
         this.functions.push(
-          new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1])
+          new LinearPosition(
+            cur[0],
+            parsed[i][1] + cur[0],
+            cur[1],
+            parsed[i][2] + cur[1]
+          )
         );
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
       } else if (parsed[i][0] === "H") {
         this.length += Math.abs(cur[0] - parsed[i][1]);
-        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]));
+        this.functions.push(
+          new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1])
+        );
         cur[0] = parsed[i][1];
       } else if (parsed[i][0] === "h") {
         this.length += Math.abs(parsed[i][1]);
-        this.functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1]));
+        this.functions.push(
+          new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1])
+        );
         cur[0] = parsed[i][1] + cur[0];
       } else if (parsed[i][0] === "V") {
         this.length += Math.abs(cur[1] - parsed[i][1]);
-        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1]));
+        this.functions.push(
+          new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1])
+        );
         cur[1] = parsed[i][1];
       } else if (parsed[i][0] === "v") {
         this.length += Math.abs(parsed[i][1]);
-        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]));
+        this.functions.push(
+          new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1])
+        );
         cur[1] = parsed[i][1] + cur[1];
         //Close path
       } else if (parsed[i][0] === "z" || parsed[i][0] === "Z") {
         this.length += Math.sqrt(
-          Math.pow(ringStart[0] - cur[0], 2) + Math.pow(ringStart[1] - cur[1], 2)
+          Math.pow(ringStart[0] - cur[0], 2) +
+            Math.pow(ringStart[1] - cur[1], 2)
         );
-        this.functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1]));
+        this.functions.push(
+          new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1])
+        );
         cur = [ringStart[0], ringStart[1]];
         //Cubic Bezier curves
       } else if (parsed[i][0] === "C") {
@@ -95,7 +116,9 @@ export default class SVGPathProperties implements Properties {
           this.functions.push(curve);
           cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
         } else {
-          this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1]));
+          this.functions.push(
+            new LinearPosition(cur[0], cur[0], cur[1], cur[1])
+          );
         }
       } else if (parsed[i][0] === "S") {
         if (i > 0 && ["C", "c", "S", "s"].indexOf(parsed[i - 1][0]) > -1) {
@@ -234,7 +257,12 @@ export default class SVGPathProperties implements Properties {
           this.functions.push(curve);
           this.length += curve.getTotalLength();
         } else {
-          let linearCurve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
+          let linearCurve = new LinearPosition(
+            cur[0],
+            parsed[i][1],
+            cur[1],
+            parsed[i][2]
+          );
           this.functions.push(linearCurve);
           this.length += linearCurve.getTotalLength();
         }
@@ -354,7 +382,12 @@ export default class SVGPathProperties implements Properties {
     if (functionAtPart) {
       return functionAtPart.getPropertiesAtLength(fractionPart.fraction);
     } else if (this.initial_point) {
-      return { x: this.initial_point.x, y: this.initial_point.y, tangentX: 0, tangentY: 0 };
+      return {
+        x: this.initial_point.x,
+        y: this.initial_point.y,
+        tangentX: 0,
+        tangentY: 0,
+      };
     }
     throw new Error("Wrong function at this part.");
   };
@@ -372,7 +405,7 @@ export default class SVGPathProperties implements Properties {
           length: this.partial_lengths[i] - this.partial_lengths[i - 1],
           getPointAtLength: this.functions[i]!.getPointAtLength,
           getTangentAtLength: this.functions[i]!.getTangentAtLength,
-          getPropertiesAtLength: this.functions[i]!.getPropertiesAtLength
+          getPropertiesAtLength: this.functions[i]!.getPropertiesAtLength,
         };
         parts.push(properties);
       }
