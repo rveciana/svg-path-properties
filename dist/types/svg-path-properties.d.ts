@@ -4,7 +4,7 @@ export default class SVGPathProperties implements Properties {
     private partial_lengths;
     private functions;
     private initial_point;
-    constructor(string: string);
+    constructor(source: string | [string, ...Array<number>][]);
     private getPartAtLength;
     getTotalLength: () => number;
     getPointAtLength: (fractionLength: number) => Point;
