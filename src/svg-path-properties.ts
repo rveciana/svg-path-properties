@@ -9,8 +9,8 @@ export default class SVGPathProperties implements Properties {
   private partial_lengths: number[] = [];
   private functions: (null | Properties)[] = [];
   private initial_point: null | Point = null;
-  constructor(string: string) {
-    const parsed = parse(string);
+  constructor(source: string | [string, ...Array<number>][]) {
+    const parsed = Array.isArray(source) ? source : parse(string);
     let cur: PointArray = [0, 0];
     let prev_point: PointArray = [0, 0];
     let curve: Bezier | undefined;
