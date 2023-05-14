@@ -43,3 +43,11 @@ test("Testing pull request #16 solution", function (test) {
 
   test.end();
 });
+
+test("Testing for infinite length (issue #61)", function (test) {
+  var curve = new Bezier(267, 0, 391, 0, 512, 0, undefined, undefined);
+  var length = curve.getTotalLength();
+  test.true(length != Infinity);
+
+  test.end();
+});
