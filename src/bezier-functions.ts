@@ -84,7 +84,7 @@ export const getQuadraticArcLength = (
   const uuk = u * u + k > 0 ? Math.sqrt(u * u + k) : 0;
   const bbk = b * b + k > 0 ? Math.sqrt(b * b + k) : 0;
   const term =
-    b + Math.sqrt(b * b + k) !== 0
+    b + Math.sqrt(b * b + k) !== 0 && ((u + uuk) / (b + bbk)) != 0
       ? k * Math.log(Math.abs((u + uuk) / (b + bbk)))
       : 0;
 
