@@ -39,8 +39,8 @@ export class LinearPosition implements Properties {
         (this.y1 - this.y0) * (this.y1 - this.y0)
     );
     return {
-      x: -(this.x1 - this.x0) / module,
-      y: -(this.y1 - this.y0) / module,
+      x: (this.x1 - this.x0) / module,
+      y: (this.y1 - this.y0) / module,
     };
   };
 
