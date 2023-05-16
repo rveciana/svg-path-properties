@@ -51,23 +51,23 @@ test("Testing the getParts with simple path", function (test) {
 
   test.deepEqual(
     parts[0].getTangentAtLength(5),
-    { x: -1, y: -0 },
+    { x: 1, y: 0 },
     "testing getTangentAtLength"
   );
   test.deepEqual(
     parts[1].getTangentAtLength(5),
-    { x: -1, y: -0 },
+    { x: 1, y: 0 },
     "testing getTangentAtLength"
   );
 
   test.deepEqual(
     parts[0].getPropertiesAtLength(5),
-    { tangentX: -1, tangentY: -0, x: 15, y: 0 },
+    { tangentX: 1, tangentY: 0, x: 15, y: 0 },
     "testing getPropertiesAtLength"
   );
   test.deepEqual(
     parts[1].getPropertiesAtLength(5),
-    { tangentX: -1, tangentY: -0, x: 25, y: 0 },
+    { tangentX: 1, tangentY: 0, x: 25, y: 0 },
     "testing getPropertiesAtLength"
   );
 
