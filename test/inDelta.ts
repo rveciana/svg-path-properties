@@ -7,7 +7,7 @@ export const inDelta = (
     return inDeltaArray(actual, expected, delta);
   else if (!Array.isArray(actual) && !Array.isArray(expected))
     return inDeltaNumber(actual, expected, delta);
-  else throw new Error("Both elements shouls be either arrays or numbers");
+  else throw new Error("Both elements should be either arrays or numbers");
 };
 
 const inDeltaArray = (actual: number[], expected: number[], delta: number) => {
