@@ -393,7 +393,7 @@ export default class SVGPathProperties implements Properties {
   };
 
   public getParts = () => {
-    const parts = [];
+    const parts: PartProperties[] = [];
     for (var i = 0; i < this.functions.length; i++) {
       if (this.functions[i] !== null) {
         this.functions[i] = this.functions[i] as Properties;

@@ -1,12 +1,16 @@
-export const inDelta = (actual, expected, delta) => {
-  return (Array.isArray(expected) ? inDeltaArray : inDeltaNumber)(
-    actual,
-    expected,
-    delta
-  );
+export const inDelta = (
+  actual: number[] | number,
+  expected: number[] | number,
+  delta: number
+) => {
+  if (Array.isArray(actual) && Array.isArray(expected))
+    return inDeltaArray(actual, expected, delta);
+  else if (!Array.isArray(actual) && !Array.isArray(expected))
+    return inDeltaNumber(actual, expected, delta);
+  else throw new Error("Both elements shouls be either arrays or numbers");
 };
 
-const inDeltaArray = (actual, expected, delta) => {
+const inDeltaArray = (actual: number[], expected: number[], delta: number) => {
   const n = expected.length;
   let i = -1;
   if (actual.length !== n) return false;
@@ -14,6 +18,6 @@ const inDeltaArray = (actual, expected, delta) => {
   return true;
 };
 
-const inDeltaNumber = (actual, expected, delta) => {
+const inDeltaNumber = (actual: number, expected: number, delta: number) => {
   return actual >= expected - delta && actual <= expected + delta;
 };

@@ -1,11 +1,10 @@
-import * as test from "tape";
-import { inDelta } from "./inDelta";
+import test from "tape";
 import { svgPathProperties } from "../src/index";
 
-test("Creation with different styles test", function(test) {
+test("Creation with different styles test", function (test) {
   const svgPath = "M0,100 q50,-150 100,0 t100,0";
   const a = new svgPathProperties(svgPath); // MyClass
-  const b = svgPathProperties(svgPath); // also MyClass
+  const b = new svgPathProperties(svgPath); // also MyClass
 
   test.equal(
     a.getTotalLength(),

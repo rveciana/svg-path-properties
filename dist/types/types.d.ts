@@ -16,11 +16,11 @@ export interface Point {
     x: number;
     y: number;
 }
-export declare type PointArray = [number, number];
+export type PointArray = [number, number];
 export interface PointProperties {
     x: number;
     y: number;
     tangentX: number;
     tangentY: number;
 }
-export declare type pathOrders = "a" | "c" | "h" | "l" | "m" | "q" | "s" | "t" | "v" | "z";
+export type pathOrders = "a" | "c" | "h" | "l" | "m" | "q" | "s" | "t" | "v" | "z";

@@ -1,4 +1,4 @@
-import * as test from "tape";
+import test from "tape";
 import SVGPathProperties from "../src/svg-path-properties";
 
 test("Testing the getParts with simple path", function (test) {

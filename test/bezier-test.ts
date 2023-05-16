@@ -1,4 +1,4 @@
-import * as test from "tape";
+import test from "tape";
 import { Bezier } from "../src/bezier";
 import { inDelta } from "./inDelta";
 
@@ -36,7 +36,16 @@ test("Testing getTangentAtLength", function (test) {
 });
 
 test("Testing pull request #16 solution", function (test) {
-  var curve = new Bezier(640.48, 1285.21, 642.39, 644.73, 642.39, 644.73, undefined, undefined);
+  var curve = new Bezier(
+    640.48,
+    1285.21,
+    642.39,
+    644.73,
+    642.39,
+    644.73,
+    undefined,
+    undefined
+  );
   var tangent = curve.getTangentAtLength(curve.getTotalLength() / 2);
   test.true(inDelta(tangent.y, 0, 1));
   test.true(inDelta(tangent.x, 0, 1));

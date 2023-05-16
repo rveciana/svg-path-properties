@@ -1,4 +1,4 @@
-import * as test from "tape";
+import test from "tape";
 import SVGPathProperties from "../src/svg-path-properties";
 import { inDelta } from "./inDelta";
 
