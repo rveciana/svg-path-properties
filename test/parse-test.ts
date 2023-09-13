@@ -60,6 +60,10 @@ test("arcTo, quadratic curveTo, smooth curveTo, smooth quadratic curveTo", funct
     ["A", 30, 50, 0, 0, 1, 162.55, 162.45],
   ]);
 
+  test.deepEqual(parse('a30 50 0 01162.55 162.45'), [
+    ['a', 30, 50, 0, 0, 1, 162.55, 162.45],
+  ]);
+
   test.deepEqual(parse("M10 80 Q 95 10 180 80"), [
     ["M", 10, 80],
     ["Q", 95, 10, 180, 80],

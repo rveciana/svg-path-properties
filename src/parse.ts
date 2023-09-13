@@ -23,13 +23,27 @@ export default (path: string) => {
   return segments.reduce((segmentsArray: [string, ...Array<number>][], segmentString: string) => {
     let command = segmentString.charAt(0);
     let type: pathOrders = command.toLowerCase() as pathOrders;
-    const args = parseValues(segmentString.substr(1));
+    let args = parseValues(segmentString.substring(1));
 
     // overloaded moveTo
     if (type === "m" && args.length > 2) {
       segmentsArray.push([command, ...args.splice(0, 2)]);
       type = "l";
       command = command === "m" ? "l" : "L";
+    }
+
+    // overloaded arcTo
+    if (type.toLowerCase() === "a" && args.length === 5) {
+      const aArgs = segmentString.substring(1).trim().split(' ');
+      args = [
+        Number(aArgs[0]),
+        Number(aArgs[1]),
+        Number(aArgs[2]),
+        Number(aArgs[3].charAt(0)),
+        Number(aArgs[3].charAt(1)),
+        Number(aArgs[3].substring(2)),
+        Number(aArgs[4]),
+      ];
     }
 
     while (args.length >= 0) {
