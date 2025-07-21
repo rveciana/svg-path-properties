@@ -1,19 +1,34 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "moduleResolution": "node",
+    "lib": [
+      "ES2022"
+    ],
+    "strict": true,
+    "allowJs": true,
     "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": true,
-    "declarationDir": "dist/types",
+    "skipLibCheck": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "target": "ES2022",
+    "baseUrl": ".",
+    "noEmit": true,
+    "rootDir": "./src",
     "declaration": true,
-    "target": "es2015",
-    "module": "es2015",
-    "strict": true
+    "declarationMap": true,
+    "sourceMap": true,
+		"allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "removeComments": true,
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*",
+    "src/bin/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

@@ -1,0 +1,26 @@
+name: Markdown Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  markdown_lint:
+    name: Lint Markdown files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Markdown Lint
+        uses: ruzickap/action-my-markdown-linter@26b4129bf0352527e60b5bd739357af63df1b7bf
+        with:
+          debug: true
+          config_file: .github/.markdownlint.yml
+          exclude: |
+            .changeset/
+            .github/
+            CODE_OF_CONDUCT.md
+            LICENSE
+            CHANGELOG.md
