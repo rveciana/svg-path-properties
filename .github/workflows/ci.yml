@@ -1,0 +1,40 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        node: ["22.x"]
+        platform: [ubuntu-latest]
+    name: Node v${{matrix.node}} ((${{matrix.platform}}))
+    runs-on: ${{matrix.platform}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node}}
+      - name: install dependencies
+        run: npm ci
+      - name: lint code
+        run: npm run lint
+      - name: build project
+        run: npm run build
+      - name: run tests
+        run: npm run test
+
+  release-preview:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - name: install dependencies
+        run: npm ci
+      - name: build project
+        run: npm run build
+      - name: release preview with pkr-pr-new
+        run: npx pkg-pr-new publish
