@@ -11,7 +11,7 @@ jobs:
     name: Lint Markdown files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Markdown Lint
         uses: ruzickap/action-my-markdown-linter@26b4129bf0352527e60b5bd739357af63df1b7bf
