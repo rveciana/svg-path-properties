@@ -82,12 +82,6 @@ export class Arc implements Properties {
     const p1 = this.getPointAtLength(fractionLength)
     let p2: Point
 
-    if (fractionLength < 0) {
-      fractionLength = 0
-    } else if (fractionLength > this.length) {
-      fractionLength = this.length
-    }
-
     if (fractionLength < this.length - pointDist) {
       p2 = this.getPointAtLength(fractionLength + pointDist)
     } else {
@@ -96,7 +90,7 @@ export class Arc implements Properties {
 
     const xDist = p2.x - p1.x
     const yDist = p2.y - p1.y
-    const dist = Math.sqrt(xDist * xDist + yDist * yDist)
+    const dist = Math.hypot(xDist, yDist)
 
     if (fractionLength < this.length - pointDist) {
       return { x: -xDist / dist, y: -yDist / dist }
@@ -297,7 +291,7 @@ const toRadians = (angle: number) => {
 }
 
 const distance = (p0: Point, p1: Point) => {
-  return Math.sqrt(Math.pow(p1.x - p0.x, 2) + Math.pow(p1.y - p0.y, 2))
+  return Math.hypot(p1.x - p0.x, p1.y - p0.y)
 }
 
 const clamp = (val: number, min: number, max: number) => {
@@ -306,9 +300,7 @@ const clamp = (val: number, min: number, max: number) => {
 
 const angleBetween = (v0: Point, v1: Point) => {
   const p = v0.x * v1.x + v0.y * v1.y
-  const n = Math.sqrt(
-    (Math.pow(v0.x, 2) + Math.pow(v0.y, 2)) * (Math.pow(v1.x, 2) + Math.pow(v1.y, 2))
-  )
+  const n = Math.hypot(v0.x, v0.y) * Math.hypot(v1.x, v1.y)
   const sign = v0.x * v1.y - v0.y * v1.x < 0 ? -1 : 1
   const angle = sign * Math.acos(p / n)
 
