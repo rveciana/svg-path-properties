@@ -51,9 +51,6 @@ export const quadraticPoint = (xs: number[], ys: number[], t: number): Point => 
 }
 
 export const getQuadraticArcLength = (xs: number[], ys: number[], t: number) => {
-  if (t === undefined) {
-    t = 1
-  }
   const ax = xs[0] - 2 * xs[1] + xs[2]
   const ay = ys[0] - 2 * ys[1] + ys[2]
   const bx = 2 * xs[1] - 2 * xs[0]
@@ -64,7 +61,7 @@ export const getQuadraticArcLength = (xs: number[], ys: number[], t: number) => 
   const C = bx * bx + by * by
 
   if (A === 0) {
-    return t * Math.sqrt(Math.pow(xs[2] - xs[0], 2) + Math.pow(ys[2] - ys[0], 2))
+    return t * Math.hypot(xs[2] - xs[0], ys[2] - ys[0])
   }
   const b = B / (2 * A)
   const c = C / A

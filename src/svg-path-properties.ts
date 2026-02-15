@@ -31,13 +31,11 @@ export default class SVGPathProperties implements Properties {
         this.functions.push(null)
         // lineTo
       } else if (parsed[i][0] === 'L') {
-        this.length += Math.sqrt(
-          Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2)
-        )
+        this.length += Math.hypot(cur[0] - parsed[i][1], cur[1] - parsed[i][2])
         this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]))
         cur = [parsed[i][1], parsed[i][2]]
       } else if (parsed[i][0] === 'l') {
-        this.length += Math.sqrt(Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2))
+        this.length += Math.hypot(parsed[i][1], parsed[i][2])
         this.functions.push(
           new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1])
         )
@@ -60,9 +58,7 @@ export default class SVGPathProperties implements Properties {
         cur[1] = parsed[i][1] + cur[1]
         // Close path
       } else if (parsed[i][0] === 'z' || parsed[i][0] === 'Z') {
-        this.length += Math.sqrt(
-          Math.pow(ringStart[0] - cur[0], 2) + Math.pow(ringStart[1] - cur[1], 2)
-        )
+        this.length += Math.hypot(ringStart[0] - cur[0], ringStart[1] - cur[1])
         this.functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1]))
         cur = [ringStart[0], ringStart[1]]
         // Cubic Bezier curves

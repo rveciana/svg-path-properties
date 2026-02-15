@@ -14,11 +14,12 @@ export class LinearPosition implements Properties {
   }
 
   public getTotalLength = () => {
-    return Math.sqrt(Math.pow(this.x0 - this.x1, 2) + Math.pow(this.y0 - this.y1, 2))
+    return Math.hypot(this.x1 - this.x0, this.y1 - this.y0)
   }
 
   public getPointAtLength = (pos: number): Point => {
-    let fraction = pos / Math.sqrt(Math.pow(this.x0 - this.x1, 2) + Math.pow(this.y0 - this.y1, 2))
+    const length = Math.hypot(this.x1 - this.x0, this.y1 - this.y0)
+    let fraction = pos / length
 
     fraction = Number.isNaN(fraction) ? 1 : fraction
     const newDeltaX = (this.x1 - this.x0) * fraction
@@ -28,9 +29,7 @@ export class LinearPosition implements Properties {
   }
 
   public getTangentAtLength = (_: number): Point => {
-    const module = Math.sqrt(
-      (this.x1 - this.x0) * (this.x1 - this.x0) + (this.y1 - this.y0) * (this.y1 - this.y0)
-    )
+    const module = Math.hypot(this.x1 - this.x0, this.y1 - this.y0)
     return {
       x: (this.x1 - this.x0) / module,
       y: (this.y1 - this.y0) / module

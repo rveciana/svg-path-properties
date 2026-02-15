@@ -10,7 +10,7 @@ To use with npm, just type
 
     npm install svg-path-properties
 
-You can use it int he browser directly by including _svg-path-properties.min.js_ from the dist directory
+You can use it in the browser directly by including _svg-path-properties.min.js_ from the dist directory
 
     <script src="svg-path-properties.min.js"></script>
 

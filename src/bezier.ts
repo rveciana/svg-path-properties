@@ -19,6 +19,7 @@ export class Bezier implements Properties {
   private getArcLength: (xs: number[], ys: number[], t: number) => number
   private getPoint: (xs: number[], ys: number[], t: number) => Point
   private getDerivative: (xs: number[], ys: number[], t: number) => Point
+
   constructor (
     ax: number,
     ay: number,
@@ -51,6 +52,14 @@ export class Bezier implements Properties {
     )
   }
 
+  private normalizeTangent = (derivative: Point): Point => {
+    const mdl = Math.hypot(derivative.x, derivative.y)
+    if (mdl > 0) {
+      return { x: derivative.x / mdl, y: derivative.y / mdl }
+    }
+    return { x: 0, y: 0 }
+  }
+
   public getTotalLength = () => {
     return this.length
   }
@@ -69,14 +78,7 @@ export class Bezier implements Properties {
     const t = t2length(length, this.length, (i) => this.getArcLength(xs, xy, i))
 
     const derivative = this.getDerivative(xs, xy, t)
-    const mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y)
-    let tangent: Point
-    if (mdl > 0) {
-      tangent = { x: derivative.x / mdl, y: derivative.y / mdl }
-    } else {
-      tangent = { x: 0, y: 0 }
-    }
-    return tangent
+    return this.normalizeTangent(derivative)
   }
 
   public getPropertiesAtLength = (length: number) => {
@@ -85,13 +87,7 @@ export class Bezier implements Properties {
     const t = t2length(length, this.length, (i) => this.getArcLength(xs, xy, i))
 
     const derivative = this.getDerivative(xs, xy, t)
-    const mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y)
-    let tangent: Point
-    if (mdl > 0) {
-      tangent = { x: derivative.x / mdl, y: derivative.y / mdl }
-    } else {
-      tangent = { x: 0, y: 0 }
-    }
+    const tangent = this.normalizeTangent(derivative)
     const point = this.getPoint(xs, xy, t)
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y }
   }
