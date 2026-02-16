@@ -67,7 +67,7 @@
     "@changesets/cli": "^2.27.7",
     "@types/node": "^25.2.3",
     "c8": "^10.1.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "eslint-plugin-security": "^3.0.1",
     "husky": "^9.0.11",
     "lint-staged": "^16.2.7",
