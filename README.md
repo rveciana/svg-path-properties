@@ -10,6 +10,8 @@ To use with npm, just type
 
     npm install svg-path-properties
 
+The package is lightweight with no dependencies (~20KB gzipped).
+
 You can use it in the browser directly by including _svg-path-properties.min.js_ from the dist directory
 
     <script src="svg-path-properties.min.js"></script>
@@ -58,7 +60,9 @@ Since _svgPathProperties_ is a class, using _new_ is the correct way to initiliz
 
 ## Typescript
 
-The TypeScript declaration file is available too, since version 0.5.0 From version 1.0.0, the whole library has been rewritten using TypeScript, and the types are auto-generated.
+The TypeScript declaration file is available too, since version 0.5.0. From version 1.0.0, the whole library has been rewritten using TypeScript, and the types are auto-generated.
+
+All public APIs are fully documented with JSDoc comments for better IDE support.
 
 ## CREDITS
 
