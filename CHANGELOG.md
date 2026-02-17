@@ -1,5 +1,11 @@
 # svg-path-properties
 
+## 2.0.2
+
+### Patch Changes
+
+- 8ccfe06: Improve README documentation: add package size information and mention JSDoc support for better developer experience.
+
 ## 2.0.1
 
 ### Patch Changes
