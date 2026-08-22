@@ -1,16 +1,20 @@
-import { Properties, Point, PointProperties } from './types.ts'
+import { SegmentProperties, Point, PointProperties, SegmentDetails } from './types.ts'
 
-export class LinearPosition implements Properties {
+export type LinearCommand = 'L' | 'H' | 'V' | 'Z'
+
+export class LinearPosition implements SegmentProperties {
   private x0: number
   private x1: number
   private y0: number
   private y1: number
+  private command: LinearCommand
 
-  constructor (x0: number, x1: number, y0: number, y1: number) {
+  constructor (x0: number, x1: number, y0: number, y1: number, command: LinearCommand = 'L') {
     this.x0 = x0
     this.x1 = x1
     this.y0 = y0
     this.y1 = y1
+    this.command = command
   }
 
   public getTotalLength = () => {
@@ -40,5 +44,14 @@ export class LinearPosition implements Properties {
     const point = this.getPointAtLength(pos)
     const tangent = this.getTangentAtLength(pos)
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y }
+  }
+
+  public getDetails = (): SegmentDetails => {
+    switch (this.command) {
+      case 'H': return ['H', this.x1]
+      case 'V': return ['V', this.y1]
+      case 'Z': return ['Z']
+      default: return ['L', this.x1, this.y1]
+    }
   }
 }

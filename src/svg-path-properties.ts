@@ -1,6 +1,6 @@
 /* eslint-disable security/detect-object-injection */
 import parse from './parse.ts'
-import { PointArray, Properties, PartProperties, Point } from './types.ts'
+import { PointArray, Properties, SegmentProperties, PartProperties, Point } from './types.ts'
 import { LinearPosition } from './linear.ts'
 import { Arc } from './arc.ts'
 import { Bezier } from './bezier.ts'
@@ -8,7 +8,7 @@ import { Bezier } from './bezier.ts'
 export default class SVGPathProperties implements Properties {
   private length: number = 0
   private partial_lengths: number[] = []
-  private functions: (null | Properties)[] = []
+  private functions: (null | SegmentProperties)[] = []
   private initial_point: null | Point = null
   constructor (source: string | [string, ...Array<number>][]) {
     const parsed = Array.isArray(source) ? source : parse(source)
@@ -32,34 +32,34 @@ export default class SVGPathProperties implements Properties {
         // lineTo
       } else if (parsed[i][0] === 'L') {
         this.length += Math.hypot(cur[0] - parsed[i][1], cur[1] - parsed[i][2])
-        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]))
+        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2], 'L'))
         cur = [parsed[i][1], parsed[i][2]]
       } else if (parsed[i][0] === 'l') {
         this.length += Math.hypot(parsed[i][1], parsed[i][2])
         this.functions.push(
-          new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1])
+          new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1], 'L')
         )
         cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]]
       } else if (parsed[i][0] === 'H') {
         this.length += Math.abs(cur[0] - parsed[i][1])
-        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]))
+        this.functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1], 'H'))
         cur[0] = parsed[i][1]
       } else if (parsed[i][0] === 'h') {
         this.length += Math.abs(parsed[i][1])
-        this.functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1]))
+        this.functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1], 'H'))
         cur[0] = parsed[i][1] + cur[0]
       } else if (parsed[i][0] === 'V') {
         this.length += Math.abs(cur[1] - parsed[i][1])
-        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1]))
+        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1], 'V'))
         cur[1] = parsed[i][1]
       } else if (parsed[i][0] === 'v') {
         this.length += Math.abs(parsed[i][1])
-        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]))
+        this.functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1], 'V'))
         cur[1] = parsed[i][1] + cur[1]
         // Close path
       } else if (parsed[i][0] === 'z' || parsed[i][0] === 'Z') {
         this.length += Math.hypot(ringStart[0] - cur[0], ringStart[1] - cur[1])
-        this.functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1]))
+        this.functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1], 'Z'))
         cur = [ringStart[0], ringStart[1]]
         // Cubic Bezier curves
       } else if (parsed[i][0] === 'C') {
@@ -167,7 +167,8 @@ export default class SVGPathProperties implements Properties {
             parsed[i][1],
             parsed[i][3],
             parsed[i][2],
-            parsed[i][4]
+            parsed[i][4],
+            'L'
           )
           this.length += linearCurve.getTotalLength()
           this.functions.push(linearCurve)
@@ -207,7 +208,8 @@ export default class SVGPathProperties implements Properties {
             cur[0] + parsed[i][1],
             cur[0] + parsed[i][3],
             cur[1] + parsed[i][2],
-            cur[1] + parsed[i][4]
+            cur[1] + parsed[i][4],
+            'L'
           )
           this.length += linearCurve.getTotalLength()
           this.functions.push(linearCurve)
@@ -230,7 +232,7 @@ export default class SVGPathProperties implements Properties {
           this.functions.push(curve)
           this.length += curve.getTotalLength()
         } else {
-          const linearCurve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2])
+          const linearCurve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2], 'L')
           this.functions.push(linearCurve)
           this.length += linearCurve.getTotalLength()
         }
@@ -256,7 +258,8 @@ export default class SVGPathProperties implements Properties {
             cur[0],
             cur[0] + parsed[i][1],
             cur[1],
-            cur[1] + parsed[i][2]
+            cur[1] + parsed[i][2],
+            'L'
           )
           this.length += linearCurve.getTotalLength()
           this.functions.push(linearCurve)
@@ -364,7 +367,7 @@ export default class SVGPathProperties implements Properties {
     const parts: PartProperties[] = []
     for (let i = 0; i < this.functions.length; i++) {
       if (this.functions[i] !== null) {
-        this.functions[i] = this.functions[i] as Properties
+        this.functions[i] = this.functions[i] as SegmentProperties
         const properties: PartProperties = {
           start: this.functions[i]!.getPointAtLength(0),
           end: this.functions[i]!.getPointAtLength(
@@ -373,7 +376,8 @@ export default class SVGPathProperties implements Properties {
           length: this.partial_lengths[i] - this.partial_lengths[i - 1],
           getPointAtLength: this.functions[i]!.getPointAtLength,
           getTangentAtLength: this.functions[i]!.getTangentAtLength,
-          getPropertiesAtLength: this.functions[i]!.getPropertiesAtLength
+          getPropertiesAtLength: this.functions[i]!.getPropertiesAtLength,
+          details: this.functions[i]!.getDetails()
         }
         parts.push(properties)
       }

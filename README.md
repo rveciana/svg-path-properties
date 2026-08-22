@@ -28,6 +28,65 @@ The available methods are:
     const allProperties = properties.getPropertiesAtLength(200);
     const parts = properties.getParts();
 
+### `getTotalLength()`
+
+Returns the total length of the path.
+
+### `getPointAtLength(pos)`
+
+Returns `{ x, y }` — the coordinates at the given distance along the path.
+
+### `getTangentAtLength(pos)`
+
+Returns `{ x, y }` — the normalized tangent vector at the given distance.
+
+### `getPropertiesAtLength(pos)`
+
+Returns `{ x, y, tangentX, tangentY }` — point and tangent combined.
+
+### `getParts()`
+
+Returns an array of segment objects, one per path command (move commands are skipped). Each object has:
+
+| Property | Description |
+|---|---|
+| `start` | `{ x, y }` — start point of the segment |
+| `end` | `{ x, y }` — end point of the segment |
+| `length` | Arc length of the segment |
+| `getPointAtLength(pos)` | Point at local distance within the segment |
+| `getTangentAtLength(pos)` | Tangent at local distance within the segment |
+| `getPropertiesAtLength(pos)` | Point and tangent combined |
+| `details` | Raw segment parameters (see below) |
+
+#### `details` — segment parameters
+
+Each segment's `details` is a tuple in SVG notation with the **uppercase command letter** and all coordinates in **absolute form**:
+
+| Tuple | Segment type |
+|---|---|
+| `['L', x, y]` | Line to |
+| `['H', x]` | Horizontal line to |
+| `['V', y]` | Vertical line to |
+| `['Z']` | Close path |
+| `['C', cp1x, cp1y, cp2x, cp2y, x, y]` | Cubic Bézier |
+| `['Q', cpx, cpy, x, y]` | Quadratic Bézier |
+| `['A', rx, ry, xRotation, largeArcFlag, sweepFlag, x, y]` | Elliptical arc (`largeArcFlag` and `sweepFlag` are `0` or `1`) |
+
+Example — parametric interpolation along a cubic Bézier at evenly-spaced `t` values instead of arc-length:
+
+    import { svgPathProperties } from "svg-path-properties";
+
+    const parts = new svgPathProperties("M0,0 C10,20 30,40 50,0").getParts();
+    for (const part of parts) {
+      if (part.details[0] === 'C') {
+        const [, cp1x, cp1y, cp2x, cp2y, x, y] = part.details;
+        // evaluate cubic Bézier at t=0.5
+        const t = 0.5;
+        const px = Math.pow(1-t,3)*part.start.x + 3*Math.pow(1-t,2)*t*cp1x + 3*(1-t)*t*t*cp2x + t*t*t*x;
+        const py = Math.pow(1-t,3)*part.start.y + 3*Math.pow(1-t,2)*t*cp1y + 3*(1-t)*t*t*cp2y + t*t*t*y;
+      }
+    }
+
 ### Node
 
     const path = require("svg-path-properties");

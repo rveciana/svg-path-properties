@@ -1,4 +1,4 @@
-import { Properties, Point } from './types.ts'
+import { SegmentProperties, Point, SegmentDetails } from './types.ts'
 
 import {
   cubicPoint,
@@ -10,12 +10,13 @@ import {
   t2length
 } from './bezier-functions.ts'
 
-export class Bezier implements Properties {
+export class Bezier implements SegmentProperties {
   private a: Point
   private b: Point
   private c: Point
   private d: Point
   private length: number
+  private isCubic: boolean
   private getArcLength: (xs: number[], ys: number[], t: number) => number
   private getPoint: (xs: number[], ys: number[], t: number) => Point
   private getDerivative: (xs: number[], ys: number[], t: number) => Point
@@ -35,11 +36,13 @@ export class Bezier implements Properties {
     this.c = { x: cx, y: cy }
 
     if (dx !== undefined && dy !== undefined) {
+      this.isCubic = true
       this.getArcLength = getCubicArcLength
       this.getPoint = cubicPoint
       this.getDerivative = cubicDerivative
       this.d = { x: dx, y: dy }
     } else {
+      this.isCubic = false
       this.getArcLength = getQuadraticArcLength
       this.getPoint = quadraticPoint
       this.getDerivative = quadraticDerivative
@@ -98,5 +101,12 @@ export class Bezier implements Properties {
 
   public getD = () => {
     return this.d
+  }
+
+  public getDetails = (): SegmentDetails => {
+    if (this.isCubic) {
+      return ['C', this.b.x, this.b.y, this.c.x, this.c.y, this.d.x, this.d.y]
+    }
+    return ['Q', this.b.x, this.b.y, this.c.x, this.c.y]
   }
 }
