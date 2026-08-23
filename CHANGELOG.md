@@ -1,5 +1,11 @@
 # svg-path-properties
 
+## 2.1.0
+
+### Minor Changes
+
+- 3093792: Expose segment detils
+
 ## 2.0.2
 
 ### Patch Changes
