@@ -32,6 +32,19 @@ export interface Properties {
 }
 
 /**
+ * Extended interface implemented by individual segment classes.
+ * Adds getDetails() on top of the base Properties methods.
+ */
+export interface SegmentProperties extends Properties {
+  /**
+   * Returns the raw geometric parameters of this segment in SVG notation.
+   * The first element is the uppercase command letter; all coordinates are absolute.
+   * @returns A tuple describing the segment type and its parameters
+   */
+  getDetails(): SegmentDetails
+}
+
+/**
  * Properties for a single part (segment) of an SVG path.
  * Each part represents one continuous path element (line, curve, arc, etc.).
  */
@@ -65,6 +78,12 @@ export interface PartProperties {
    * @returns Combined point and tangent properties at the specified position
    */
   getPropertiesAtLength(pos: number): PointProperties
+
+  /**
+   * The raw geometric parameters of this segment in SVG notation.
+   * The first element is the uppercase command letter; all coordinates are absolute.
+   */
+  details: SegmentDetails
 }
 
 /**
@@ -115,3 +134,24 @@ export interface PointProperties {
  * - z: close path
  */
 export type pathOrders = 'a' | 'c' | 'h' | 'l' | 'm' | 'q' | 's' | 't' | 'v' | 'z'
+
+/**
+ * The raw geometric parameters of a path segment, using uppercase SVG command
+ * letters with all coordinates in absolute form.
+ *
+ * - ['L', x, y]                                — line to
+ * - ['H', x]                                   — horizontal line to
+ * - ['V', y]                                   — vertical line to
+ * - ['Z']                                      — close path
+ * - ['C', cp1x, cp1y, cp2x, cp2y, x, y]       — cubic bézier
+ * - ['Q', cpx, cpy, x, y]                      — quadratic bézier
+ * - ['A', rx, ry, xRot, largeArc, sweep, x, y] — elliptical arc (largeArc and sweep as 0 or 1)
+ */
+export type SegmentDetails =
+  | ['L', number, number]
+  | ['H', number]
+  | ['V', number]
+  | ['Z']
+  | ['C', number, number, number, number, number, number]
+  | ['Q', number, number, number, number]
+  | ['A', number, number, number, number, number, number, number]

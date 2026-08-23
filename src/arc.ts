@@ -1,6 +1,6 @@
-import { Properties, Point, PointProperties } from './types.ts'
+import { SegmentProperties, Point, PointProperties, SegmentDetails } from './types.ts'
 
-export class Arc implements Properties {
+export class Arc implements SegmentProperties {
   private x0: number
   private y0: number
   private rx: number
@@ -103,6 +103,19 @@ export class Arc implements Properties {
     const tangent = this.getTangentAtLength(fractionLength)
     const point = this.getPointAtLength(fractionLength)
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y }
+  }
+
+  public getDetails = (): SegmentDetails => {
+    return [
+      'A',
+      this.rx,
+      this.ry,
+      this.xAxisRotate,
+      this.LargeArcFlag ? 1 : 0,
+      this.SweepFlag ? 1 : 0,
+      this.x1,
+      this.y1
+    ]
   }
 }
 
