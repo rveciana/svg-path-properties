@@ -5,6 +5,29 @@ import assert from 'node:assert'
 import { describe, test } from 'node:test'
 
 describe('Tangent calculations', () => {
+  test('tangent is a unit vector where a control point sits on its anchor', () => {
+    // The first derivative vanishes at such an endpoint, but the curve still
+    // has a tangent there.
+    const cases: [string, 'start' | 'end', [number, number]][] = [
+      // S with no preceding C: the reflected control point is the start point
+      ['M100,200 S400,300 400,200', 'start', [0.9486832980505138, 0.31622776601683794]],
+      // cubic with cp1 on the start point
+      ['M0,0 C0,0 50,100 100,0', 'start', [0.4472135954999579, 0.8944271909999159]],
+      // cubic with cp2 on the end point
+      ['M0,0 C50,100 100,0 100,0', 'end', [0.4472135954999579, -0.8944271909999159]]
+    ]
+
+    for (const [path, where, [wantX, wantY]] of cases) {
+      const properties = new SVGPathProperties(path)
+      const pos = where === 'start' ? 0 : properties.getTotalLength()
+      const tangent = properties.getTangentAtLength(pos)
+
+      assert.strictEqual(inDelta(Math.hypot(tangent.x, tangent.y), 1, 1e-6), true, path)
+      assert.strictEqual(inDelta(tangent.x, wantX, 1e-6), true, path)
+      assert.strictEqual(inDelta(tangent.y, wantY, 1e-6), true, path)
+    }
+  })
+
   test('getTangentAtLength testing', function (test) {
     const paths = [
       {
@@ -121,13 +144,16 @@ describe('Tangent calculations', () => {
       },
       {
         path: 'M100,200 S400,300 400,200',
+        // The S has no preceding C, so its reflected control point is the start
+        // point and the derivative vanishes at t=0. The tangent there is still
+        // (300,100) normalized, the direction of the second control point.
         xValues: [
-          0, 0.9647425496827284, 0.9760648482761272, 0.9886843239589528, 0.9995932816004552,
-          0.953018740113177, 2.2070215559197298e-7
+          0.9486832980505138, 0.9647425496827284, 0.9760648482761272, 0.9886843239589528,
+          0.9995932816004552, 0.953018740113177, 2.2070215559197298e-7
         ],
         yValues: [
-          0, 0.26319538907752243, 0.21747968171693818, 0.15001102478760836, 0.028517913304325987,
-          -0.30291134180332835, -0.9999999999999756
+          0.31622776601683794, 0.26319538907752243, 0.21747968171693818, 0.15001102478760836,
+          0.028517913304325987, -0.30291134180332835, -0.9999999999999756
         ]
       },
       {
