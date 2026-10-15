@@ -10,6 +10,10 @@ import {
   t2length
 } from './bezier-functions.ts'
 
+// How far along the curve to look when the derivative vanishes at t. Small
+// enough that the direction is the limit, large enough to survive rounding.
+const TANGENT_EPSILON = 1e-8
+
 export class Bezier implements SegmentProperties {
   private a: Point
   private b: Point
@@ -55,8 +59,23 @@ export class Bezier implements SegmentProperties {
     )
   }
 
-  private normalizeTangent = (derivative: Point): Point => {
-    const mdl = Math.hypot(derivative.x, derivative.y)
+  private normalizeTangent = (
+    xs: number[],
+    ys: number[],
+    t: number
+  ): Point => {
+    let derivative = this.getDerivative(xs, ys, t)
+    let mdl = Math.hypot(derivative.x, derivative.y)
+
+    if (mdl === 0) {
+      // The derivative vanishes where a control point sits on its anchor, but
+      // the curve still has a tangent there. Take the limit from just along
+      // the curve, forwards where there is room and backwards at the end.
+      const nudged = t < 1 ? t + TANGENT_EPSILON : t - TANGENT_EPSILON
+      derivative = this.getDerivative(xs, ys, nudged)
+      mdl = Math.hypot(derivative.x, derivative.y)
+    }
+
     if (mdl > 0) {
       return { x: derivative.x / mdl, y: derivative.y / mdl }
     }
@@ -80,8 +99,7 @@ export class Bezier implements SegmentProperties {
     const xy = [this.a.y, this.b.y, this.c.y, this.d.y]
     const t = t2length(length, this.length, (i) => this.getArcLength(xs, xy, i))
 
-    const derivative = this.getDerivative(xs, xy, t)
-    return this.normalizeTangent(derivative)
+    return this.normalizeTangent(xs, xy, t)
   }
 
   public getPropertiesAtLength = (length: number) => {
@@ -89,8 +107,7 @@ export class Bezier implements SegmentProperties {
     const xy = [this.a.y, this.b.y, this.c.y, this.d.y]
     const t = t2length(length, this.length, (i) => this.getArcLength(xs, xy, i))
 
-    const derivative = this.getDerivative(xs, xy, t)
-    const tangent = this.normalizeTangent(derivative)
+    const tangent = this.normalizeTangent(xs, xy, t)
     const point = this.getPoint(xs, xy, t)
     return { x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y }
   }
