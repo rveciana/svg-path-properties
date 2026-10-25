@@ -25,27 +25,16 @@ export default (path: string) => {
   return segments.reduce((segmentsArray: [string, ...Array<number>][], segmentString: string) => {
     let command = segmentString.charAt(0)
     let type: pathOrders = command.toLowerCase() as pathOrders
-    let args = parseValues(segmentString.substring(1))
+    const args =
+      type === 'a'
+        ? parseArcValues(segmentString.substring(1))
+        : parseValues(segmentString.substring(1))
 
     // overloaded moveTo
     if (type === 'm' && args.length > 2) {
       segmentsArray.push([command, ...args.splice(0, 2)])
       type = 'l'
       command = command === 'm' ? 'l' : 'L'
-    }
-
-    // overloaded arcTo
-    if (type.toLowerCase() === 'a' && (args.length === 5 || args.length === 6)) {
-      const aArgs = segmentString.substring(1).trim().split(' ')
-      args = [
-        Number(aArgs[0]),
-        Number(aArgs[1]),
-        Number(aArgs[2]),
-        Number(aArgs[3].charAt(0)),
-        Number(aArgs[3].charAt(1)),
-        Number(aArgs[3].substring(2)),
-        Number(aArgs[4])
-      ]
     }
 
     while (args.length >= 0) {
@@ -68,4 +57,24 @@ export default (path: string) => {
 const parseValues = (args: string) => {
   const numbers = args.match(numberRegExp)
   return numbers ? numbers.map(Number) : []
+}
+
+// The arc flags are single digits, so a flag can be followed by the next value without a separator
+// eslint-disable-next-line security/detect-unsafe-regex
+const arcNumberRegExp = /^[\s,]*([-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)/i
+const arcFlagRegExp = /^[\s,]*([01])/
+
+const parseArcValues = (args: string) => {
+  const values: number[] = []
+  let rest = args
+  for (;;) {
+    for (let i = 0; i < length.a; i++) {
+      const match = (i === 3 || i === 4 ? arcFlagRegExp : arcNumberRegExp).exec(rest)
+      if (!match) {
+        return values
+      }
+      values.push(Number(match[1]))
+      rest = rest.substring(match[0].length)
+    }
+  }
 }

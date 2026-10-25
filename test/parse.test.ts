@@ -61,6 +61,14 @@ describe('Parse strings', () => {
       ['a', 95500, 95500, 0, 0, 1, -219.59, 1128.84]
     ])
 
+    assert.deepEqual(parse('a1 1 0 01 10 0'), [['a', 1, 1, 0, 0, 1, 10, 0]])
+    assert.deepEqual(parse('a1,1,0,01,10,0'), [['a', 1, 1, 0, 0, 1, 10, 0]])
+    assert.deepEqual(parse('a1\n1\n0\n01\n10\n0'), [['a', 1, 1, 0, 0, 1, 10, 0]])
+    assert.deepEqual(parse('a1 1 0 00.5.5 2 2 0 1110 0'), [
+      ['a', 1, 1, 0, 0, 0, 0.5, 0.5],
+      ['a', 2, 2, 0, 1, 1, 10, 0]
+    ])
+
     assert.deepEqual(parse('M10 80 Q 95 10 180 80'), [
       ['M', 10, 80],
       ['Q', 95, 10, 180, 80]
